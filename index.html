@@ -1140,6 +1140,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
 .bc-cnt{display:inline-flex;align-items:center;gap:6px;margin:2px 6px 2px 0;font-size:12.5px;font-weight:700;color:var(--bh-c)}.bc-cnt i{width:10px;height:10px;border-radius:3px;background:var(--bh-c)}
 .ba-legend>span{display:inline-flex;align-items:center;gap:4px;margin-right:8px}
 </style>
+<style id="lp-css">.lp-levels{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px}.lp-hint{display:block;margin-top:6px;font-size:12.5px;line-height:1.5;color:#57534e}.lp-opt{font-style:normal;font-weight:400;color:#78716c;font-size:12px}</style>
 </head>
 <body class="text-slate-700 antialiased" 
       x-data="schoolApp()" 
@@ -3189,6 +3190,12 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                 <label class="tl-field"><span>Workspace</span><select x-model="ua.rf.workspace" :disabled="!!ua.rf.id" data-uarf-ws><template x-for="w in ua.data.workspaces" :key="'uarw' + w.id"><option :value="w.id" x-text="w.label + (w.enabled ? '' : ' (ยังไม่มีระบบงาน)')" :selected="ua.rf.workspace === w.id"></option></template></select></label>
                 <label class="sd-chk" x-show="!ua.rf.id && ua.rf.workspace !== 'staff'"><input type="checkbox" x-model="ua.rf.student" data-uarf-student><span>บทบาทของบัญชีนักเรียน — ไม่มีสิทธิ์ใด ๆ ในงาน TSS เรียกได้เฉพาะงานของ Workspace นี้ (บัญชีนี้มีบทบาทบุคลากรร่วมไม่ได้)</span></label>
                 <p class="is-note" x-show="ua.rf.workspace === 'council'"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-info"/></svg><span>Student Council ยังไม่มีระบบงาน — สร้างบทบาทและมอบหมายไว้ล่วงหน้าได้ แต่ยังให้สิทธิ์ใด ๆ ไม่ได้ และผู้ได้รับมอบหมายยังทำอะไรไม่ได้</span></p>
+                <div class="tl-field" x-show="ua.data && (ua.data.levels || []).length && (ua.rf.workspace === 'staff' || !ua.rf.id) && !ua.rf.student" data-uarf-levels>
+                    <span>ระดับชั้นที่โหลดข้อมูลไว้ก่อน <em class="lp-opt">(ไม่บังคับ · เลือกได้หลายระดับ)</em></span>
+                    <div class="lp-levels"><template x-for="l in (ua.data ? ua.data.levels : [])" :key="'uarl' + l"><label class="sd-chk"><input type="checkbox" :value="l" x-model="ua.rf.prefetchLevels"><span x-text="l"></span></label></template></div>
+                    <small class="lp-hint">ผู้ที่มีบทบาทนี้จะได้ข้อมูลทั่วไปของแฟ้มนักเรียนในระดับชั้นที่เลือก (เฉพาะแฟ้มที่มีสิทธิ์เปิดอยู่แล้ว) โหลดไว้ระหว่างใช้งาน เปิดแฟ้มได้เร็วขึ้น — ไม่เปลี่ยนสิทธิ์การเข้าถึง ข้อมูลเฉพาะทางและผลประเมินยังโหลดเมื่อเปิดแฟ้มเท่านั้น ถ้าไม่เลือก จะโหลดเฉพาะเคสที่ได้รับมอบหมาย</small>
+                    <small class="is-fe" x-show="ua.rf.fe.prefetchLevels" x-text="ua.rf.fe.prefetchLevels"></small>
+                </div>
                 <label class="sys-sw" x-show="!ua.rf.fixed" :class="ua.rf.active && 'is-on'"><input type="checkbox" x-model="ua.rf.active" data-uarf-active><i></i><b x-text="ua.rf.active ? 'เปิดใช้งาน' : 'ปิดใช้งาน — ผู้ที่มีบทบาทนี้เสียสิทธิ์ของบทบาทนี้ทันที'"></b></label>
                 <label class="tl-field"><span>เหตุผล *</span><input type="text" maxlength="300" x-model="ua.rf.note" data-uarf-note><small class="is-fe" x-show="ua.rf.fe.note" x-text="ua.rf.fe.note"></small></label>
                 <div class="tl-error" x-show="ua.rf.err" role="alert"><span x-text="ua.rf.err"></span></div>
@@ -12016,7 +12023,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     <script src="js/app-2-4577189a13.js"></script>
     <script src="js/app-3-0ebcb3a77b.js"></script>
     <!-- ALPINE.JS LOGIC -->
-    <script src="js/app-4-417e54ca2d.js"></script>
+    <script src="js/app-4-4fc21eddd2.js"></script>
 <!-- loading animation clip (MP4, base64). Not executed; read by TssLoaderVideoSrc only when a loader is shown. -->
 
 <script>
