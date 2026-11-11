@@ -67,9 +67,9 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Chart.js for Spider Web Radar Chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- SheetJS (xlsx) for Real .xlsx Export -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
     <!-- Google Fonts: Inter, Sarabun, Mali -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Mali:wght@400;500;600;700&family=Sarabun:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/app-6-52cddccffd.css">
@@ -510,6 +510,13 @@ body{background:radial-gradient(1200px 600px at 10% -10%,#fff4e6 0%,rgba(255,244
 .sd-pill.sd-plan{background:#fffbeb;color:#92400e;border-color:#fde68a}
 .sd-pill.sd-closed{background:#f5f5f4;color:#57534e;border-color:#e7e5e4}
 .sd-pill.is-new{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+.sd-pill.is-bad{background:#fff1f2;color:#9f1239;border-color:#fecdd3}
+.xt-ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;border-radius:10px;padding:8px 12px;font-weight:700}.xt-issues{max-height:320px;overflow:auto}.xt-sid{width:110px;border:1px solid #e7ddd4;border-radius:8px;padding:4px 8px;font:inherit}
+.xp-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}.xp-item{border:1px solid #ece4dc;border-radius:12px;padding:10px 12px;background:#fff}
+.xp-desc{white-space:pre-wrap;margin-top:4px}.xp-hist{margin-top:6px;padding:6px 10px;background:#faf7f4;border-radius:8px}.xp-sel{border:1px solid #e7ddd4;border-radius:10px;padding:6px 10px;font:inherit;font-size:13px}
+.xp-msg{border-radius:10px;padding:8px 12px;font-weight:700}.xp-msg.is-ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}.xp-msg.is-warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.xs-conf{border:1px solid #fecdd3;border-radius:12px;padding:10px 12px;background:#fff}.xs-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}.xs-two>div{background:#faf7f4;border-radius:8px;padding:6px 10px}
+@media (max-width:640px){.xs-two{grid-template-columns:1fr}}
 .sd-pill.is-upd{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
 .sd-pill.is-skip{background:#fffbeb;color:#92400e;border-color:#fde68a}
 .sd-pill.is-err{background:#fef2f2;color:#991b1b;border-color:#fecaca}
@@ -4604,6 +4611,144 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                 <button type="button" class="tl-btn tl-btn-ghost" @click="phOneDelete()" :disabled="ph.one.delBusy" data-ph-one-del x-text="ph.one.delBusy ? 'กำลังลบ…' : 'ลบรูปนี้'"></button></div></div></template>
                     </div>
                 </section>
+                <section x-show="sys.tab === 'ext_sources'" class="space-y-3" data-xt-page>
+                    <div class="sys-bar"><p class="tl-mute">เชื่อม Google Sheets เดิมของบุคลากร แล้วนำแถวย้อนหลังเข้ามาเป็น <b>ข้อมูลย้อนหลัง (อ่านอย่างเดียว)</b> จับคู่นักเรียนด้วย <b>รหัสนักเรียน</b> เท่านั้น ระบบไม่เขียนอะไรลงไฟล์ต้นทาง ไฟล์ต้องแชร์ให้บัญชีที่ Deploy ระบบ (สิทธิ์ผู้ดูก็พอ) และต้องไม่เปิดแบบ “ทุกคนที่มีลิงก์”</p>
+                        <div class="flex flex-wrap gap-2"><button type="button" class="tl-btn tl-btn-ghost" @click="xtLoad()" :disabled="xt.loading" data-xt-reload>รีเฟรช</button>
+                            <button type="button" class="tl-btn" @click="xtNew()" data-xt-new>เพิ่มแหล่งข้อมูล</button></div></div>
+                    <div x-show="xt.loading && !xt.data" class="sk-card" role="status" aria-busy="true"><div class="sk sk-line w-70"></div><div class="sk sk-line w-50"></div></div>
+                    <div x-show="xt.err" class="tl-error" role="alert"><span x-text="xt.err"></span></div>
+                    <template x-if="xt.data"><div class="tl-card" data-xt-list>
+                        <p class="tl-empty" x-show="!xt.data.sources.length">ยังไม่มีแหล่งข้อมูล — กด “เพิ่มแหล่งข้อมูล”</p>
+                        <div class="is-table-wrap" x-show="xt.data.sources.length"><table class="sd-table">
+                            <thead><tr><th>แหล่งข้อมูล</th><th>ประเภท</th><th>แท็บ / ไฟล์</th><th>สถานะ</th><th>นำเข้าแล้ว</th><th>จับคู่ไม่ได้</th><th>นำเข้าล่าสุด</th><th></th></tr></thead>
+                            <tbody><template x-for="s in xt.data.sources" :key="'xts' + s.sourceId"><tr :data-xt-row="s.sourceId">
+                                <td><b x-text="s.sourceName"></b><small class="block tl-mute" x-show="s.ownerName" x-text="'เจ้าของ: ' + s.ownerName"></small></td>
+                                <td x-text="s.recordTypeLabel"></td>
+                                <td><span x-text="s.sheetName + ' (แถวหัวตาราง ' + s.headerRow + ')'"></span><small class="block tl-mute" x-text="'ไฟล์ ' + s.spreadsheetRef"></small></td>
+                                <td><span class="sd-pill" :class="XT_ST[s.status][1]" x-text="XT_ST[s.status][0]"></span>
+                                    <span class="sd-pill" :class="s.syncMode === 'two_way' ? 'is-upd' : ''" x-text="s.syncMode === 'two_way' ? 'Sync สองทาง' : 'นำเข้าย้อนหลัง'" data-xt-mode></span>
+                                    <small class="block tl-mute" x-show="s.syncMode === 'two_way' && s.lastSweep" x-text="s.lastSweep ? 'Sync ล่าสุด ' + xpWhen(s.lastSweep.at) + (s.lastSweep.review.length ? ' • ต้องตรวจ ' + s.lastSweep.review.length + ' แถว' : '') : ''"></small>
+                                    <template x-if="s.syncMode === 'two_way' && s.lastSweep && s.lastSweep.review.length"><details class="text-xs"><summary>แถวที่ต้องตรวจ</summary>
+                                        <template x-for="(v, i) in s.lastSweep.review" :key="'xtv' + s.sourceId + i"><p x-text="'แถว ' + v.row + ': ' + v.reason"></p></template></details></template></td>
+                                <td x-text="s.records"></td><td x-text="s.unmatched"></td>
+                                <td><span x-text="s.lastImport ? formatThaiDateDisplay(s.lastImport.at.slice(0, 10)) + (s.lastImport.done ? '' : ' (ยังไม่ครบ)') : '—'"></span></td>
+                                <td class="whitespace-nowrap"><button type="button" class="tl-link text-xs" @click="xtEdit(s)" data-xt-edit>แก้ไข</button>
+                                    <button type="button" class="tl-link text-xs" @click="xtPreview(s)" :disabled="s.status === 'paused'" data-xt-preview>ตรวจก่อนนำเข้า</button>
+                                    <button type="button" class="tl-link text-xs" @click="xtStatus(s, s.status === 'paused' ? 'active' : 'paused')" x-text="s.status === 'paused' ? 'เปิดใช้' : 'พัก'" data-xt-pause></button>
+                                    <button type="button" class="tl-link text-xs" @click="xtTwoWay(s, s.syncMode !== 'two_way')" x-text="s.syncMode === 'two_way' ? 'ปิด Sync สองทาง' : 'เปิด Sync สองทาง'" data-xt-twoway></button>
+                                    <button type="button" class="tl-link text-xs" x-show="s.syncMode === 'two_way' && s.status === 'active'" @click="xtSyncNow(s)" :disabled="s.syncing" data-xt-syncnow>Sync ตอนนี้</button></td>
+                            </tr></template></tbody></table></div>
+                    </div></template>
+
+                    <!-- add / edit a source -->
+                    <template x-if="xt.f"><div class="tl-card space-y-3" data-xt-form>
+                        <div class="flex items-center justify-between gap-2"><h4 class="font-extrabold" x-text="xt.f.sourceId ? 'แก้ไขแหล่งข้อมูล' : 'เพิ่มแหล่งข้อมูล'"></h4>
+                            <button type="button" class="tl-btn tl-btn-ghost" @click="xt.f = null">ปิด</button></div>
+                        <div class="is-row"><label class="tl-field" :class="xt.f.fe.ref && 'is-err'"><span>ลิงก์ Google Sheets หรือ Spreadsheet ID</span>
+                                <input type="text" maxlength="300" x-model="xt.f.ref" placeholder="https://docs.google.com/spreadsheets/d/…" data-xt-f="ref"><small class="is-fe" x-show="xt.f.fe.ref" x-text="xt.f.fe.ref"></small></label>
+                            <div class="flex items-end"><button type="button" class="tl-btn tl-btn-ghost" @click="xtInspect(false)" :disabled="xt.f.busy" data-xt-open>เปิดไฟล์</button></div></div>
+                        <p class="tl-mute text-sm" x-show="xt.f.file" data-xt-file><span x-text="'ไฟล์: ' + (xt.f.file && xt.f.file.title)"></span> • <span x-text="XT_SHARE[xt.f.file && xt.f.file.sharing] || ''"></span></p>
+                        <div class="is-row" x-show="xt.f.file">
+                            <label class="tl-field" :class="xt.f.fe.sheetName && 'is-err'"><span>แท็บ</span><select x-model="xt.f.sheetName" data-xt-f="sheet"><option value="">— เลือกแท็บ —</option>
+                                <template x-for="t in (xt.f.file ? xt.f.file.tabs : [])" :key="'xtt' + t.gid"><option :value="t.name" x-text="t.name + ' (' + t.rows + ' แถว)'" :selected="t.name === xt.f.sheetName"></option></template></select>
+                                <small class="is-fe" x-show="xt.f.fe.sheetName" x-text="xt.f.fe.sheetName"></small></label>
+                            <label class="tl-field is-narrow" :class="xt.f.fe.headerRow && 'is-err'"><span>หัวตารางอยู่แถวที่</span><input type="number" min="1" max="50" x-model.number="xt.f.headerRow" data-xt-f="hrow"></label>
+                            <div class="flex items-end"><button type="button" class="tl-btn tl-btn-ghost" @click="xtInspect(true)" :disabled="xt.f.busy || !xt.f.sheetName" data-xt-headers>อ่านหัวตาราง</button></div></div>
+                        <template x-if="xt.f.headers"><div class="space-y-3">
+                            <div class="is-table-wrap"><table class="sd-table" data-xt-sample><thead><tr><template x-for="h in xt.f.headers" :key="'xth' + h.col"><th x-text="h.text || ('คอลัมน์ ' + h.col + ' (ไม่มีชื่อ)')"></th></template></tr></thead>
+                                <tbody><template x-for="(r, i) in xt.f.sample" :key="'xtr' + i"><tr><template x-for="(c, j) in r" :key="'xtc' + i + '-' + j"><td x-text="c"></td></template></tr></template></tbody></table></div>
+                            <p class="tl-mute text-xs">ตัวอย่าง 5 แถวแรก (จากทั้งหมด <span x-text="xt.f.dataRows"></span> แถว) — ใช้ตรวจว่าเลือกแถวหัวตารางถูก</p>
+                            <div class="sd-hgrid" data-xt-map>
+                                <template x-for="k in XT_FIELDS" :key="'xtm' + k[0]"><label class="tl-field" :class="xt.f.fe['map.' + k[0]] && 'is-err'"><span x-text="k[1] + (k[2] ? ' *' : ' (ถ้ามี)')"></span>
+                                    <select x-model="xt.f.map[k[0]]" :data-xt-map-f="k[0]"><option value="">— ไม่ใช้ —</option>
+                                        <template x-for="h in xt.f.headers.filter(h => h.text)" :key="'xto' + k[0] + h.col"><option :value="h.text" x-text="h.text" :selected="xt.f.map[k[0]] === h.text"></option></template></select>
+                                    <small class="is-fe" x-show="xt.f.fe['map.' + k[0]]" x-text="xt.f.fe['map.' + k[0]]"></small></label></template>
+                            </div>
+                            <div><span class="text-sm font-bold">คอลัมน์อื่นที่ต้องการเก็บไว้ด้วย (ไม่บังคับ)</span>
+                                <div class="flex flex-wrap gap-3 mt-1"><template x-for="h in xtExtraChoices" :key="'xte' + h"><label class="text-sm"><input type="checkbox" :value="h" x-model="xt.f.map.extra"> <span x-text="h"></span></label></template></div></div>
+                            <small class="is-fe" x-show="xt.f.fe.columnMap" x-text="xt.f.fe.columnMap" data-xt-fe-map></small>
+                            <div class="sd-hgrid">
+                                <label class="tl-field" :class="xt.f.fe.sourceName && 'is-err'"><span>ชื่อแหล่งข้อมูล *</span><input type="text" maxlength="100" x-model="xt.f.sourceName" data-xt-f="name"><small class="is-fe" x-show="xt.f.fe.sourceName" x-text="xt.f.fe.sourceName"></small></label>
+                                <label class="tl-field" :class="xt.f.fe.recordType && 'is-err'"><span>ประเภทข้อมูล *</span><select x-model="xt.f.recordType" data-xt-f="type"><option value="">— เลือก —</option>
+                                    <template x-for="t in (xt.data ? xt.data.types : [])" :key="'xty' + t.key"><option :value="t.key" x-text="t.label" :selected="t.key === xt.f.recordType"></option></template></select><small class="is-fe" x-show="xt.f.fe.recordType" x-text="xt.f.fe.recordType"></small></label>
+                                <label class="tl-field"><span>เจ้าของ / ผู้รับผิดชอบไฟล์</span><input type="text" maxlength="100" x-model="xt.f.ownerName"></label>
+                                <label class="tl-field"><span>วันที่แบบตัวเลข เช่น 03/04</span><select x-model="xt.f.dateOrder" data-xt-f="order"><option value="dmy">วัน/เดือน/ปี</option><option value="mdy">เดือน/วัน/ปี</option></select></label>
+                                <label class="tl-field"><span>ปีที่เขียน 2 หลัก (เช่น 68)</span><select x-model="xt.f.era" data-xt-f="era"><option value="auto">ไม่รับ — แจ้งเป็นแถวที่ต้องแก้</option><option value="be">เป็นปี พ.ศ.</option><option value="ce">เป็นปี ค.ศ.</option></select></label>
+                                <label class="tl-field" :class="xt.f.fe.cutoverDate && 'is-err'"><span>วันเริ่ม Sync (ไม่บังคับ)</span><input type="date" x-model="xt.f.cutoverDate" data-xt-f="cutover"><small class="tl-mute">แถวตั้งแต่วันนี้ไม่ถูกนำเข้าเป็นข้อมูลย้อนหลัง</small></label>
+                                <label class="tl-field"><span>สถานะ</span><select x-model="xt.f.status" data-xt-f="status"><option value="draft">ร่าง</option><option value="active">ใช้งาน</option><option value="paused">พัก</option></select></label>
+                            </div>
+                        </div></template>
+                        <div x-show="xt.f.err" class="tl-error" role="alert"><span x-text="xt.f.err"></span></div>
+                        <div class="flex justify-end gap-2" x-show="xt.f.headers"><button type="button" class="tl-btn" @click="xtSave()" :disabled="xt.f.busy" data-xt-save x-text="xt.f.busy ? 'กำลังบันทึก…' : 'บันทึกแหล่งข้อมูล'"></button></div>
+                    </div></template>
+
+                    <!-- check before import, then import -->
+                    <template x-if="xt.pv"><div class="tl-card space-y-3" data-xt-pv>
+                        <div class="flex items-center justify-between gap-2"><h4 class="font-extrabold" x-text="'ตรวจก่อนนำเข้า: ' + xt.pv.source.sourceName"></h4>
+                            <button type="button" class="tl-btn tl-btn-ghost" @click="xt.pv = null" :disabled="xt.pv.running">ปิด</button></div>
+                        <div x-show="xt.pv.loading" class="sk-card" role="status" aria-busy="true"><div class="sk sk-line w-70"></div></div>
+                        <div x-show="xt.pv.err" class="tl-error" role="alert"><span x-text="xt.pv.err"></span></div>
+                        <template x-if="xt.pv.data"><div class="space-y-3">
+                            <div class="flex flex-wrap gap-2" data-xt-sum><template x-for="k in XT_SUM" :key="'xtk' + k[0]"><span class="sd-pill" :class="k[2]" :data-xt-sum-k="k[0]" x-text="k[1] + ' ' + (xt.pv.data.summary[k[0]] || 0)"></span></template></div>
+                            <p class="tl-mute text-sm" x-show="xt.pv.data.truncated">ไฟล์มีมากกว่า 20,000 แถว — ตรวจเฉพาะ 20,000 แถวแรก</p>
+                            <div x-show="xt.pv.data.examples.length"><b class="text-sm">ตัวอย่างข้อมูลที่จะนำเข้า</b>
+                                <div class="is-table-wrap"><table class="sd-table" data-xt-ex><thead><tr><th>แถว</th><th>รหัสนักเรียน</th><th>วันที่</th><th>หัวข้อ</th><th>รายละเอียด</th><th>ผู้บันทึก</th></tr></thead>
+                                    <tbody><template x-for="e in xt.pv.data.examples" :key="'xtx' + e.row"><tr><td x-text="e.row"></td><td x-text="e.studentId"></td><td x-text="formatThaiDateDisplay(e.eventDate)"></td><td x-text="e.title || '—'"></td><td x-text="e.description"></td><td x-text="e.recorderName || 'ไม่ระบุผู้บันทึกในข้อมูลต้นทาง'"></td></tr></template></tbody></table></div></div>
+                            <div x-show="xt.pv.data.issues.length"><b class="text-sm">แถวที่ไม่นำเข้าหรือต้องตรวจ (เลขแถวในไฟล์ต้นทาง)</b>
+                                <div class="is-table-wrap xt-issues"><table class="sd-table" data-xt-issues><thead><tr><th>แถว</th><th>ผล</th><th>เหตุผล</th></tr></thead>
+                                    <tbody><template x-for="i in xt.pv.data.issues" :key="'xti' + i.row"><tr :data-xt-issue="i.row"><td x-text="i.row"></td><td><span class="sd-pill" :class="XT_IS[i.status][1]" x-text="XT_IS[i.status][0]"></span></td><td x-text="i.reason"></td></tr></template></tbody></table></div></div>
+                            <p class="text-sm" data-xt-plan x-text="'จะนำเข้า ' + xt.pv.data.summary.ok + ' แถวเป็นข้อมูลย้อนหลัง (แก้ไขใน TSS ไม่ได้) และส่ง ' + xt.pv.data.summary.unmatched + ' แถวที่จับคู่นักเรียนไม่ได้ไปรอตรวจ แถวที่ไม่ผ่านจะไม่ถูกนำเข้า — แก้ในไฟล์ต้นทางแล้วตรวจใหม่'"></p>
+                            <div class="flex flex-wrap items-center justify-end gap-2">
+                                <span class="tl-mute text-sm" x-show="xt.pv.progress" x-text="xt.pv.progress" data-xt-progress></span>
+                                <button type="button" class="tl-btn" @click="xtImport()" :disabled="xt.pv.running || (!xt.pv.data.summary.ok && !xt.pv.data.summary.unmatched)" data-xt-import x-text="xt.pv.running ? 'กำลังนำเข้า…' : 'นำเข้า'"></button></div>
+                            <p class="xt-ok" x-show="xt.pv.result" x-text="xt.pv.result" role="status" data-xt-done></p>
+                        </div></template>
+                    </div></template>
+
+                    <!-- two-way sync: conflicts + queue (Phase 4) -->
+                    <div class="tl-card space-y-2" data-xs-conf>
+                        <div class="flex items-center justify-between gap-2"><h4 class="font-extrabold">ข้อมูลขัดแย้ง (แก้ทั้งใน TSS และ Google Sheets) <span class="tl-mute" x-text="xs.conf ? '(' + xs.conf.length + ')' : ''"></span></h4>
+                            <button type="button" class="tl-btn tl-btn-ghost" @click="xsLoad()" data-xs-load>โหลดสถานะ Sync</button></div>
+                        <p class="tl-mute text-sm">ระบบไม่เขียนทับข้อมูลที่ขัดแย้งเอง เปรียบเทียบแล้วเลือกว่าจะใช้ข้อมูลฝั่งไหน</p>
+                        <div x-show="xs.err" class="tl-error" role="alert"><span x-text="xs.err"></span></div>
+                        <p class="tl-empty" x-show="xs.conf && !xs.conf.length">ไม่มีข้อมูลขัดแย้ง</p>
+                        <template x-for="c in (xs.conf || [])" :key="'xsc' + c.id"><div class="xs-conf" :data-xs-conf-item="c.id">
+                            <p class="text-sm"><b x-text="c.sourceName"></b> • <span x-text="'รหัสนักเรียน ' + (c.tss.studentId || '')"></span> • <span x-text="'แถว ' + (c.sheet.row || '')"></span></p>
+                            <div class="xs-two"><div><small class="tl-mute">ใน TSS</small><p x-text="formatThaiDateDisplay(c.tss.eventDate) + ' — ' + (c.tss.title ? c.tss.title + ': ' : '') + c.tss.description"></p></div>
+                                <div><small class="tl-mute">ใน Google Sheets</small><p x-text="(c.sheet.eventDate ? formatThaiDateDisplay(c.sheet.eventDate) : 'วันที่อ่านไม่ได้') + ' — ' + (c.sheet.title ? c.sheet.title + ': ' : '') + c.sheet.description"></p></div></div>
+                            <div class="flex flex-wrap gap-2 justify-end"><button type="button" class="tl-btn tl-btn-ghost" @click="xsResolve(c, 'keep_tss')" :disabled="c.busy" data-xs-keep-tss>ใช้ข้อมูลจาก TSS (เขียนทับใน Sheet)</button>
+                                <button type="button" class="tl-btn tl-btn-ghost" @click="xsResolve(c, 'keep_sheet')" :disabled="c.busy" data-xs-keep-sheet>ใช้ข้อมูลจาก Google Sheets</button></div>
+                            <small class="is-fe" x-show="c.err" x-text="c.err"></small>
+                        </div></template>
+                    </div>
+                    <div class="tl-card space-y-2" data-xs-queue x-show="xs.queue">
+                        <h4 class="font-extrabold">คิวส่งข้อมูลไป Google Sheets</h4>
+                        <div class="flex flex-wrap gap-2"><template x-for="k in XS_Q" :key="'xsq' + k[0]"><span class="sd-pill" :class="k[2]" x-text="k[1] + ' ' + ((xs.queue && xs.queue.counts[k[0]]) || 0)"></span></template></div>
+                        <div class="is-table-wrap" x-show="xs.queue && xs.queue.items.length"><table class="sd-table"><thead><tr><th>แหล่งข้อมูล</th><th>การทำงาน</th><th>สถานะ</th><th>ครั้งที่ลอง</th><th>ลองล่าสุด</th><th></th></tr></thead>
+                            <tbody><template x-for="q in (xs.queue ? xs.queue.items : [])" :key="'xsi' + q.queueId"><tr :data-xs-q="q.queueId"><td x-text="q.sourceName"></td><td x-text="q.operation === 'CREATE' ? 'เพิ่ม' : 'แก้ไข'"></td>
+                                <td><span class="sd-pill" :class="q.status === 'FAILED' ? 'is-bad' : 'sd-plan'" x-text="XS_QS[q.status] || q.status"></span></td><td x-text="q.attempts"></td><td x-text="q.lastAttemptAt ? xpWhen(q.lastAttemptAt) : '—'"></td>
+                                <td><button type="button" class="tl-link text-xs" x-show="q.status === 'FAILED' || q.status === 'PENDING'" @click="xsRetry(q)" data-xs-retry>ลองส่งใหม่</button></td></tr></template></tbody></table></div>
+                    </div>
+                    <!-- rows whose student could not be matched -->
+                    <div class="tl-card space-y-2" data-xt-un>
+                        <div class="flex items-center justify-between gap-2"><h4 class="font-extrabold">แถวที่จับคู่นักเรียนไม่ได้ <span class="tl-mute" x-text="xt.un ? '(' + xt.un.total + ')' : ''"></span></h4>
+                            <button type="button" class="tl-btn tl-btn-ghost" @click="xtUnLoad(0)" data-xt-un-load>โหลดรายการ</button></div>
+                        <p class="tl-mute text-sm">ระบบไม่จับคู่ด้วยชื่อ–นามสกุล ใส่รหัสนักเรียนที่ถูกต้องเพื่อนำเข้า หรือเลือก “ไม่นำเข้า”</p>
+                        <div x-show="xt.unErr" class="tl-error" role="alert"><span x-text="xt.unErr"></span></div>
+                        <template x-if="xt.un"><div>
+                            <p class="tl-empty" x-show="!xt.un.items.length">ไม่มีรายการรอตรวจ</p>
+                            <div class="is-table-wrap" x-show="xt.un.items.length"><table class="sd-table"><thead><tr><th>แหล่งข้อมูล / แถว</th><th>เหตุผล</th><th>รหัสในไฟล์</th><th>วันที่</th><th>รายละเอียด</th><th>รหัสนักเรียนที่ถูกต้อง</th><th></th></tr></thead>
+                                <tbody><template x-for="u in xt.un.items" :key="'xtu' + u.id"><tr :data-xt-un-row="u.id">
+                                    <td><b x-text="u.sourceName"></b><small class="block tl-mute" x-text="'แถว ' + u.row"></small></td><td x-text="u.reason"></td><td x-text="u.rawStudentId || '—'"></td>
+                                    <td x-text="u.eventDate ? formatThaiDateDisplay(u.eventDate) : '—'"></td><td x-text="(u.title ? u.title + ' — ' : '') + u.description"></td>
+                                    <td><input type="text" maxlength="20" class="xt-sid" x-model="u.fix" aria-label="รหัสนักเรียนที่ถูกต้อง" data-xt-un-sid><small class="is-fe block" x-show="u.fe" x-text="u.fe"></small></td>
+                                    <td class="whitespace-nowrap"><button type="button" class="tl-link text-xs" @click="xtUnResolve(u, 'link')" :disabled="u.busy || !u.fix" data-xt-un-link>จับคู่</button>
+                                        <button type="button" class="tl-link text-xs" @click="xtUnResolve(u, 'ignore')" :disabled="u.busy" data-xt-un-ignore>ไม่นำเข้า</button></td></tr></template></tbody></table></div>
+                            <div class="flex justify-end gap-2 mt-2" x-show="xt.un.total > xt.un.pageSize"><button type="button" class="tl-btn tl-btn-ghost" @click="xtUnLoad(xt.un.page - 1)" :disabled="xt.un.page === 0">ก่อนหน้า</button>
+                                <button type="button" class="tl-btn tl-btn-ghost" @click="xtUnLoad(xt.un.page + 1)" :disabled="(xt.un.page + 1) * xt.un.pageSize >= xt.un.total">ถัดไป</button></div>
+                        </div></template>
+                    </div>
+                </section>
                 <section x-show="sys.tab === 'storage'" class="space-y-3" data-st-page>
                     <div class="sys-bar"><p class="tl-mute">Google Sheets จำกัด <b>10 ล้านเซลล์ต่อไฟล์</b> และนับทุกเซลล์ในตาราง รวมเซลล์ว่าง • หน้านี้แสดงพื้นที่ที่ใช้จริงของทุกไฟล์ และมีเครื่องมือ 3 อย่าง: ตัดเซลล์ว่าง • ย้ายข้อมูลเก่าไป archive • แยกตารางที่โตเร็วไปไฟล์ของตัวเอง — ทุกขั้นแสดงตัวอย่างก่อน และเซิร์ฟเวอร์ตรวจข้อมูลครบก่อนลบต้นทาง</p>
                         <div class="flex flex-wrap gap-2"><button type="button" class="tl-btn tl-btn-ghost" @click="stLoad()" :disabled="st.loading" data-st-reload>รีเฟรช</button></div></div>
@@ -8071,6 +8216,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             <button type="button" role="tab" class="pf-tab" :class="profileTab === 'svc_timeline' && 'is-active'" :aria-selected="profileTab === 'svc_timeline'" @click="openServiceTimeline()" data-pf-tab-svc-timeline><svg class="ico ico-m" aria-hidden="true"><use href="#i-clock"/></svg>ไทม์ไลน์</button>
                             <button type="button" role="tab" class="pf-tab" :class="profileTab === 'behavior' && 'is-active'" :aria-selected="profileTab === 'behavior'" @click="openBehaviorTab()" data-pf-tab-behavior><svg class="ico ico-m" aria-hidden="true"><use href="#i-list-checks"/></svg>ข้อมูลพฤติกรรม</button>
                             <button type="button" role="tab" class="pf-tab" :class="profileTab === 'issp' && 'is-active'" :aria-selected="profileTab === 'issp'" @click="profileTab = 'issp'; isProfileEnter()" data-pf-tab-issp x-show="modOn('issp')"><svg class="ico ico-m" aria-hidden="true"><use href="#i-target"/></svg>แผน ISSP</button>
+                            <button type="button" role="tab" class="pf-tab" :class="profileTab === 'ext' && 'is-active'" :aria-selected="profileTab === 'ext'" @click="profileTab = 'ext'" data-pf-tab-ext><svg class="ico ico-m" aria-hidden="true"><use href="#i-sheet"/></svg>แหล่งข้อมูลเดิม</button>
                             <button type="button" role="tab" class="pf-tab" :class="profileTab === 'care' && 'is-active'" :aria-selected="profileTab === 'care'" @click="profileTab = 'care'; cpEnter()" data-pf-tab-care><svg class="ico ico-m" aria-hidden="true"><use href="#i-hand-heart"/></svg>การดูแลต่อเนื่อง</button>
                             <button type="button" role="tab" class="pf-tab" :class="profileTab === 'plans' && 'is-active'" :aria-selected="profileTab === 'plans'" @click="profileTab = 'plans'; cplEnter()" data-pf-tab-plans><svg class="ico ico-m" aria-hidden="true"><use href="#i-clipboard-check"/></svg>แผนการดูแล</button>
                             <button type="button" role="tab" class="pf-tab" :class="profileTab === 'timeline' && 'is-active'" :aria-selected="profileTab === 'timeline'" @click="profileTab = 'timeline'"><span x-text="t('ประวัติการให้บริการ')"></span><span class="pf-count" x-text="activeStudentLogs.length"></span></button>
@@ -8483,6 +8629,69 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                 </div>
 
                 <!-- TAB: แผน ISSP (plans of this student; each plan opens on its own) -->
+                <div x-show="profileTab === 'ext'" class="tl-page" data-xp-page x-effect="profileTab === 'ext' && activeStudent && xp.clientId !== activeStudent.id && xpLoad(0)">
+                    <div class="tl-head">
+                        <h4 class="tl-title">ข้อมูลจากแหล่งเดิม (Google Sheets)</h4><span class="flex-1"></span>
+                        <select x-model="xp.type" @change="xpLoad(0)" aria-label="ประเภทข้อมูล" data-xp-type class="xp-sel"><option value="">ทุกประเภท</option>
+                            <template x-for="t in (xp.data ? xp.data.types : [])" :key="'xpt' + t.key"><option :value="t.key" x-text="t.label + ' (' + t.n + ')'" :selected="t.key === xp.type"></option></template></select>
+                        <label class="text-sm" x-show="xp.data && xp.data.canSeeInactive"><input type="checkbox" x-model="xp.inactive" @change="xpLoad(0)" data-xp-inactive> รายการที่ซ่อน</label>
+                        <button type="button" class="tl-btn tl-btn-ghost" @click="xpLoad(0)" :disabled="xp.loading"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>รีเฟรช</button>
+                        <button data-ro-hide type="button" class="tl-btn tl-btn-primary" x-show="xp.data && xp.data.writable.length && !xp.inactive" @click="xpNew()" data-xp-new><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-plus"/></svg>เพิ่มบันทึก</button>
+                    </div>
+                    <p class="tl-mute text-sm">ข้อมูลย้อนหลังแก้ไขใน TSS ไม่ได้ (แก้ในไฟล์ Google Sheets ต้นทาง) • ข้อมูลใหม่ส่งไป–กลับกับ Google Sheets ภายในประมาณ 1–5 นาที ไม่ใช่ทันที</p>
+                    <div x-show="xp.loading && !xp.data" class="sk-card" role="status" aria-busy="true"><div class="sk sk-line w-70"></div><div class="sk sk-line w-50"></div></div>
+                    <div x-show="xp.err" class="tl-error" role="alert"><span x-text="xp.err"></span></div>
+                    <p class="tl-empty" x-show="xp.data && !xp.data.studentLinked" data-xp-unlinked>แฟ้มนี้ยังไม่ได้ผูกกับรหัสนักเรียนในทะเบียน — ข้อมูลจากแหล่งเดิมจะแสดงเมื่อผูกแล้ว</p>
+                    <p class="tl-empty" x-show="xp.data && xp.data.studentLinked && !xp.items.length">ยังไม่มีข้อมูลจากแหล่งเดิม</p>
+
+                    <template x-if="xp.f"><div class="tl-card space-y-3" data-xp-form>
+                        <h4 class="font-extrabold" x-text="xp.f.recordId ? 'แก้ไขบันทึก' : 'เพิ่มบันทึกลงแหล่งข้อมูลเดิม'"></h4>
+                        <div class="sd-hgrid">
+                            <label class="tl-field" x-show="!xp.f.recordId"><span>บันทึกลงแหล่งข้อมูล</span><select x-model="xp.f.sourceId" data-xp-f="source">
+                                <template x-for="s in xp.data.writable" :key="'xpw' + s.sourceId"><option :value="s.sourceId" x-text="s.sourceName + ' — ' + s.recordTypeLabel" :selected="s.sourceId === xp.f.sourceId"></option></template></select></label>
+                            <label class="tl-field" :class="xp.f.fe.eventDate && 'is-err'"><span>วันที่ *</span><input type="date" x-model="xp.f.eventDate" data-xp-f="date"><small class="is-fe" x-show="xp.f.fe.eventDate" x-text="xp.f.fe.eventDate"></small></label>
+                            <label class="tl-field" x-show="xpSrc() && xpSrc().fields.title"><span>หัวข้อ</span><input type="text" maxlength="200" x-model="xp.f.title" data-xp-f="title"></label>
+                            <label class="tl-field" x-show="xpSrc() && xpSrc().fields.recorderName"><span>ผู้บันทึก</span><input type="text" maxlength="120" x-model="xp.f.recorderName" data-xp-f="recorder"></label>
+                        </div>
+                        <label class="tl-field" :class="xp.f.fe.description && 'is-err'"><span>รายละเอียด *</span><textarea rows="4" maxlength="5000" x-model="xp.f.description" data-xp-f="desc"></textarea><small class="is-fe" x-show="xp.f.fe.description" x-text="xp.f.fe.description"></small></label>
+                        <template x-for="h in (xpSrc() ? xpSrc().fields.extra : [])" :key="'xpe' + h"><label class="tl-field"><span x-text="h"></span><input type="text" maxlength="1000" x-model="xp.f.extra[h]"></label></template>
+                        <div x-show="xp.f.err" class="tl-error" role="alert"><span x-text="xp.f.err"></span></div>
+                        <div class="flex justify-end gap-2"><button type="button" class="tl-btn tl-btn-ghost" @click="xp.f = null" :disabled="xp.f.busy">ยกเลิก</button>
+                            <button type="button" class="tl-btn tl-btn-primary" @click="xpSave()" :disabled="xp.f.busy" data-xp-save x-text="xp.f.busy ? 'กำลังบันทึก…' : 'บันทึก'"></button></div>
+                    </div></template>
+                    <p class="xp-msg" :class="xp.msgKind" x-show="xp.msg" x-text="xp.msg" role="status" data-xp-msg></p>
+
+                    <ol class="xp-list" data-xp-list>
+                        <template x-for="it in xp.items" :key="'xpi' + it.recordId"><li class="xp-item" :data-xp-item="it.recordId">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <b x-text="formatThaiDateDisplay(it.eventDate)"></b>
+                                <span class="sd-pill" x-text="it.recordTypeLabel"></span>
+                                <span class="sd-pill" :class="it.sourceKind === 'new' ? 'is-new' : 'sd-closed'" x-text="it.sourceKind === 'new' ? 'ข้อมูลใหม่' : 'ข้อมูลย้อนหลัง (อ่านอย่างเดียว)'"></span>
+                                <span class="sd-pill" :class="XP_SYNC[it.syncStatus] || ''" x-show="it.sourceKind === 'new' && it.syncLabel" x-text="it.syncLabel" data-xp-sync></span>
+                                <span class="sd-pill sd-closed" x-show="it.status === 'inactive'">ซ่อนอยู่</span>
+                            </div>
+                            <p class="font-bold mt-1" x-show="it.title" x-text="it.title"></p>
+                            <p class="xp-desc" x-text="it.description"></p>
+                            <template x-for="(v, k) in it.extra" :key="'xpx' + it.recordId + k"><p class="text-sm"><span class="tl-mute" x-text="k + ': '"></span><span x-text="v"></span></p></template>
+                            <p class="tl-mute text-xs mt-1" data-xp-meta x-text="xpMeta(it)"></p>
+                            <div class="flex flex-wrap gap-3 mt-1">
+                                <button data-ro-hide type="button" class="tl-link text-xs" x-show="it.canEdit" @click="xpEdit(it)" data-xp-edit>แก้ไข</button>
+                                <button type="button" class="tl-link text-xs" @click="xpHistory(it)" data-xp-hist>ประวัติการแก้ไข</button>
+                                <button data-ro-hide type="button" class="tl-link text-xs" x-show="it.canEdit && it.status !== 'inactive'" @click="xpHideAsk(it)" data-xp-hide>ซ่อน (ไม่ลบใน Google Sheets)</button>
+                                <button type="button" class="tl-link text-xs" x-show="it.status === 'inactive' && xp.data.canSeeInactive" @click="xpSetActive(it, true)" data-xp-restore>กู้คืน</button>
+                            </div>
+                            <template x-if="xp.hide && xp.hide.recordId === it.recordId"><div class="flex flex-wrap gap-2 items-end mt-2">
+                                <label class="tl-field tl-grow"><span>เหตุผลที่ซ่อน</span><input type="text" maxlength="300" x-model="xp.hide.reason" data-xp-hide-reason></label>
+                                <button type="button" class="tl-btn" @click="xpSetActive(it, false)" :disabled="!xp.hide || !xp.hide.reason.trim()" data-xp-hide-ok>ยืนยันซ่อน</button>
+                                <button type="button" class="tl-btn tl-btn-ghost" @click="xp.hide = null">ยกเลิก</button></div></template>
+                            <template x-if="xp.hist && xp.hist.recordId === it.recordId"><div class="xp-hist" data-xp-hist-list>
+                                <p class="tl-mute text-sm" x-show="xp.hist.loading">กำลังโหลด…</p>
+                                <template x-for="(h, i) in xp.hist.items" :key="'xph' + i"><p class="text-xs"><b x-text="XP_ACT[h.action] || h.action"></b> • <span x-text="XP_ORIGIN[h.origin] || h.origin"></span> • <span x-text="xpWhen(h.changedAt)"></span><span x-show="h.changedBy" x-text="' • ' + h.changedBy"></span></p></template>
+                            </div></template>
+                        </li></template>
+                    </ol>
+                    <div class="flex justify-center" x-show="xp.data && xp.items.length < xp.data.total"><button type="button" class="tl-btn tl-btn-ghost" @click="xpLoad(xp.page + 1)" :disabled="xp.loading" data-xp-more>โหลดเพิ่ม</button></div>
+                </div>
                 <div x-show="profileTab === 'issp'" class="tl-page" data-is-pf>
                     <div class="tl-head">
                         <h4 class="tl-title">แผนสนับสนุนนักเรียนรายบุคคล (ISSP)</h4><span class="flex-1"></span>
@@ -11812,6 +12021,38 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
 })();
 </script>
 
+    <!-- TssLib (2026-11-10) — Chart.js and SheetJS are no longer downloaded when the page opens (they blocked the first screen:
+         ~1.1 MB). Each is fetched once, the first time a chart is drawn or an Excel file is read / written. Fixed versions. -->
+    <script>
+    window.TssLib = (function () {
+        'use strict';
+        var LIBS = {
+            chart: { url: 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js', ready: function () { return !!window.Chart; } },
+            xlsx:  { url: 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js', ready: function () { return !!(window.XLSX && window.XLSX.utils); } }
+        };
+        var pending = {};
+        function load(name) {
+            var L = LIBS[name];
+            if (!L) return Promise.reject(new Error('unknown library'));
+            if (L.ready()) return Promise.resolve();
+            if (pending[name]) return pending[name];
+            var t0 = Date.now();
+            pending[name] = new Promise(function (res, rej) {
+                var s = document.createElement('script'), done = false;
+                var fin = function (ok, why) { if (done) return; done = true; if (ok) res(); else { delete pending[name]; try { s.remove(); } catch (e) {} rej(new Error(why)); }
+                    try { if (window.TssPerf) window.TssPerf.span('โหลดไลบรารี ' + name, Date.now() - t0); } catch (e) {} };
+                s.src = L.url; s.async = true; s.crossOrigin = 'anonymous';
+                s.onload = function () { fin(L.ready(), 'library not ready'); };
+                s.onerror = function () { fin(false, 'library failed to load'); };
+                setTimeout(function () { fin(false, 'library timeout'); }, 20000);
+                document.head.appendChild(s);
+            });
+            return pending[name];
+        }
+        return { load: load, ready: function (name) { return !!(LIBS[name] && LIBS[name].ready()); } };
+    })();
+    </script>
+
     <!-- AUTH API CONNECTOR — talks to the Google Apps Script backend. Holds no secrets. -->
     <script>
     window.TssApi = (function () {
@@ -11822,7 +12063,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
         function cfg() { return window.TSS_CONFIG || {}; }
         // sessionStorage: cleared when the tab/window closes; never localStorage for the session.
         function getToken() { try { return sessionStorage.getItem(KEY) || memToken; } catch (e) { return memToken; } }
-        function setToken(t) { memToken = t || null; try { if (t) sessionStorage.setItem(KEY, t); else sessionStorage.removeItem(KEY); } catch (e) {} }
+        function setToken(t) { memToken = t || null; if (!t) primed = {}; try { if (t) sessionStorage.setItem(KEY, t); else sessionStorage.removeItem(KEY); } catch (e) {} }
         function inAppsScript() { return !!(window.google && google.script && google.script.run); }
         function configured() { return inAppsScript() || GAS_URL.test(String(cfg().apiUrl || '')); }
         var NETWORK = { ok: false, code: 'NETWORK', status: 0, message: 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่' };
@@ -11830,17 +12071,35 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
         var SHARE = ['modules.get', 'club.meta', 'calendar.list', 'instruments.catalog', 'home.today', 'appointments.list', 'requests.list', 'ba.summary',
                      'behavior.alerts', 'data.logs', 'data.reports', 'students.search', 'tools.defs', 'photos.get', 'regprofile.get'];
         var inflight = {};
+        /* answers that came back inside auth.login / auth.me (one round trip): used once, same account, within 30 s; memory only */
+        var primed = {};
+        var STARTUP = [{ action: 'data.bootstrap', payload: { lite: true } }, { action: 'modules.get', payload: {} }, { action: 'club.meta', payload: {} }];
+        /* something saved (any page, any path): screens that show counts read again on the next visit */
+        function isRead(action) { return /^data\./.test(action) || /\.(list|get|catalog|defs|meta|search|detail|summary|today|alerts|status|history|source|batch|cacheStatus)$/.test(action) || /^auth\.(me|login|logout)$/.test(action) || action === 'system.ping'; }
+        function done(action, t0) { return function (r) { perfNote(action, Date.now() - t0, r && r.perf, false); if (r && r.perf) delete r.perf; return r; }; }
+        function pkey(action, payload) { return action + '|' + JSON.stringify(payload || {}); }
+        function prime(results) {
+            var tok = getToken() || '';
+            if (!Array.isArray(results)) return;
+            STARTUP.forEach(function (x, i) { var r = results[i]; if (r && typeof r === 'object' && r.ok) primed[pkey(x.action, x.payload)] = { r: r, tok: tok, at: Date.now() }; });
+        }
+        function takePrimed(action, payload) {
+            var k = pkey(action, payload), e = primed[k]; if (!e) return null;
+            delete primed[k];
+            return Date.now() - e.at < 30000 && e.tok === (getToken() || '') ? e.r : null;
+        }
         /* speed counters: on with sessionStorage tss_perf = 1 (or TSS_CONFIG.perf); kept in memory only, action names + times */
         function perfOn() { try { return cfg().perf === true || sessionStorage.getItem('tss_perf') === '1'; } catch (e) { return cfg().perf === true; } }
         function perfNote(action, ms, server, shared) { try { if (window.TssPerf) window.TssPerf.note(action, ms, server, shared); } catch (e) {} }
         function call(action, payload) {
+            var pre = takePrimed(action, payload);
+            if (pre) { perfNote(action + ' (มากับการเข้าสู่ระบบ)', 0, null, false); return Promise.resolve(pre); }
+            if (!isRead(action)) return route(action, payload).then(function (r) { if (r && r.ok) window.__tssWriteAt = Date.now(); return r; }).then(done(action, Date.now()));
             var key = SHARE.indexOf(action) >= 0 ? action + '|' + (getToken() || '') + '|' + JSON.stringify(payload || {}) : '';
             if (key && inflight[key]) { perfNote(action, 0, null, true); return inflight[key]; }
             var t0 = Date.now(), p = route(action, payload).then(function (r) {
                 if (key) delete inflight[key];
-                perfNote(action, Date.now() - t0, r && r.perf, false);
-                if (r && r.perf) delete r.perf;
-                return r;
+                return done(action, t0)(r);
             });
             if (key) inflight[key] = p;
             return p;
@@ -11910,11 +12169,14 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                 if (!inAppsScript() && /[?&]reset=/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash);
             } catch (e) {}
         }
-        return { call: call, getToken: getToken, setToken: setToken, configured: configured, inAppsScript: inAppsScript, urlParams: urlParams, scrubUrl: scrubUrl };
+        return { call: call, getToken: getToken, setToken: setToken, configured: configured, inAppsScript: inAppsScript, urlParams: urlParams, scrubUrl: scrubUrl,
+                 prime: prime, startup: function () {             // switch off: TSS_CONFIG.signInData = false (config.js) → old two-step sign-in
+                     if (cfg().signInData === false || window.TSS_SIGNIN_DATA === false) return [];
+                     return STARTUP.map(function (x) { return { action: x.action, payload: x.payload }; }); } };
     })();
     /* TssPerf — what each request cost (for checking speed on the real deployment). Nothing is sent anywhere and no data is kept:
        only the action name, the time the page waited, and — when tss_perf = 1 — the server's counters (Sheet reads, cache hits, ms).
-       In the browser console: TssPerf.on() → reload → use the system → TssPerf.report(). TssPerf.off() stops the counters. */
+       In the browser console: TssPerf.on() → reload → use the system → TssPerf.report(). TssPerf.off() stops the counters. TssPerf.export() saves a .json of the rows (action names + times only). */
     window.TssPerf = (function () {
         var rows = [], MAX = 400, t0 = Date.now();
         function note(action, ms, server, shared) {
@@ -11931,9 +12193,35 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
             });
             return Object.keys(by).map(function (k) { var b = by[k]; b.avgMs = b.calls ? Math.round(b.avgMs / b.calls) : 0; return b; }).sort(function (a, b) { return b.avgMs * b.calls - a.avgMs * a.calls; });
         }
+        function pageTimes() {
+            var o = {};
+            try {
+                var n = performance.getEntriesByType('navigation')[0];
+                if (n) { o.ttfbMs = Math.round(n.responseStart); o.domContentLoadedMs = Math.round(n.domContentLoadedEventEnd); o.loadEventMs = Math.round(n.loadEventEnd); o.transferKb = Math.round((n.transferSize || 0) / 1024); }
+                performance.getEntriesByType('paint').forEach(function (p) { if (p.name === 'first-contentful-paint') o.fcpMs = Math.round(p.startTime); });
+                if (lcp) o.lcpMs = Math.round(lcp);
+                var res = performance.getEntriesByType('resource'), kb = 0;
+                res.forEach(function (r) { kb += r.transferSize || 0; });
+                o.files = res.length; o.filesKb = Math.round(kb / 1024);
+            } catch (e) {}
+            return o;
+        }
+        var lcp = 0;
+        try { new PerformanceObserver(function (l) { var e = l.getEntries(); if (e.length) lcp = e[e.length - 1].startTime; }).observe({ type: 'largest-contentful-paint', buffered: true }); } catch (e) {}
+        function exportLogs() {
+            var data = { exportedAt: new Date().toISOString(), page: pageTimes(), summary: summary(), rows: rows.slice() };    // action names + times only — no names or records
+            try {
+                var b = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' }), a = document.createElement('a');
+                a.href = URL.createObjectURL(b); a.download = 'tss-perf-' + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';
+                document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+            } catch (e) {}
+            return data;
+        }
         return {
+            pageTimes: pageTimes, export: exportLogs,
+            span: function (label, ms) { rows.push({ at: Date.now() - t0, action: '⏱ ' + String(label).slice(0, 60), ms: Math.round(ms), shared: false }); if (rows.length > MAX) rows.shift(); },
             note: note, rows: function () { return rows.slice(); }, summary: summary, clear: function () { rows = []; t0 = Date.now(); },
-            report: function () { var s = summary(); if (console.table) console.table(s); return s; },
+            report: function () { var s = summary(), pg = pageTimes(); if (console.table) { console.table([pg]); console.table(s); } return { page: pg, requests: s }; },
             on: function () { try { sessionStorage.setItem('tss_perf', '1'); } catch (e) {} return 'เปิดตัวนับแล้ว — โหลดหน้าใหม่แล้วใช้งานตามปกติ จากนั้นพิมพ์ TssPerf.report()'; },
             off: function () { try { sessionStorage.removeItem('tss_perf'); } catch (e) {} return 'ปิดตัวนับแล้ว'; },
             mark: function (label) { rows.push({ at: Date.now() - t0, action: '— ' + String(label).slice(0, 60), ms: 0, shared: false }); }
@@ -12023,7 +12311,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     <script src="js/app-2-4577189a13.js"></script>
     <script src="js/app-3-0ebcb3a77b.js"></script>
     <!-- ALPINE.JS LOGIC -->
-    <script src="js/app-4-5e179c9a93.js"></script>
+    <script src="js/app-4-99718bf011.js"></script>
 <!-- loading animation clip (MP4, base64). Not executed; read by TssLoaderVideoSrc only when a loader is shown. -->
 
 <script>
