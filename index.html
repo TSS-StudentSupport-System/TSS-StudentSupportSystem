@@ -725,6 +725,14 @@ ul.sd-ol{list-style:disc}
 i.ba-BH{background:var(--bh-bh)}.ba-line.ba-BH{stroke:var(--bh-bh)}.ba-dot.ba-BH{stroke:var(--bh-bh)}.ba-seg.ba-BH{stroke:var(--bh-bh)}.ba-bar>i.ba-BH{background:var(--bh-bh)}
 .bc-list li.bc-d-BH{--bh-c:var(--bh-bh)}
 .bf-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.bf-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 8px;padding:4px;background:#f5f1ec;border-radius:16px}
+.bf-cat{display:flex;align-items:center;gap:10px;text-align:left;border:0;background:transparent;border-radius:12px;padding:10px 14px;min-height:56px;color:#57534e;cursor:pointer}
+.bf-cat b{display:block;font-size:14px;line-height:1.3;color:inherit}.bf-cat small{display:block;font-size:11.5px;font-weight:600;opacity:.8}
+.bf-cat-n{margin-left:auto;min-width:24px;height:24px;border-radius:999px;background:#e7e0d8;color:#44403c;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;padding:0 7px}
+.bf-cat-n:empty{display:none}
+.bf-cat.is-on{background:#fff;color:#7f1d1d;box-shadow:0 1px 3px rgba(0,0,0,.12)}.bf-cat.is-on .bf-cat-n{background:#8b0000;color:#fff}
+.bf-cat:focus-visible{outline:2px solid #8b0000;outline-offset:2px}
+@media (max-width:640px){.bf-cats{grid-template-columns:1fr}.bf-cat{min-height:48px}}
 .bf-tab{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #e7e0d8;background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:#44403c;min-height:38px}
 .bf-tab b{font:800 13px/1 ui-sans-serif,system-ui;color:var(--bh-c,#44403c)}
 .bf-tab small{font-size:11px;font-weight:700;background:var(--bh-c,#78716c);color:#fff;border-radius:999px;padding:1px 7px}
@@ -1526,16 +1534,23 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                     <p x-show="bm.meta.guidance.contacts" class="sg-contacts" x-text="'ติดต่อในโรงเรียน: ' + bm.meta.guidance.contacts"></p></div></template>
                             </div>
                         </div>
+                        <div class="bf-cats" role="tablist" aria-label="หมวดใหญ่ของพฤติกรรม" x-show="bfHasBH" data-bf-cats>
+                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'bh' && 'is-on'" :aria-selected="bf.cat === 'bh'" @click="bfSetCat('bh')" data-bf-cat="bh">
+                                <span><b>พฤติกรรมความเสี่ยงตามธรรมนูญนักเรียน</b><small>รหัส BH</small></span><span class="bf-cat-n" x-text="bfCatCount('bh') || ''"></span></button>
+                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'gen' && 'is-on'" :aria-selected="bf.cat === 'gen'" @click="bfSetCat('gen')" data-bf-cat="gen">
+                                <span><b>พฤติกรรมนักเรียนทั่วไป</b><small>รหัสอื่น ๆ ทั้งหมด</small></span><span class="bf-cat-n" x-text="bfCatCount('gen') || ''"></span></button>
+                        </div>
+                        <p class="tl-mute text-xs" x-show="bfHasBH && (bf.fq || '').trim()" data-bf-cat-search>กำลังค้นหาในทั้ง 2 หมวด</p>
                         <div class="bf-tabs" role="tablist" aria-label="เลือกหมวดพฤติกรรม" data-bf-tabs>
-                            <button type="button" role="tab" class="bf-tab" :class="!bf.dom && 'is-on'" :aria-selected="!bf.dom" @click="bf.dom = ''" data-bf-tab=""><span>ทุกหมวด</span><small x-text="bf.codes.length || ''"></small></button>
-                            <template x-for="g in bfGroups" :key="'bftg' + g.id"><div class="bf-tabg" role="group" :aria-label="g.nameEn" :data-bf-tabg="g.id"><small x-text="g.nameEn"></small>
+                            <button type="button" role="tab" class="bf-tab" :class="!bf.dom && 'is-on'" :aria-selected="!bf.dom" @click="bf.dom = ''" data-bf-tab=""><span>ทุกหมวด</span><small x-text="(bfHasBH && !(bf.fq || '').trim() ? bfCatCount(bf.cat) : bf.codes.length) || ''"></small></button>
+                            <template x-for="g in bfGroupsCat" :key="'bftg' + g.id"><div class="bf-tabg" role="group" :aria-label="g.nameEn" :data-bf-tabg="g.id"><small x-text="g.nameEn"></small>
                             <template x-for="d in g.domains" :key="'bft' + d.code">
                                 <button type="button" role="tab" class="bf-tab" :class="[BH_DOM_STYLE[d.code], bf.dom === d.code && 'is-on']" :aria-selected="bf.dom === d.code" @click="bf.dom = d.code" :data-bf-tab="d.code" :title="d.nameTh">
                                     <b x-text="d.code"></b><span class="bf-tab-n" x-text="d.nameEn"></span><small x-text="bf.codes.filter(c => (bhItem(c) || {}).domain === d.code).length || ''"></small></button>
                             </template></div></template>
                         </div>
                         <div class="bf-doms">
-                            <template x-for="g in bfGroups" :key="'bfg' + g.id"><div class="bf-group" x-show="!bf.dom || g.domains.some(x => x.code === bf.dom)" :data-bf-group="g.id">
+                            <template x-for="g in bfGroupsCat" :key="'bfg' + g.id"><div class="bf-group" x-show="!bf.dom || g.domains.some(x => x.code === bf.dom)" :data-bf-group="g.id">
                             <p class="bf-ghead"><span x-text="g.nameEn"></span><small x-text="g.nameTh"></small></p>
                             <div class="bf-gdoms">
                             <template x-for="d in g.domains" :key="'bd' + d.code">
@@ -3686,7 +3701,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                     <div x-show="admin.error" class="auth-alert" role="alert" x-text="admin.error"></div>
                     <div x-show="admin.link" class="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 space-y-2" role="status">
                         <div class="font-bold" x-text="admin.linkFor"></div>
-                        <div x-text="admin.linkEmailed ? 'ส่งอีเมลถึงเจ้าของบัญชีแล้ว หากไม่ได้รับ สามารถส่งลิงก์นี้ให้เจ้าของบัญชีโดยตรงผ่านช่องทางที่ปลอดภัย' : 'ส่งอีเมลไม่สำเร็จ — กรุณาส่งลิงก์นี้ให้เจ้าของบัญชีโดยตรงผ่านช่องทางที่ปลอดภัย'"></div>
+                        <div x-text="admin.linkEmailed === 'queued' ? 'อีเมลอยู่ในคิว รอส่ง… (หน้านี้จะแจ้งเมื่อส่งแล้ว) ระหว่างนี้คัดลอกลิงก์ส่งให้เจ้าของบัญชีโดยตรงได้' : admin.linkEmailed ? 'ส่งอีเมลถึงเจ้าของบัญชีแล้ว หากไม่ได้รับ สามารถส่งลิงก์นี้ให้เจ้าของบัญชีโดยตรงผ่านช่องทางที่ปลอดภัย' : 'ส่งอีเมลไม่สำเร็จ — กรุณาส่งลิงก์นี้ให้เจ้าของบัญชีโดยตรงผ่านช่องทางที่ปลอดภัย'"></div>
                         <div class="flex gap-2 items-center"><input class="adm-input font-mono text-[11px]" readonly :value="admin.link" aria-label="ลิงก์ตั้งรหัสผ่าน" @focus="$event.target.select()"><button type="button" class="adm-btn soft" @click="copyText(admin.link)">คัดลอก</button><button type="button" class="adm-btn soft" @click="admin.link = ''">ปิด</button></div>
                         <div class="text-xs">ลิงก์ใช้ได้ครั้งเดียวและหมดอายุอัตโนมัติ ห้ามโพสต์ในกลุ่มแชทสาธารณะ</div>
                     </div>
@@ -8272,7 +8287,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         </div>
                         <div>
                             <p class="text-[10px] font-bold uppercase text-slate-400">วันเกิด / เพศ</p>
-                            <p class="font-semibold text-slate-700 mt-0.5" x-text="activeStudent ? (activeStudent.dob + ' • เพศ: ' + (activeStudent.gender || 'ไม่ระบุ')) : '-'"></p>
+                            <p class="font-semibold text-slate-700 mt-0.5" x-text="activeStudent ? ((activeStudent.dob || 'ไม่ระบุ') + ' • เพศ: ' + (activeStudent.gender || 'ไม่ระบุ')) : '-'"></p>
                         </div>
                         <div>
                             <p class="text-[10px] font-bold uppercase text-slate-400">ผู้ปกครอง / เบอร์ติดต่อ</p>
@@ -12057,15 +12072,20 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     <script>
     window.TssApi = (function () {
         'use strict';
-        var KEY = 'tss_session_token';
         var GAS_URL = /^https:\/\/script\.google\.com\/(?:a\/macros\/[A-Za-z0-9.-]+|macros)\/s\/[A-Za-z0-9_-]{10,}\/exec$/;
+        /* Supabase Edge Function (TSS_CONFIG.edgeUrl): every request goes there first; an answer USE_GAS (work that needs Google:
+           Drive, teacher sheets, request e-mails) is sent again to Apps Script only when TSS_CONFIG.gasFallback = true, i.e. after
+           Apps Script itself runs on the same PostgreSQL (one database, never two). Only a *.supabase.co function URL is accepted. */
+        var EDGE_URL = /^https:\/\/[a-z0-9]{20}\.supabase\.co\/functions\/v1\/[a-z0-9-]+$/;
         var memToken = null;
         function cfg() { return window.TSS_CONFIG || {}; }
+        function edgeOn() { return !inAppsScript() && EDGE_URL.test(String(cfg().edgeUrl || '')); }
+        var KEY = 'tss_session_token' + (EDGE_URL.test(String((window.TSS_CONFIG || {}).edgeUrl || '')) ? '_pg' : '');
         // sessionStorage: cleared when the tab/window closes; never localStorage for the session.
         function getToken() { try { return sessionStorage.getItem(KEY) || memToken; } catch (e) { return memToken; } }
         function setToken(t) { memToken = t || null; if (!t) primed = {}; try { if (t) sessionStorage.setItem(KEY, t); else sessionStorage.removeItem(KEY); } catch (e) {} }
         function inAppsScript() { return !!(window.google && google.script && google.script.run); }
-        function configured() { return inAppsScript() || GAS_URL.test(String(cfg().apiUrl || '')); }
+        function configured() { return inAppsScript() || edgeOn() || GAS_URL.test(String(cfg().apiUrl || '')); }
         var NETWORK = { ok: false, code: 'NETWORK', status: 0, message: 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่' };
         /* read requests that may be shared while one is already on its way (same action, same payload, same account) */
         var SHARE = ['modules.get', 'club.meta', 'calendar.list', 'instruments.catalog', 'home.today', 'appointments.list', 'requests.list', 'ba.summary',
@@ -12148,11 +12168,41 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                 });
             }
             if (!configured()) return Promise.resolve({ ok: false, code: 'NOT_CONFIGURED', status: 0, message: 'ยังไม่ได้ตั้งค่าเซิร์ฟเวอร์ยืนยันตัวตน' });
-            // HTTPS only (enforced by GAS_URL). text/plain avoids a CORS preflight; no cookies are sent.
-            return fetch(cfg().apiUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(req), credentials: 'omit', cache: 'no-store', redirect: 'follow', referrerPolicy: 'no-referrer' })
-                .then(function (r) { return r.ok ? r.json() : NETWORK; })
+            if (edgeOn()) {
+                return post(cfg().edgeUrl, req, true).then(function (j) {
+                    if (!j || j.code !== 'USE_GAS') return j;
+                    if (cfg().gasFallback === true && GAS_URL.test(String(cfg().apiUrl || ''))) return post(cfg().apiUrl, req, false);
+                    return { ok: false, code: 'USE_GAS', status: 409, message: 'ส่วนนี้ต้องใช้บริการของ Google (Drive / Google Sheet / อีเมลคำร้อง) ซึ่งยังไม่เปิดในระบบทดสอบนี้ — ไม่มีข้อมูลใดถูกบันทึก' };
+                });
+            }
+            return post(cfg().apiUrl, req, false);
+        }
+        // HTTPS only (enforced by GAS_URL / EDGE_URL). text/plain avoids a CORS preflight; no cookies are sent.
+        // The Edge Function answers errors as JSON with a 4xx/5xx status (e.g. 403 for another origin), so its body is read either way.
+        function post(url, req, anyStatus) {
+            return fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(req), credentials: 'omit', cache: 'no-store', redirect: 'follow', referrerPolicy: 'no-referrer' })
+                .then(function (r) { return r.ok || anyStatus ? r.json().catch(function () { return NETWORK; }) : NETWORK; })
                 .then(function (j) { return j && typeof j === 'object' ? j : NETWORK; })
                 .catch(function () { return NETWORK; });
+        }
+        /* E-mail written to the queue by the Edge Function (answer field mail.ids): pending → sent / failed, asked every few seconds.
+           onChange(state) gets 'pending' | 'sent' | 'failed'; stops after ~2 minutes (the 1-minute sender then still sends it). */
+        function watchMail(ids, onChange) {
+            ids = (ids || []).filter(function (x) { return /^mail_[0-9a-f]{32}$/.test(x); }).slice(0, 20);
+            if (!ids.length) return;
+            var n = 0;
+            onChange('pending');
+            (function tick() {
+                setTimeout(function () {
+                    send('mail.status', { ids: ids }).then(function (r) {
+                        var items = r && r.ok && r.data && Array.isArray(r.data.items) ? r.data.items : [];
+                        var st = items.length === ids.length && items.every(function (x) { return x.status === 'sent'; }) ? 'sent'
+                               : items.some(function (x) { return x.status === 'failed'; }) ? 'failed' : 'pending';
+                        if (st !== 'pending') { onChange(st); return; }
+                        if (++n < 30) tick();
+                    });
+                }, n < 5 ? 3000 : 6000);
+            })();
         }
         /** Query parameters of the page (Apps Script serves the page inside an iframe). */
         function urlParams() {
@@ -12169,7 +12219,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                 if (!inAppsScript() && /[?&]reset=/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash);
             } catch (e) {}
         }
-        return { call: call, getToken: getToken, setToken: setToken, configured: configured, inAppsScript: inAppsScript, urlParams: urlParams, scrubUrl: scrubUrl,
+        return { call: call, watchMail: watchMail, edgeOn: edgeOn, getToken: getToken, setToken: setToken, configured: configured, inAppsScript: inAppsScript, urlParams: urlParams, scrubUrl: scrubUrl,
                  prime: prime, startup: function () {             // switch off: TSS_CONFIG.signInData = false (config.js) → old two-step sign-in
                      if (cfg().signInData === false || window.TSS_SIGNIN_DATA === false) return [];
                      return STARTUP.map(function (x) { return { action: x.action, payload: x.payload }; }); } };
@@ -12311,7 +12361,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     <script src="js/app-2-4577189a13.js"></script>
     <script src="js/app-3-0ebcb3a77b.js"></script>
     <!-- ALPINE.JS LOGIC -->
-    <script src="js/app-4-99718bf011.js"></script>
+    <script src="js/app-4-3833c937fc.js"></script>
 <!-- loading animation clip (MP4, base64). Not executed; read by TssLoaderVideoSrc only when a loader is shown. -->
 
 <script>
