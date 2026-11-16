@@ -72,7 +72,7 @@
     
     <!-- Google Fonts: Inter, Sarabun, Mali -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Mali:wght@400;500;600;700&family=Sarabun:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/app-6-52cddccffd.css">
+    <link rel="stylesheet" href="css/app-6-7a591f2cab.css">
 <style id="tss-care">
 /* ===== การดูแลต่อเนื่องและความปลอดภัย ===== */
 .sg-box{margin-top:10px;background:#fff;border:1.5px solid #f3c6c6;border-radius:14px;padding:10px 12px;color:#4a1212}
@@ -725,6 +725,137 @@ ul.sd-ol{list-style:disc}
 i.ba-BH{background:var(--bh-bh)}.ba-line.ba-BH{stroke:var(--bh-bh)}.ba-dot.ba-BH{stroke:var(--bh-bh)}.ba-seg.ba-BH{stroke:var(--bh-bh)}.ba-bar>i.ba-BH{background:var(--bh-bh)}
 .bc-list li.bc-d-BH{--bh-c:var(--bh-bh)}
 .bf-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.bf-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 8px;padding:4px;background:#f5f1ec;border-radius:16px}
+.bf-cat{display:flex;align-items:center;gap:10px;text-align:left;border:0;background:transparent;border-radius:12px;padding:10px 14px;min-height:56px;color:#57534e;cursor:pointer}
+.bf-cat b{display:block;font-size:14px;line-height:1.3;color:inherit}.bf-cat small{display:block;font-size:11.5px;font-weight:600;opacity:.8}
+.bf-cat-n{margin-left:auto;min-width:24px;height:24px;border-radius:999px;background:#e7e0d8;color:#44403c;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;padding:0 7px}
+.bf-cat-n:empty{display:none}
+.bf-cat.is-on{background:#fff;color:#7f1d1d;box-shadow:0 1px 3px rgba(0,0,0,.12)}.bf-cat.is-on .bf-cat-n{background:#8b0000;color:#fff}
+.bf-cat:focus-visible{outline:2px solid #8b0000;outline-offset:2px}
+@media (max-width:640px){.bf-cats{grid-template-columns:1fr}.bf-cat{min-height:48px}}
+.bf-num-ico{display:inline-flex;align-items:center;justify-content:center}
+.bf-cps{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 10px;padding:0;list-style:none}
+.bf-cp{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;max-width:100%}
+.bf-cp>span{display:flex;flex-direction:column;min-width:0}.bf-cp b{font-size:.85rem;overflow-wrap:anywhere}.bf-cp small{font-size:.72rem;color:#9a3412}
+.bf-cp-x{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;color:#9a3412}.bf-cp-x:hover,.bf-cp-x:focus-visible{background:#ffedd5}
+.bf-cp-typed{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px;margin-top:8px}.bf-cp-note{margin-top:8px;font-size:.75rem}
+.cf-pre{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:8px 12px;border-radius:12px;background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;font-size:.78rem}
+.cf-pre small{flex-basis:100%;color:#92400e}.cf-hint{display:block;margin-top:4px;font-size:.72rem;color:#92400e}
+.adv-add{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px}.adv-add input{min-width:0}
+.adv-list{display:flex;flex-direction:column;gap:8px;padding:0;margin:0;list-style:none}
+.adv-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-radius:14px;background:#fff;border:1px solid #e7e2dc}
+.adv-row.is-off{background:#f8f6f3;color:#78716c}.adv-main{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}.adv-main b{overflow-wrap:anywhere}
+/* ===== นักเรียนทั้งหมด (roster) + general info (profile / roster sheet): warm, readable, minimal ===== */
+.ro-bar{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:22px}
+.ro-search{position:relative;display:flex;align-items:center}
+.ro-search .ico{position:absolute;left:14px;color:#a8a29e;pointer-events:none}
+.ro-search input{width:100%;min-height:50px;padding:0 16px 0 46px;border-radius:16px;border:1px solid #e7e2dc;background:#fff;font-size:16px;color:#1c1917}
+.ro-search input:focus{outline:none;border-color:#8b0000;box-shadow:0 0 0 3px rgba(139,0,0,.12)}
+.ro-filters{display:flex;flex-wrap:wrap;gap:8px}.ro-filters:empty{display:none}
+.ro-sel select{min-height:42px;padding:0 34px 0 14px;border-radius:12px;border:1px solid #e7e2dc;background-color:#fff;font-size:15px;color:#292524}
+.ro-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.ro-chips::-webkit-scrollbar{display:none}
+.ro-chip{flex:none;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid #e7e2dc;background:#fff;font-size:14px;font-weight:700;color:#57534e;transition:background-color .15s,color .15s}
+.ro-chip[aria-pressed="true"]{background:#1c1917;border-color:#1c1917;color:#fff}
+.ro-chip.is-green[aria-pressed="true"]{background:#047857;border-color:#047857}.ro-chip.is-yellow[aria-pressed="true"]{background:#b45309;border-color:#b45309}.ro-chip.is-red[aria-pressed="true"]{background:#8b0000;border-color:#8b0000}
+.ro-chip-sep{flex:none;width:1px;margin:6px 2px;background:#e7e2dc}
+.ro-head p{font-size:14px;color:#78716c;padding:0 6px}
+.ro-list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;transition:opacity .15s}.ro-list.is-busy{opacity:.55}
+.ro-row{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;padding:12px 16px;border-radius:18px;background:#fff;border:1px solid #efeae4;text-align:left;box-shadow:0 1px 2px rgba(41,32,28,.04);transition:border-color .15s,box-shadow .15s,transform .15s}
+.ro-row:hover,.ro-row:focus-visible{border-color:#e4c9c4;box-shadow:0 6px 18px rgba(41,32,28,.08)}
+.ro-row:active{transform:scale(.995)}
+.ro-av{flex:none;display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:15px;background:#fbefee;color:#8b0000;font-size:19px;font-weight:800}
+.ro-av.is-green{background:#ecfdf5;color:#047857}.ro-av.is-yellow{background:#fffbeb;color:#b45309}.ro-av.is-red{background:#fef2f2;color:#b91c1c}
+.ro-av.is-lg{width:60px;height:60px;border-radius:20px;font-size:24px}
+.ro-main{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}
+.ro-main b{font-size:16px;font-weight:800;color:#1c1917;overflow-wrap:anywhere}.ro-main em{font-style:normal;font-size:15px;color:#78716c}
+.ro-main small{flex-basis:100%;font-size:13.5px;color:#78716c}
+.ro-tags{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+.ro-tag{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;background:#f5f5f4;color:#57534e;font-size:12.5px;font-weight:700;white-space:nowrap}
+.ro-tag.is-file{background:#fbefee;color:#8b0000}.ro-tag.is-green{background:#ecfdf5;color:#047857}.ro-tag.is-yellow{background:#fffbeb;color:#92400e}.ro-tag.is-red{background:#fef2f2;color:#b91c1c}
+.ro-go{flex:none;color:#d6d3d1}
+.ro-empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:36px 16px;border-radius:20px;background:#fff;border:1px dashed #e7e2dc;color:#78716c;font-size:15px;text-align:center}
+.ro-pager{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0 12px;font-size:15px;color:#57534e}
+@media (max-width:640px){.ro-row{flex-wrap:wrap;gap:10px 12px}.ro-tags{order:3;flex-basis:100%;justify-content:flex-start;padding-left:58px}.ro-go{display:none}}
+
+.pg{display:flex;flex-direction:column;gap:14px}
+.pg-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px}
+.pg-fact{display:flex;align-items:flex-start;gap:12px;padding:16px;border-radius:18px;background:#fff;border:1px solid #efeae4}
+.pg-fact>div{min-width:0;display:flex;flex-direction:column;gap:2px}
+.pg-ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:13px;background:#fbefee;color:#8b0000}
+.pg-fact small{font-size:13px;color:#78716c;font-weight:600}
+.pg-fact b{font-size:17px;font-weight:800;color:#1c1917;line-height:1.35;overflow-wrap:anywhere}.pg-fact b.is-none{font-size:15px;font-weight:600;color:#a8a29e}
+.pg-fact em{font-style:normal;font-size:13.5px;color:#57534e}
+.pg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.pg-card{padding:18px 20px;border-radius:20px;background:#fff;border:1px solid #efeae4}
+.pg-card h5{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:15.5px;font-weight:800;color:#1c1917}.pg-card h5 .ico{color:#8b0000}
+.pg-dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px 20px;margin:0}
+.pg-dl>div{min-width:0}.pg-dl .pg-wide{grid-column:1/-1}
+.pg-dl dt{font-size:13px;font-weight:600;color:#78716c}
+.pg-dl dd{margin:3px 0 0;font-size:15.5px;font-weight:600;color:#292524;line-height:1.5;overflow-wrap:anywhere}
+.pg-tel{color:#8b0000;text-decoration:underline;text-underline-offset:3px}
+.pg-health{background:#fffbf5;border-color:#f5e3cc}.pg-health h5 .ico{color:#b45309}
+.pg-care-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;font-size:15px;color:#57534e}
+.pg-risk{display:inline-flex;align-items:center;min-height:32px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:800;background:#f5f5f4;color:#57534e}
+.pg-risk.is-green{background:#ecfdf5;color:#047857}.pg-risk.is-yellow{background:#fffbeb;color:#92400e}.pg-risk.is-red{background:#fef2f2;color:#b91c1c}
+.pg-note{padding:12px 16px;border-radius:14px;background:#faf8f5;color:#78716c;font-size:14px;line-height:1.55}
+.pg-all{border-radius:20px;background:#fff;border:1px solid #efeae4;overflow:hidden}
+.pg-all>summary{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 20px;cursor:pointer;list-style:none;font-size:15.5px;font-weight:800;color:#1c1917}
+.pg-all>summary::-webkit-details-marker{display:none}.pg-all>summary>span{display:flex;align-items:center;gap:8px;flex:1}.pg-all>summary .ico{color:#8b0000}
+.pg-all>summary small{font-size:13px;font-weight:600;color:#78716c}.pg-chev{transition:transform .2s}.pg-all[open] .pg-chev{transform:rotate(180deg)}
+.pg-all-body{display:flex;flex-direction:column;gap:18px;padding:4px 20px 20px;border-top:1px solid #f3efe9}
+.pg-group h6{margin:14px 0 10px;font-size:14px;font-weight:800;color:#8b0000}
+.pg-year{padding-top:12px;font-size:14px;color:#57534e}.pg-year select{margin-left:6px;min-height:38px;padding:0 30px 0 10px;border-radius:10px;border:1px solid #e7e2dc;background-color:#fff;font-size:14px}
+.rsh-wrap{position:fixed;inset:0;z-index:70;display:flex;align-items:flex-end;justify-content:center;background:rgba(28,25,23,.42);padding:0}
+@media (min-width:768px){.rsh-wrap{align-items:center;padding:24px}}
+.rsh-sheet{display:flex;flex-direction:column;width:100%;max-width:880px;max-height:92vh;background:#faf8f5;border-radius:26px 26px 0 0;box-shadow:0 20px 60px rgba(28,25,23,.25);overflow:hidden}
+@media (min-width:768px){.rsh-sheet{border-radius:26px}}
+.rsh-head{display:flex;align-items:flex-start;gap:14px;padding:20px 20px 16px;background:#fff;border-bottom:1px solid #efeae4}
+.rsh-head h3{margin:0;font-size:20px;font-weight:800;color:#1c1917;line-height:1.3}.rsh-head p{margin:4px 0 8px;font-size:14px;color:#78716c}
+.rsh-x{flex:none;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;color:#57534e}.rsh-x:hover,.rsh-x:focus-visible{background:#f5f5f4}
+.rsh-body{flex:1;overflow-y:auto;padding:18px 20px}
+.rsh-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px;padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #efeae4}
+.rl-wrap{display:flex;flex-direction:column;gap:8px;margin-top:12px}.rl-h{font-size:14px;font-weight:700;color:#44403c}.rl-h small{font-weight:500;color:#78716c}
+.rl-opts{display:flex;flex-wrap:wrap;gap:6px}
+.rl-o{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid #e7e2dc;background:#fff;font-size:14px;font-weight:700;color:#44403c;cursor:pointer}
+.rl-o input{accent-color:#8b0000}.rl-o.is-none{color:#78716c}
+.rl-o.is-on.is-actor{border:2px solid #8b0000;background:#fbefee;color:#8b0000}
+.rl-o.is-on.is-target{border:2px solid #1d4ed8;background:#eff6ff;color:#1e3a8a}.rl-o.is-target input{accent-color:#1d4ed8}
+.rl-o.is-on.is-mutual{border:2px solid #b45309;background:#fffbeb;color:#92400e}.rl-o.is-mutual input{accent-color:#b45309}
+.rl-o.is-on.is-none{border:2px solid #57534e;background:#f5f5f4;color:#292524}
+.bf-cps{flex-direction:column}.bf-cp{flex-wrap:wrap;width:100%;box-sizing:border-box}.bf-cp>span{flex:1}.bf-cp .rl-opts{flex-basis:100%}
+@media (max-width:640px){.rl-opts{display:grid;grid-template-columns:1fr 1fr}}
+.rl-sum{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:4px 0 10px;padding:12px 14px;border-radius:14px;background:#faf8f5;border:1px dashed #d6d3d1}.rl-sum-h{font-size:13.5px;font-weight:700;color:#57534e}
+.rl-chip{display:inline-flex;align-items:center;min-height:26px;padding:0 11px;border-radius:999px;font-size:13px;font-weight:800;background:#f5f5f4;color:#57534e}
+.rl-chip.is-actor{background:#fbefee;color:#8b0000}.rl-chip.is-target{background:#eff6ff;color:#1e3a8a}.rl-chip.is-mutual{background:#fffbeb;color:#92400e}
+.rl-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;margin-top:10px}
+.rl-group{padding:12px 14px;border-radius:16px;background:#faf8f5;border-top:4px solid #a8a29e}
+.rl-group.is-actor{border-top-color:#8b0000}.rl-group.is-target{border-top-color:#1d4ed8}.rl-group.is-mutual{border-top-color:#b45309}
+.rl-group-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}.rl-group-h b{font-size:15px;font-weight:800}.rl-group-h span{font-size:13px;color:#78716c}
+.rl-group ul{display:flex;flex-direction:column;gap:4px;margin:0;padding:0;list-style:none}
+.rl-group li{display:flex;align-items:baseline;gap:8px;font-size:14px;color:#292524}.rl-group li em{font-style:normal;font-weight:800;color:#57534e;min-width:40px}.rl-group li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rl-group li b{font-weight:800}
+.cn-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.cn-chip{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:0 11px;border-radius:999px;background:#f5f5f4;color:#44403c;font-size:13px;font-weight:600;white-space:nowrap}
+.cn-chip.is-case{background:#fbefee;color:#8b0000;font-weight:800;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.tl-meta .cn-chip{min-height:24px;font-size:12.5px}
+.rsh-tabs{display:flex;gap:6px;padding:10px 20px 0;background:#fff;border-bottom:1px solid #efeae4;overflow-x:auto;scrollbar-width:none}
+.rsh-tab{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-bottom:3px solid transparent;font-size:15px;font-weight:700;color:#78716c}
+.rsh-tab[aria-selected="true"]{color:#8b0000;border-bottom-color:#8b0000}.rsh-tab b{min-width:22px;padding:0 6px;border-radius:999px;background:#fbefee;color:#8b0000;font-size:12px;line-height:20px}
+.ov-freq{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:8px}
+.ov-f{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:#faf8f5}.ov-f>b{flex:none;min-width:34px;font-size:20px;font-weight:800;color:#8b0000;text-align:center}
+.ov-f span{display:flex;flex-direction:column;min-width:0}.ov-f em{font-style:normal;font-size:13px;font-weight:800;color:#57534e}.ov-f small{font-size:13px;color:#78716c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ov-list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.ov-item{padding:14px 16px;border-radius:18px;background:#fff;border:1px solid #efeae4}.ov-item.is-cancel{opacity:.6}
+.ov-item-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.ov-item-h b{font-size:15.5px;font-weight:800;color:#1c1917}.ov-item-h span{font-size:13.5px;color:#78716c}
+.ov-codes{display:flex;flex-direction:column;gap:4px;margin:10px 0 0;padding:0;list-style:none}.ov-codes li{display:flex;gap:8px;font-size:15px;color:#292524;line-height:1.45}
+.ov-codes em{flex:none;font-style:normal;font-weight:800;color:#8b0000;min-width:44px}
+.ov-text{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px dashed #efeae4}.ov-text p{display:flex;flex-direction:column;gap:2px;font-size:15px;color:#292524}.ov-text b{font-size:13px;color:#78716c}
+.ov-lock{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:13.5px;color:#78716c}
+.ov-issues{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.ov-by{margin-top:8px;font-size:14px;color:#57534e}
+.bf-share{grid-column:1/-1}
+.bf-share-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:8px;margin-top:10px}
+.bf-share-o{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:14px;border:1px solid #e7e2dc;background:#fff;cursor:pointer}
+.bf-share-o.is-on{border-color:#8b0000;background:#fbefee}.bf-share-o input{margin-top:4px;accent-color:#8b0000}
+.bf-share-o span{display:flex;flex-direction:column;gap:2px}.bf-share-o b{font-size:14.5px;color:#1c1917}.bf-share-o small{font-size:12.5px;color:#78716c}
 .bf-tab{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #e7e0d8;background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:#44403c;min-height:38px}
 .bf-tab b{font:800 13px/1 ui-sans-serif,system-ui;color:var(--bh-c,#44403c)}
 .bf-tab small{font-size:11px;font-weight:700;background:var(--bh-c,#78716c);color:#fff;border-radius:999px;padding:1px 7px}
@@ -1168,7 +1299,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
             <section class="auth-card" aria-labelledby="auth-title">
                 <header class="auth-head">
                     <div class="auth-mark" aria-hidden="true"><svg class="ico w-6 h-6"><use href="#i-shield-check"/></svg></div>
-                    <h1 id="auth-title">ระบบจัดการเคส<wbr>และ<span style="white-space:nowrap">การให้คำปรึกษา</span></h1>
+                    <h1 id="auth-title">ระบบสนับสนุน<wbr>นักเรียน</h1>
                     <p class="auth-school">โรงเรียนสาธิตแห่งมหาวิทยาลัยธรรมศาสตร์</p>
                     <p class="auth-tag">“ระบบสารสนเทศสำหรับการดูแล ให้คำปรึกษา และติดตามผู้รับบริการอย่างเป็นระบบ”</p>
                     <div class="auth-divider" aria-hidden="true"></div>
@@ -1401,6 +1532,146 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     </div>
 
     <!-- ===== แบบบันทึกพฤติกรรมนักเรียน (ทุกบทบาท) ===== -->
+    <!-- roster student (no case file the user may open): registry profile only -->
+    <div x-show="rsh.open" x-cloak class="rsh-wrap no-print" @keydown.escape.window="rsh.open && rshClose()" @click.self="rshClose()" data-rsh>
+        <div class="rsh-sheet" role="dialog" aria-modal="true" aria-labelledby="rsh-title">
+            <template x-if="rsh.it"><div class="rsh-head">
+                <span class="ro-av is-lg" aria-hidden="true" x-text="roInitials(rsh.it.name)"></span>
+                <div class="min-w-0 flex-1"><h3 id="rsh-title" x-text="rsh.it.name + (rsh.it.nickname ? ' (' + rsh.it.nickname + ')' : '')"></h3>
+                    <p x-text="[rsh.it.grade ? 'ชั้น ' + rsh.it.grade : '', rsh.it.studentId ? 'StudentID ' + rsh.it.studentId : '', rsh.it.caseNo ? 'เลขเคส ' + rsh.it.caseNo : '', rsh.it.status && rsh.it.status !== 'studying' ? rsh.it.statusLabel : ''].filter(Boolean).join(' • ')"></p>
+                    <span class="ro-tag" x-text="rsh.it.hasFile ? 'มีแฟ้มเคสแล้ว (ผู้อื่นดูแล)' : 'ยังไม่มีแฟ้มเคส'"></span></div>
+                <button type="button" class="rsh-x" @click="rshClose()" aria-label="ปิด"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-x"/></svg></button>
+            </div></template>
+            <div class="rsh-tabs" role="tablist" aria-label="ข้อมูลนักเรียน">
+                <template x-for="t in [['general', 'ข้อมูลทั่วไป'], ['behavior', 'พฤติกรรม'], ['counsel', 'การให้คำปรึกษา']]" :key="'rsht' + t[0]">
+                    <button type="button" role="tab" class="rsh-tab" :aria-selected="rsh.tab === t[0]" @click="rsh.tab = t[0]" :data-rsh-tab="t[0]">
+                        <span x-text="t[1]"></span><b x-show="t[0] === 'behavior' && rsh.ov && rsh.ov.behavior.records.length" x-text="rsh.ov ? rsh.ov.behavior.records.filter(r => r.status === 'active').length : ''"></b>
+                        <b x-show="t[0] === 'counsel' && rsh.ov && rsh.ov.counsel.total" x-text="rsh.ov ? rsh.ov.counsel.total : ''"></b></button></template>
+            </div>
+            <div class="rsh-body">
+                <div x-show="rsh.tab !== 'general'">
+                    <div x-show="rsh.loading && !rsh.ov" class="sk-fade" role="status"><span class="sr-only">กำลังโหลดประวัติ…</span><div class="sk sk-title"></div><div class="sk sk-line w-70"></div><div class="sk sk-line w-50"></div></div>
+                    <p class="tl-error" x-show="rsh.err" role="alert" x-text="rsh.err"></p>
+                    <p class="pg-note" x-show="rsh.ov && !rsh.ov.hasFile">นักเรียนคนนี้ยังไม่มีประวัติในระบบ</p>
+                </div>
+                <!-- behaviour history: every code, date, recorder; the text only as the recorder shared it -->
+                <div x-show="rsh.tab === 'behavior' && rsh.ov && rsh.ov.hasFile" class="pg" data-rsh-behavior>
+                    <section class="pg-card" x-show="rsh.ov && rsh.ov.behavior.frequency.length">
+                        <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-chart-no-axes-combined"/></svg>สรุปความถี่ (ระเบียนที่ยังไม่ถูกยกเลิก)</h5>
+                        <div class="ov-freq"><template x-for="f in (rsh.ov ? rsh.ov.behavior.frequency : [])" :key="'ovf' + f.code">
+                            <div class="ov-f" :title="f.text"><b x-text="f.count"></b><span><em x-text="f.code"></em><small x-text="f.text"></small></span></div></template></div>
+                    </section>
+<section class="pg-card rl-by" x-show="(rsh.ov && rsh.ov.behavior.byRole || []).length" data-rsh-byrole>
+                            <div class="tl-sec-h"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-users-round"/></svg><div><h5>แยกตามบทบาทในเหตุการณ์</h5><p class="tl-mute">นับทุกบันทึกเหมือนด้านบน แล้วแยกหัวตามบทบาทของนักเรียนคนนี้</p></div></div>
+                            <div class="rl-groups"><template x-for="g in (rsh.ov && rsh.ov.behavior.byRole || [])" :key="'rlg' + g.role">
+                                <div class="rl-group" :class="'is-' + (g.role || 'none')" :data-rl-group="g.role || 'none'">
+                                    <div class="rl-group-h"><b x-text="g.label"></b><span x-text="g.records + ' ครั้ง'"></span></div>
+                                    <ul><template x-for="c in g.codes" :key="g.role + c.code"><li><em x-text="c.code"></em><span x-text="c.text"></span><b x-text="c.count"></b></li></template></ul>
+                                </div></template></div>
+                        </section>
+                    <section class="pg-card" x-show="rsh.ov && (rsh.ov.behavior.involved || []).length" data-rsh-involved>
+                        <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-users-round"/></svg>เกี่ยวข้องในเหตุการณ์ของนักเรียนคนอื่น (เป็นคู่กรณี)</h5>
+                        <ol class="ov-list"><template x-for="x in (rsh.ov ? rsh.ov.behavior.involved || [] : [])" :key="'rsi' + x.recordId">
+                            <li class="ov-item"><div class="ov-item-h"><b x-text="x.occurredDate ? pgDate(x.occurredDate) : a3Time(x.recordedAt)"></b><span class="rl-chip" :class="'is-' + (x.role || 'none')" x-text="'บทบาท: ' + x.roleLabel"></span></div>
+                                <p class="ov-by" x-text="(x.otherName ? 'ในบันทึกของ ' + x.otherName + (x.otherGrade ? ' (' + x.otherGrade + ')' : '') : 'ในบันทึกของนักเรียนคนอื่น') + ' • ผู้บันทึก ' + (x.recorderName || '-')"></p></li></template></ol>
+                    </section>
+                    <p class="pg-note" x-show="rsh.ov && !rsh.ov.behavior.records.length">ยังไม่มีการบันทึกพฤติกรรม</p>
+                    <ol class="ov-list"><template x-for="r in (rsh.ov ? rsh.ov.behavior.records : [])" :key="'ovr' + r.id">
+                        <li class="ov-item" :class="r.status === 'cancelled' && 'is-cancel'" :data-ov-rec="r.id">
+                            <div class="ov-item-h"><b x-text="r.occurredDate ? pgDate(r.occurredDate) : a3Time(r.recordedAt)"></b><span class="rl-chip" :class="'is-' + (r.role || 'none')" x-show="r.role" x-text="r.roleLabel"></span><span x-text="'บันทึกโดย ' + r.recorderName"></span>
+                                <span class="ro-tag" x-show="r.status === 'cancelled'">ยกเลิกแล้ว</span></div>
+                            <ul class="ov-codes"><template x-for="c in r.codes" :key="r.id + c"><li><em x-text="c"></em><span x-text="(bhItem(c).text || (r.labels && r.labels[c]) || '')"></span></li></template></ul>
+                            <template x-if="r.full"><div class="ov-text">
+                                <p x-show="r.detail"><b>รายละเอียด</b><span x-text="r.detail"></span></p>
+                                <p x-show="r.handling"><b>วิธีจัดการ</b><span x-text="r.handling"></span></p>
+                                <p x-show="r.counterparts && r.counterparts.length"><b>คู่กรณี</b><span x-text="(r.counterparts || []).map(x => x.name + (x.role ? ' — ' + x.roleLabel : '')).join(', ')"></span></p></div></template>
+                            <p class="ov-lock" x-show="!r.full"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg><span x-text="'รายละเอียดเปิดให้: ' + r.shareLabel"></span></p>
+                        </li></template></ol>
+                </div>
+                <!-- counselling history: when, about what, by whom — never the notes -->
+                <div x-show="rsh.tab === 'counsel' && rsh.ov && rsh.ov.hasFile" class="pg" data-rsh-counsel>
+                    <p class="pg-note" x-text="rsh.ov && rsh.ov.counsel.total ? 'รับบริการ/ให้คำปรึกษาแล้ว ' + rsh.ov.counsel.total + ' ครั้ง — แสดงเฉพาะวันที่ ประเด็น และผู้ให้บริการ เนื้อหาการให้คำปรึกษาเปิดได้เฉพาะผู้ดูแลแฟ้มและผู้เชี่ยวชาญ' : 'ยังไม่มีประวัติการให้คำปรึกษา'"></p>
+                    <ol class="ov-list"><template x-for="(c, i) in (rsh.ov ? rsh.ov.counsel.items : [])" :key="'ovc' + i">
+                        <li class="ov-item" data-ov-counsel><div class="ov-item-h"><b x-text="c.date ? pgDate(c.date) : '-'"></b><span x-text="c.kindLabel"></span></div>
+                            <div class="ov-issues" x-show="c.issues.length"><template x-for="x in c.issues" :key="i + x"><span class="ro-tag" x-text="x"></span></template></div>
+                            <p class="ov-by" x-text="'ผู้ให้บริการ: ' + (c.provider || '-')"></p></li></template></ol>
+                </div>
+                <div x-show="rsh.tab === 'general'">
+<div class="pg" data-pg="roster">
+                        <template x-if="rg.loading && !rg.prof"><div class="pg-facts" aria-hidden="true"><template x-for="n in 4" :key="'pgsk' + n"><div class="pg-fact"><div class="sk sk-line w-50"></div><div class="sk sk-title"></div></div></template></div></template>
+                        <p class="tl-error" x-show="rg.err" role="alert" x-text="rg.err"></p>
+                        <!-- key facts: from the registry first, then from the case file -->
+                        <div class="pg-facts" x-show="!(rg.loading && !rg.prof)">
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span>
+                                <div><small>ชั้นเรียน</small><b x-text="pgClass(null) || 'ไม่มีข้อมูล'" :class="!pgClass(null) && 'is-none'"></b>
+                                    <em x-show="rg.prof && rg.prof.student && rg.prof.student.year" x-text="rg.prof && rg.prof.student ? 'ปีการศึกษา ' + rg.prof.student.year : ''"></em></div></div>
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-calendar-days"/></svg></span>
+                                <div><small>วันเกิด</small><b x-text="pgBirth(null) ? pgDate(pgBirth(null)) : 'ไม่มีข้อมูล'" :class="!pgBirth(null) && 'is-none'" data-pg-dob></b>
+                                    <em x-show="pgBirth(null)" x-text="pgAge(pgBirth(null))"></em></div></div>
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-user-round"/></svg></span>
+                                <div><small>เพศ</small><b x-text="pgF('gender', null && null.gender !== 'ไม่ระบุ' ? null.gender : '') || 'ไม่มีข้อมูล'" :class="!pgF('gender', null && null.gender !== 'ไม่ระบุ' ? null.gender : '') && 'is-none'"></b>
+                                    <em x-show="pgF('studentType')" x-text="pgF('studentType')"></em></div></div>
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-users-round"/></svg></span>
+                                <div><small>ครูประจำชั้น / ครูที่ปรึกษา</small><b x-text="pgF('advisor', null && null.advisor) || 'ไม่มีข้อมูล'" :class="!pgF('advisor', null && null.advisor) && 'is-none'" data-pg-advisor></b></div></div>
+                        </div>
+                        <!-- people & contact -->
+                        <div class="pg-grid" x-show="pgHas(['guardian','relation','father','mother','parentPhone','studentPhone','email','parentEmail','address']) || (false && null && (null.parentName || null.parentPhone))">
+                            <section class="pg-card" x-show="pgHas(['guardian','father','mother']) || (false && null && null.parentName && null.parentName !== 'ไม่ระบุ')" data-pg-family>
+                                <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-house-heart"/></svg>ครอบครัว</h5>
+                                <dl class="pg-dl">
+                                    <div x-show="pgF('guardian', false && null && null.parentName !== 'ไม่ระบุ' ? null.parentName : '')"><dt>ผู้ปกครอง</dt><dd x-text="pgF('guardian', false && null && null.parentName !== 'ไม่ระบุ' ? null.parentName : '') + (pgF('relation') ? ' (' + pgF('relation') + ')' : '')"></dd></div>
+                                    <div x-show="pgF('father')"><dt>บิดา</dt><dd x-text="pgF('father') + (pgF('fatherStatus') ? ' • ' + pgF('fatherStatus') : '')"></dd></div>
+                                    <div x-show="pgF('mother')"><dt>มารดา</dt><dd x-text="pgF('mother') + (pgF('motherStatus') ? ' • ' + pgF('motherStatus') : '')"></dd></div>
+                                    <div x-show="pgF('siblings')"><dt>พี่น้อง</dt><dd x-text="pgF('siblings')"></dd></div>
+                                </dl></section>
+                            <section class="pg-card" x-show="pgHas(['parentPhone','studentPhone','email','parentEmail','address']) || (false && null && null.parentPhone && null.parentPhone !== '-')" data-pg-contact>
+                                <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-phone"/></svg>ติดต่อ</h5>
+                                <dl class="pg-dl">
+                                    <div x-show="pgF('parentPhone', false && null && null.parentPhone !== '-' ? null.parentPhone : '')"><dt>โทรศัพท์ผู้ปกครอง</dt><dd><a class="pg-tel" :href="'tel:' + String(pgF('parentPhone', false && null && null.parentPhone !== '-' ? null.parentPhone : '')).replace(/[^0-9+]/g, '')" x-text="pgF('parentPhone', false && null && null.parentPhone !== '-' ? null.parentPhone : '')"></a></dd></div>
+                                    <div x-show="pgF('studentPhone')"><dt>โทรศัพท์นักเรียน</dt><dd><a class="pg-tel" :href="'tel:' + String(pgF('studentPhone')).replace(/[^0-9+]/g, '')" x-text="pgF('studentPhone')"></a></dd></div>
+                                    <div x-show="pgF('email')"><dt>อีเมลนักเรียน</dt><dd x-text="pgF('email')"></dd></div>
+                                    <div x-show="pgF('parentEmail')"><dt>อีเมลผู้ปกครอง</dt><dd x-text="pgF('parentEmail')"></dd></div>
+                                    <div x-show="pgF('address')" class="pg-wide"><dt>ที่อยู่ปัจจุบัน</dt><dd x-text="pgF('address')"></dd></div>
+                                </dl></section>
+                        </div>
+                        <section class="pg-card pg-health" x-show="pgHas(['blood','disease','drugAllergy','foodAllergy'])" data-pg-health>
+                            <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-heart-pulse"/></svg>สุขภาพที่ควรรู้</h5>
+                            <dl class="pg-dl">
+                                <div x-show="pgF('disease')"><dt>โรคประจำตัว</dt><dd x-text="pgF('disease')"></dd></div>
+                                <div x-show="pgF('drugAllergy')"><dt>แพ้ยา</dt><dd x-text="pgF('drugAllergy')"></dd></div>
+                                <div x-show="pgF('foodAllergy')"><dt>แพ้อาหาร</dt><dd x-text="pgF('foodAllergy')"></dd></div>
+                                <div x-show="pgF('blood')"><dt>หมู่โลหิต</dt><dd x-text="pgF('blood')"></dd></div>
+                            </dl></section>
+                        <p class="pg-note" x-show="rg.prof && !rg.prof.linked" data-rsh-rg-unlinked>แฟ้มนี้ยังไม่ได้เชื่อมกับทะเบียนนักเรียน (StudentID) — ข้อมูลด้านบนมาจากแฟ้มเคส ผู้ดูแลระบบเชื่อมได้ที่ ตั้งค่าระบบ › ทะเบียนนักเรียน</p>
+                        <p class="pg-note" x-show="rg.prof && rg.prof.linked && !rg.prof.year && rg.prof.allowedAny" data-rsh-rg-none>ยังไม่มีข้อมูลทะเบียนเพิ่มเติมของนักเรียนคนนี้</p>
+                        <p class="pg-note" x-show="rg.prof && rg.prof.limited" data-pg-limited>แสดงเฉพาะข้อมูลทั่วไป — ข้อมูลติดต่อ ครอบครัว และสุขภาพ เปิดได้เมื่อคุณได้รับมอบหมายแฟ้มของนักเรียนคนนี้</p>
+                        <!-- every registry field, by category (each category only for roles allowed; checked on the server) -->
+                        <details class="pg-all" data-rsh-rg-prof x-show="rg.prof && rg.prof.allowedAny && rg.prof.groups.some(g => g.fields.length)">
+                            <summary><span><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-file-spreadsheet"/></svg>ข้อมูลทะเบียนทั้งหมด</span>
+                                <small x-text="rg.prof ? (rg.prof.year ? 'ปีการศึกษา ' + rg.prof.year + ' • ' : '') + rg.prof.groups.reduce((n, g) => n + g.fields.length, 0) + ' รายการ' : ''"></small><svg class="ico w-4 h-4 pg-chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+                            <div class="pg-all-body">
+                                <div class="pg-year" x-show="rg.prof && rg.prof.years.length > 1"><label>ปีการศึกษา <select :value="rg.prof && rg.prof.year" @change="rgReload($event.target.value)" data-rsh-rg-year>
+                                    <template x-for="y in (rg.prof ? rg.prof.years : [])" :key="'rgy' + y"><option :value="y" x-text="y" :selected="rg.prof && rg.prof.year === y"></option></template></select></label></div>
+                                <template x-for="g in (rg.prof ? rg.prof.groups : [])" :key="'rgg' + g.key"><section class="pg-group" x-show="g.fields.length" :data-rsh-rg-group="g.key">
+                                    <h6 x-text="g.label"></h6>
+                                    <dl class="pg-dl"><template x-for="f in g.fields" :key="'rgf' + f.key"><div><dt x-text="f.label"></dt>
+                                        <dd><span x-text="g.masked && rg.reveal[f.key] ? rg.reveal[f.key] : f.value" :data-rsh-rg-val="f.key"></span>
+                                            <button type="button" class="rg-reveal" x-show="g.masked && !rg.reveal[f.key]" @click="rgReveal(f.key)" :disabled="!!rg.revealBusy" :data-rsh-rg-reveal="f.key">แสดง</button></dd></div></template></dl>
+                                    <p class="tl-mute" x-show="g.masked">กด “แสดง” เพื่อดูเลขเต็ม 30 วินาที — ทุกครั้งถูกบันทึกในประวัติการใช้งาน</p>
+                                </section></template>
+                            </div>
+                        </details>
+                        <p class="pg-note" x-show="rg.prof && rg.prof.restricted && !rg.prof.limited" data-rsh-rg-restricted>บางหมวดของข้อมูลทะเบียนแสดงเฉพาะผู้ที่ได้รับสิทธิ์ (ผู้ดูแลระบบกำหนดที่ ตั้งค่าระบบ › ตารางสิทธิ์ หมวด “ข้อมูลทะเบียนนักเรียน”)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rsh-foot" x-show="rsh.it">
+                <p class="tl-mute flex-1" x-show="rsh.it && rsh.it.hasFile">ขอให้หัวหน้างานมอบหมายแฟ้มให้ หากคุณต้องดูแลนักเรียนคนนี้</p>
+                <button type="button" class="tl-btn tl-btn-ghost" @click="rshBehavior()" data-rsh-bh><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-list-checks"/></svg>บันทึกพฤติกรรม</button>
+                <button type="button" class="tl-btn tl-btn-primary" x-show="rsh.it && !rsh.it.hasFile && can('create_case')" @click="rshNewCase()" data-rsh-case><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-plus"/></svg>เปิดแฟ้ม / บันทึกเคส</button>
+            </div>
+        </div>
+    </div>
     <div x-show="bf.open" x-cloak class="bf-shell no-print" @keydown.escape.window="bf.open && !ra.open && bfClose()" data-bf>
         <div class="bf-panel" role="dialog" aria-modal="true" aria-labelledby="bf-t">
             <header class="bf-head">
@@ -1504,6 +1775,49 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             <p class="tl-mute" x-show="bf.clientId && !bhGrade(bfStudent && bfStudent.grade) && bfStudent" x-text="'ระดับชั้น/ห้องในแฟ้ม: ' + (bfStudent ? bfStudent.grade : '')"></p>
                             <button type="button" class="tl-btn tl-btn-ghost" x-show="bf.clientId && bf.mode === 'new'" @click="bfUnlink()" data-bf-change>เปลี่ยนนักเรียน</button>
                         </div>
+                        <div class="rl-wrap" data-bf-role>
+                            <span class="rl-h">บทบาทของนักเรียนคนนี้ในเหตุการณ์ <small>(ไม่บังคับ)</small></span>
+                            <div class="rl-opts" role="radiogroup" :aria-label="'บทบาทของนักเรียนคนนี้'"><template x-for="o in BH_ROLE_OPTS" :key="'bfrole' + o[0]">
+                                <label class="rl-o" :class="[bf.role === o[0] && 'is-on', 'is-' + (o[0] || 'none')]"><input type="radio" :name="'bfrole'" :value="o[0]" :checked="bf.role === o[0]" @change="bf.role = o[0]; bfTouch()"><span x-text="o[1]"></span></label></template></div>
+                        </div>
+                    </section>
+
+                    <!-- counterparts (optional) -->
+                    <section class="bf-sec" :class="{ 'bf-err': bf.fe.counterparts }" aria-labelledby="bf-scp" data-bf-cp>
+                        <h4 class="bf-h" id="bf-scp"><span class="bf-num bf-num-ico"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-users-round"/></svg></span>คู่กรณี <small class="tl-mute">ไม่บังคับ • เพิ่มได้หลายคน</small></h4>
+                        <ul class="bf-cps" x-show="bf.cps.length" aria-label="คู่กรณีที่เลือก" data-bf-cp-list>
+                            <template x-for="(x, i) in bf.cps" :key="'bcp' + i + (x.studentId || x.clientId || x.name)">
+                                <li class="bf-cp" :data-bf-cp-item="x.studentId || x.name"><svg class="ico w-4 h-4" aria-hidden="true"><use :href="x.studentId || x.clientId ? '#i-user-round' : '#i-square-pen'"/></svg>
+                                    <span><b x-text="x.name"></b><small x-text="[x.grade, x.studentId ? 'StudentID ' + x.studentId : (x.clientId ? 'แฟ้มในระบบ' : 'พิมพ์เอง (ไม่อยู่ในทะเบียน)')].filter(Boolean).join(' • ')"></small></span>
+                                    <button type="button" class="bf-cp-x" @click="bfCpRemove(i)" :aria-label="'นำ ' + x.name + ' ออก'" data-bf-cp-remove><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-x"/></svg></button>
+                                    <div class="rl-opts" role="radiogroup" :aria-label="'บทบาทของ ' + x.name"><template x-for="o in BH_ROLE_OPTS" :key="'bfcpr' + i + o[0]">
+                                <label class="rl-o" :class="[x.role === o[0] && 'is-on', 'is-' + (o[0] || 'none')]"><input type="radio" :name="'bfcpr' + i" :value="o[0]" :checked="x.role === o[0]" @change="x.role = o[0]; bfTouch()"><span x-text="o[1]"></span></label></template></div></li>
+                            </template>
+                        </ul>
+                        <div class="rl-sum" x-show="bfRoleSummary.length" data-bf-role-sum><span class="rl-sum-h">สรุปเหตุการณ์</span>
+                            <template x-for="g in bfRoleSummary" :key="'rls' + g.role"><span class="rl-chip" :class="'is-' + g.role" x-text="g.label + ': ' + g.names.join(', ')"></span></template></div>
+                        <div x-show="bf.cps.length < 10"><div class="sp" data-sp="bfcp">
+    <label class="sp-l"><span>ค้นหาคู่กรณีจากทะเบียนนักเรียน</span>
+        <span class="sp-box"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" role="combobox" aria-autocomplete="list" :aria-expanded="spx.bfcp.items.length > 0" aria-controls="sp-bfcp-list" :aria-activedescendant="spx.bfcp.active >= 0 ? 'sp-bfcp-o' + spx.bfcp.active : null"
+               x-model="spx.bfcp.q" @input="spTyping('bfcp')" @keydown="spKey('bfcp', $event)" autocomplete="off" maxlength="80" placeholder="พิมพ์ StudentID ชื่อ นามสกุล ชื่อเล่น หรือชั้น/ห้อง" data-sp-q="bfcp"></span></label>
+    <p class="sp-hint" x-show="spx.bfcp.short">พิมพ์อย่างน้อย 2 ตัวอักษร</p>
+    <p class="sp-hint" x-show="spx.bfcp.loading" role="status" data-sp-loading="bfcp"><span class="sp-spin" aria-hidden="true"></span>กำลังค้นหา…</p>
+    <p class="sp-none" x-show="spx.bfcp.done && !spx.bfcp.loading && !spx.bfcp.items.length && !spx.bfcp.err" role="status" data-sp-none="bfcp">ไม่พบในทะเบียน — พิมพ์ชื่อเองได้ในช่องด้านล่าง</p>
+    <p class="sp-none" x-show="spx.bfcp.err" x-text="spx.bfcp.err" role="alert"></p>
+    <ul class="sp-list" role="listbox" id="sp-bfcp-list" :aria-label="'ผลการค้นหา ' + spx.bfcp.items.length + ' รายการ'" x-show="spx.bfcp.items.length && !spx.bfcp.loading">
+        <template x-for="(it, i) in spx.bfcp.items" :key="'spbfcp' + it.key"><li role="option" :id="'sp-bfcp-o' + i" :aria-selected="spx.bfcp.active === i" :class="spx.bfcp.active === i && 'is-active'"
+            @mousedown.prevent="spPick('bfcp', it)" @mousemove="spx.bfcp.active = i" :data-sp-item="it.studentId || ('file:' + it.name)">
+            <b x-text="it.name + (it.nickname ? ' (' + it.nickname + ')' : '')"></b><small x-text="spSub(it)"></small><em class="sp-same" x-show="it.sameName">ชื่อซ้ำ — ตรวจ StudentID และชั้น</em></li></template></ul>
+    <p class="sp-msg" x-show="spx.bfcp.msg" x-text="spx.bfcp.msg" role="alert" data-sp-msg="bfcp"></p>
+</div>
+                            <form class="bf-cp-typed" @submit.prevent="bfCpAddTyped()">
+                                <label class="tl-field tl-grow"><span>หรือพิมพ์ชื่อคู่กรณี (ไม่อยู่ในทะเบียน เช่น นักเรียนต่างโรงเรียน)</span><input type="text" maxlength="120" x-model="bf.cpName" placeholder="ชื่อ-นามสกุล" data-bf-cp-name></label>
+                                <button type="submit" class="tl-btn tl-btn-ghost" :disabled="!bf.cpName.trim()" data-bf-cp-add><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-plus"/></svg>เพิ่มชื่อ</button></form>
+                        </div>
+                        <p class="tl-mute" x-show="bf.cps.length >= 10">ระบุคู่กรณีได้สูงสุด 10 คน</p>
+                        <p class="a3-ferr" x-show="bf.fe.counterparts" x-text="bf.fe.counterparts" role="alert"></p>
+                        <p class="tl-mute bf-cp-note">แฟ้มของคู่กรณีจะแสดงเพียงว่า “เกี่ยวข้องในเหตุการณ์” พร้อมวันที่ โดยไม่เปิดรายละเอียดของบันทึกนี้</p>
                     </section>
 
                     <!-- 2. behaviours -->
@@ -1526,16 +1840,23 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                     <p x-show="bm.meta.guidance.contacts" class="sg-contacts" x-text="'ติดต่อในโรงเรียน: ' + bm.meta.guidance.contacts"></p></div></template>
                             </div>
                         </div>
+                        <div class="bf-cats" role="tablist" aria-label="หมวดใหญ่ของพฤติกรรม" x-show="bfHasBH" data-bf-cats>
+                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'bh' && 'is-on'" :aria-selected="bf.cat === 'bh'" @click="bfSetCat('bh')" data-bf-cat="bh">
+                                <span><b>พฤติกรรมความเสี่ยงตามธรรมนูญนักเรียน</b><small>รหัส BH</small></span><span class="bf-cat-n" x-text="bfCatCount('bh') || ''"></span></button>
+                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'gen' && 'is-on'" :aria-selected="bf.cat === 'gen'" @click="bfSetCat('gen')" data-bf-cat="gen">
+                                <span><b>พฤติกรรมนักเรียนทั่วไป</b><small>รหัสอื่น ๆ ทั้งหมด</small></span><span class="bf-cat-n" x-text="bfCatCount('gen') || ''"></span></button>
+                        </div>
+                        <p class="tl-mute text-xs" x-show="bfHasBH && (bf.fq || '').trim()" data-bf-cat-search>กำลังค้นหาในทั้ง 2 หมวด</p>
                         <div class="bf-tabs" role="tablist" aria-label="เลือกหมวดพฤติกรรม" data-bf-tabs>
-                            <button type="button" role="tab" class="bf-tab" :class="!bf.dom && 'is-on'" :aria-selected="!bf.dom" @click="bf.dom = ''" data-bf-tab=""><span>ทุกหมวด</span><small x-text="bf.codes.length || ''"></small></button>
-                            <template x-for="g in bfGroups" :key="'bftg' + g.id"><div class="bf-tabg" role="group" :aria-label="g.nameEn" :data-bf-tabg="g.id"><small x-text="g.nameEn"></small>
+                            <button type="button" role="tab" class="bf-tab" :class="!bf.dom && 'is-on'" :aria-selected="!bf.dom" @click="bf.dom = ''" data-bf-tab=""><span>ทุกหมวด</span><small x-text="(bfHasBH && !(bf.fq || '').trim() ? bfCatCount(bf.cat) : bf.codes.length) || ''"></small></button>
+                            <template x-for="g in bfGroupsCat" :key="'bftg' + g.id"><div class="bf-tabg" role="group" :aria-label="g.nameEn" :data-bf-tabg="g.id"><small x-text="g.nameEn"></small>
                             <template x-for="d in g.domains" :key="'bft' + d.code">
                                 <button type="button" role="tab" class="bf-tab" :class="[BH_DOM_STYLE[d.code], bf.dom === d.code && 'is-on']" :aria-selected="bf.dom === d.code" @click="bf.dom = d.code" :data-bf-tab="d.code" :title="d.nameTh">
                                     <b x-text="d.code"></b><span class="bf-tab-n" x-text="d.nameEn"></span><small x-text="bf.codes.filter(c => (bhItem(c) || {}).domain === d.code).length || ''"></small></button>
                             </template></div></template>
                         </div>
                         <div class="bf-doms">
-                            <template x-for="g in bfGroups" :key="'bfg' + g.id"><div class="bf-group" x-show="!bf.dom || g.domains.some(x => x.code === bf.dom)" :data-bf-group="g.id">
+                            <template x-for="g in bfGroupsCat" :key="'bfg' + g.id"><div class="bf-group" x-show="!bf.dom || g.domains.some(x => x.code === bf.dom)" :data-bf-group="g.id">
                             <p class="bf-ghead"><span x-text="g.nameEn"></span><small x-text="g.nameTh"></small></p>
                             <div class="bf-gdoms">
                             <template x-for="d in g.domains" :key="'bd' + d.code">
@@ -1574,6 +1895,13 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             <h4 class="bf-h" id="bf-s4"><span class="bf-num">4</span>วิธีการจัดการพฤติกรรมที่เกิดขึ้น</h4>
                             <label class="bf-f bf-f-wide"><span>สิ่งที่ดำเนินการไปแล้วจริง (เว้นว่างได้)</span>
                                 <textarea rows="5" maxlength="3000" x-model="bf.handling" @input="bfTouch()" data-bf-handling placeholder="เช่น พูดคุยกับนักเรียน • ประสานครูที่ปรึกษา/ผู้ปกครอง • ช่วยเหลือเบื้องต้น • ส่งต่อผู้เชี่ยวชาญ"></textarea></label>
+                        </section>
+                        <section class="bf-sec bf-share" aria-labelledby="bf-ssh" data-bf-share>
+                            <h4 class="bf-h" id="bf-ssh"><span class="bf-num bf-num-ico"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg></span>ใครอ่านรายละเอียดของบันทึกนี้ได้</h4>
+                            <p class="tl-mute">บุคลากรทุกคนเห็นว่ามีการบันทึกพฤติกรรมรหัสใด เมื่อไร และใครบันทึก ส่วนรายละเอียด (ข้อ 3–4 คู่กรณี และบริบท) เห็นตามที่คุณเลือก — ผู้เชี่ยวชาญ 4 วิชาชีพเห็นทั้งหมดเสมอ</p>
+                            <div class="bf-share-opts" role="radiogroup" aria-labelledby="bf-ssh"><template x-for="o in BH_SHARE_OPTS" :key="'bsh' + o[0]">
+                                <label class="bf-share-o" :class="bf.share === o[0] && 'is-on'"><input type="radio" name="bf-share" :value="o[0]" x-model="bf.share" @change="bfTouch()" :data-bf-share-o="o[0]">
+                                    <span><b x-text="o[1]"></b><small x-text="o[2]"></small></span></label></template></div>
                         </section>
                         <details class="bf-sec bf-more" x-show="pm.meta && modOn('pbis')" data-bf-abc-wrap :open="!!(bf.abc.place || bf.abc.period || bf.abc.subject || bf.abc.antecedent || bf.abc.consequence)"><summary class="bf-more-s" data-bf-abc-open>+ บริบทเพิ่มเติม (ABC) — ไม่บังคับ</summary>
                         <section aria-labelledby="bf-s5" data-bf-abc>
@@ -1616,7 +1944,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                     <span class="ra-badge"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-siren"/></svg>Red Alert</span>
                     <h4 id="ra-t" x-text="ra.data.alert.code + ' — ' + ra.data.alert.text"></h4>
                     <button type="button" class="tl-btn tl-btn-ghost is-ra-btn" @click="isFromAlert(ra.data.client.id, ra.data.alert.id)" data-ra-issp><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-target"/></svg>แผนสนับสนุนนักเรียนรายบุคคล (ISSP)</button>
-                    <p class="tl-mute" x-text="ra.data.client.name + ' • ' + ra.data.client.grade + ' • Case ID ' + ra.data.client.id"></p>
+                    <p class="tl-mute" x-text="ra.data.client.name + ' • ' + ra.data.client.grade + (ra.data.client.caseNo ? ' • เลขเคส ' + ra.data.client.caseNo : '')"></p>
                     <dl class="tl-dl mt-2">
                         <div><dt>ประเภท</dt><dd x-text="(ra.data.alert.kind === 'immediate' ? 'แจ้งทันทีเมื่อบันทึก ' + ra.data.alert.code : 'ความถี่ถึงเกณฑ์แจ้งเตือน') + ' — เกณฑ์ตอนสร้าง: ' + (ra.data.alert.ruleAtCreate || '') + ' (กติกาของโรงเรียน ไม่ใช่ระดับความรุนแรง)'"></dd></div>
                         <div x-show="ra.data.alert.ruleNow && ra.data.alert.ruleNow !== ra.data.alert.ruleAtCreate"><dt>เกณฑ์ปัจจุบันของประเภทนี้</dt><dd x-text="ra.data.alert.ruleNow + ' (มีผลกับการบันทึกหลังการเปลี่ยน — Alert นี้ไม่ถูกเปลี่ยน)'"></dd></div>
@@ -2812,7 +3140,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
         <div class="cr-panel" role="dialog" aria-modal="true" aria-labelledby="cr-t">
             <div class="cr-top">
                 <span class="tm-ico"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-file-text"/></svg></span>
-                <div class="min-w-0"><h3 id="cr-t" class="is-h3">Case Report</h3><p class="tl-mute" x-text="cr.doc ? (cr.doc.header.name + (cr.doc.header.caseId ? ' • StudentID ' + cr.doc.header.caseId : '')) : 'กำลังเตรียมข้อมูล…'"></p></div>
+                <div class="min-w-0"><h3 id="cr-t" class="is-h3">Case Report</h3><p class="tl-mute" x-text="cr.doc ? (cr.doc.header.name + (cr.doc.header.caseId ? ' • เลขเคส ' + cr.doc.header.caseId : '')) : 'กำลังเตรียมข้อมูล…'"></p></div>
                 <span class="flex-1"></span>
                 <span class="cr-dirty" x-show="crDirty" data-cr-dirty>มีการแก้ไขที่ยังไม่บันทึก</span>
                 <button type="button" class="hm-tip-x" @click="!cr.busy && crClose()" aria-label="ปิด"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-x"/></svg></button>
@@ -4547,6 +4875,45 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             </article>
                         </template>
                     </div>
+                </section>
+
+                <!-- homeroom / advisor teachers for the case form (Advisors.gs; manage_settings checked on the server) -->
+                <section x-show="sys.tab === 'advisors'" class="space-y-3" data-adv-page>
+                    <div class="sys-bar"><p class="tl-mute">รายชื่อครูประจำชั้น/ครูที่ปรึกษาที่ให้เลือกในหน้าบันทึกเคส เมื่อเลือกนักเรียนจากทะเบียน ระบบจะเติมชื่อจากคอลัมน์ “ค.ประจำชั้น ค.ที่ปรึกษา” ให้ก่อน และเลือกชื่ออื่นจากรายการนี้ได้ — การลบหรือแก้ชื่อไม่เปลี่ยนเคสที่บันทึกไว้แล้ว</p></div>
+                    <div class="tl-card">
+                        <form class="adv-add" @submit.prevent="advSave('add')">
+                            <label class="tl-field tl-grow"><span>เพิ่มชื่อครู</span><input type="text" maxlength="120" x-model="adv.name" placeholder="เช่น ครูสมใจ ใจดี" data-adv-name></label>
+                            <button type="submit" class="tl-btn tl-btn-primary" :disabled="adv.busy || !adv.name.trim()" data-adv-add><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-plus"/></svg>เพิ่ม</button>
+                        </form>
+                        <p class="a3-ferr" x-show="adv.fe" x-text="adv.fe" role="alert" data-adv-err></p>
+                    </div>
+                    <div x-show="adv.loading && !adv.loaded" class="sk-card" role="status" aria-busy="true"><div class="sk sk-title"></div><div class="sk sk-line w-70"></div></div>
+                    <div x-show="adv.err" class="tl-error" role="alert"><span x-text="adv.err"></span></div>
+                    <p class="tl-empty" x-show="adv.loaded && !adv.items.length" data-adv-empty>ยังไม่มีรายชื่อครู — พิมพ์ชื่อแล้วกด “เพิ่ม”</p>
+                    <ul class="adv-list" x-show="adv.items.length">
+                        <template x-for="x in adv.items" :key="'adv' + x.id">
+                            <li class="adv-row" :class="!x.active && 'is-off'" :data-adv="x.name">
+                                <template x-if="adv.edit && adv.edit.id === x.id">
+                                    <form class="adv-add flex-1" @submit.prevent="advSave('update', x, { name: adv.edit.name })">
+                                        <input type="text" maxlength="120" x-model="adv.edit.name" class="flex-1" aria-label="แก้ชื่อครู" data-adv-edit-in>
+                                        <button type="submit" class="tl-btn tl-btn-primary" :disabled="adv.busy">บันทึก</button>
+                                        <button type="button" class="tl-btn tl-btn-ghost" @click="adv.edit = null">ยกเลิก</button></form>
+                                </template>
+                                <template x-if="!(adv.edit && adv.edit.id === x.id)">
+                                    <div class="adv-main"><b x-text="x.name"></b><span class="sd-pill sd-closed" x-show="!x.active">ซ่อนจากหน้าบันทึกเคส</span></div>
+                                </template>
+                                <div class="adv-acts" x-show="!(adv.edit && adv.edit.id === x.id)">
+                                    <template x-if="adv.del !== x.id"><div class="flex flex-wrap gap-2">
+                                        <button type="button" class="tl-btn tl-btn-ghost" @click="adv.edit = { id: x.id, name: x.name }; adv.del = ''">แก้ชื่อ</button>
+                                        <button type="button" class="tl-btn tl-btn-ghost" :disabled="adv.busy" @click="advSave('update', x, { active: !x.active })" x-text="x.active ? 'ซ่อน' : 'แสดง'" data-adv-toggle></button>
+                                        <button type="button" class="tl-btn tl-btn-ghost text-rose-700" @click="adv.del = x.id; adv.edit = null" data-adv-del><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-trash-2"/></svg>ลบ</button></div></template>
+                                    <template x-if="adv.del === x.id"><div class="flex flex-wrap items-center gap-2"><span class="tl-mute">ลบชื่อนี้ออกจากรายการ?</span>
+                                        <button type="button" class="tl-btn tl-btn-primary" :disabled="adv.busy" @click="advSave('remove', x)" data-adv-del-go>ยืนยันลบ</button>
+                                        <button type="button" class="tl-btn tl-btn-ghost" @click="adv.del = ''">ไม่ลบ</button></div></template>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
                 </section>
 
                 <!-- student roster -->
@@ -6631,70 +6998,56 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
             </div></template>
 
             <!-- TAB 2: CLIENTS -->
-            <template x-if="currentTab === 'clients' && tabAllowed('clients')"><div data-page class="space-y-4">
-                <div class="tss-card tss-subbar p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3" data-sticky>
-                    <div class="w-full sm:w-96 relative">
-                        <input type="text" x-ref="searchInput" x-model="searchQuery" :placeholder="t('🔍 ค้นหาชื่อ, ชั้น, ความเสี่ยง หรืออาการ...')" class="w-full pl-9 pr-4 py-2 water-drop-input text-xs">
-                        <svg class="ico w-4 h-4 text-slate-400 absolute left-3 top-2.5" aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+            <template x-if="currentTab === 'clients' && tabAllowed('clients')"><div data-page class="space-y-4 ro-page" x-init="roLoad()" data-ro-page>
+                <!-- นักเรียนทั้งหมด: the school roster (roster.list — light data; a case file opens only with the right to it) -->
+                <div class="tss-card ro-bar" data-sticky>
+                    <div class="ro-search"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-search"/></svg>
+                        <input type="search" x-ref="searchInput" x-model="searchQuery" @input="roTyping()" :placeholder="roRiskMode ? 'ค้นหาชื่อ ชั้น หรืออาการในแฟ้มเคส' : 'ค้นหาชื่อ ชื่อเล่น StudentID เลขเคส หรือชั้น/ห้อง'" aria-label="ค้นหานักเรียน" data-ro-q></div>
+                    <div class="ro-filters">
+                        <label class="ro-sel" x-show="!roRiskMode"><span class="sr-only">ระดับชั้น</span><select x-model="ro.level" @change="ro.room = ''; ro.page = 1; roLoad()" data-ro-level>
+                            <option value="">ทุกระดับชั้น</option><template x-for="l in (ro.data ? ro.data.levels : [])" :key="'rol' + l.level"><option :value="l.level" x-text="l.level" :selected="ro.level === l.level"></option></template></select></label>
+                        <label class="ro-sel" x-show="!roRiskMode && ro.level && roRooms.length"><span class="sr-only">ห้อง</span><select x-model="ro.room" @change="ro.page = 1; roLoad()" data-ro-room>
+                            <option value="">ทุกห้อง</option><template x-for="r in roRooms" :key="'ror' + r"><option :value="r" x-text="'ห้อง ' + r" :selected="ro.room === r"></option></template></select></label>
                     </div>
-
-                    <div class="flex items-center space-x-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 text-xs">
-                        <button @click="filterRisk = 'all'" :class="filterRisk === 'all' ? 'bg-slate-900 text-white' : 'bg-white/80 text-slate-700'" class="px-3 py-1.5 rounded-xl font-medium transition" x-text="t('ทั้งหมด')"></button>
-                        <button @click="filterRisk = 'green'" :class="filterRisk === 'green' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-800'" class="px-3 py-1.5 rounded-xl font-medium transition" x-text="t('เขียว')"></button>
-                        <button @click="filterRisk = 'yellow'" :class="filterRisk === 'yellow' ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-800'" class="px-3 py-1.5 rounded-xl font-medium transition" x-text="t('เหลือง')"></button>
-                        <button @click="filterRisk = 'red'" :class="filterRisk === 'red' ? 'bg-red-600 text-white' : 'bg-red-50 text-red-800'" class="px-3 py-1.5 rounded-xl font-medium transition" x-text="t('แดง')"></button>
+                    <div class="ro-chips" role="group" aria-label="กรองรายชื่อ">
+                        <button type="button" class="ro-chip" :aria-pressed="filterRisk === 'all'" @click="roFilter('all')" data-ro-f="all">ทั้งหมด</button>
+                        <button type="button" class="ro-chip" :aria-pressed="filterRisk === 'file'" @click="roFilter('file')" data-ro-f="file">มีแฟ้มเคส</button>
+                        <button type="button" class="ro-chip" :aria-pressed="filterRisk === 'nofile'" @click="roFilter('nofile')" data-ro-f="nofile">ยังไม่มีแฟ้ม</button>
+                        <span class="ro-chip-sep" aria-hidden="true"></span>
+                        <button type="button" class="ro-chip is-green" :aria-pressed="filterRisk === 'green'" @click="roFilter('green')" data-ro-f="green">ปกติ</button>
+                        <button type="button" class="ro-chip is-yellow" :aria-pressed="filterRisk === 'yellow'" @click="roFilter('yellow')" data-ro-f="yellow">เฝ้าระวัง</button>
+                        <button type="button" class="ro-chip is-red" :aria-pressed="filterRisk === 'red'" @click="roFilter('red')" data-ro-f="red">วิกฤต</button>
                     </div>
                 </div>
 
-                <div class="tss-card tss-scroll-table rounded-2xl text-xs" data-scroll-shadow>
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-white/80 border-b border-slate-200 font-semibold text-slate-500 uppercase tracking-wider">
-                                <th class="p-3.5" x-text="t('นักเรียน')"></th>
-                                <th class="p-3.5" x-text="t('ระดับชั้น')"></th>
-                                <th class="p-3.5" x-text="t('ความเสี่ยง')"></th>
-                                <th class="p-3.5" x-text="t('สถานะบริการ')"></th>
-                                <th class="p-3.5 text-right" x-text="t('การจัดการ')"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200/50">
-                            <template x-for="student in filteredStudents" :key="student.id">
-                                <tr class="hover:bg-white/60 transition cursor-pointer" @click="openProfile(student)">
-                                    <td class="p-3.5">
-                                        <div class="flex items-center space-x-2.5">
-                                            <img :src="student.avatar" onerror="this.removeAttribute('src')" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-slate-200 shadow-2xs">
-                                            <div>
-                                                <span class="font-medium text-slate-900 block" x-text="student.name"></span>
-                                                <span class="text-[10px] text-slate-500 block" x-text="getStudentSymptomsSummary(student.id)"></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-3.5 text-slate-700" x-text="student.grade"></td>
-                                    <td class="p-3.5">
-                                        <span class="px-2 py-0.5 rounded-full font-medium text-[11px]" 
-                                              :class="{
-                                                  'bg-emerald-100 text-emerald-800': student.riskLevel === 'green',
-                                                  'bg-amber-100 text-amber-900': student.riskLevel === 'yellow',
-                                                  'bg-red-100 text-red-800': student.riskLevel === 'red'
-                                              }"
-                                              x-text="!student.riskLevel ? 'ยังไม่ประเมิน' : (student.riskLevel === 'green' ? t('ปกติ') : (student.riskLevel === 'yellow' ? t('เฝ้าระวัง') : t('วิกฤต')))">
-                                        </span>
-                                    </td>
-                                    <td class="p-3.5">
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold"
-                                              :class="student.receivedService ? 'bg-indigo-100 text-indigo-900' : 'bg-slate-200/80 text-slate-700'"
-                                              x-text="student.receivedService ? t('รับบริการแล้ว') : t('ยังไม่ได้รับบริการ')">
-                                        </span>
-                                    </td>
-                                    <td class="p-3.5 text-right">
-                                        <button @click.stop="openProfile(student)" class="px-2.5 py-1 bg-white hover:bg-red-700 hover:text-white text-slate-700 rounded-lg font-medium transition shadow-2xs" x-text="t('ดูโปรไฟล์')">
-                                        </button>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
+                <div class="ro-head" data-ro-list>
+                    <p x-show="!roRiskMode && ro.data" x-text="ro.data ? (ro.data.total ? 'นักเรียน ' + ro.data.total.toLocaleString('th-TH') + ' คน' + (ro.data.pages > 1 ? ' • หน้า ' + ro.data.page + ' จาก ' + ro.data.pages : '') + (ro.data.year ? ' • ทะเบียนปีการศึกษา ' + ro.data.year : '') : '') : ''" data-ro-count></p>
+                    <p x-show="roRiskMode" x-text="'แฟ้มเคสระดับ' + ({ green: 'ปกติ', yellow: 'เฝ้าระวัง', red: 'วิกฤต' })[filterRisk] + ' ' + roRows.length + ' แฟ้ม (เฉพาะแฟ้มที่คุณดูแล)'"></p>
                 </div>
+                <div x-show="ro.loading && !ro.data && !roRiskMode" class="ro-list" role="status" aria-busy="true"><span class="sr-only">กำลังโหลดรายชื่อ…</span>
+                    <template x-for="n in 6" :key="'rosk' + n"><div class="ro-row" aria-hidden="true"><div class="sk ro-av"></div><div class="flex-1"><div class="sk sk-title"></div><div class="sk sk-line w-50"></div></div></div></template></div>
+                <div class="tl-error" x-show="ro.err && !roRiskMode" role="alert"><span x-text="ro.err"></span> <button type="button" class="underline font-bold" @click="roLoad()">ลองอีกครั้ง</button></div>
+                <div class="ro-empty" x-show="(roRiskMode || (ro.data && !ro.loading)) && !roRows.length" data-ro-empty>
+                    <svg class="ico w-8 h-8" aria-hidden="true"><use href="#i-users-round"/></svg>
+                    <p x-text="roRiskMode ? 'ไม่มีแฟ้มเคสในระดับนี้' : (searchQuery.trim() || ro.level ? 'ไม่พบนักเรียนที่ตรงกับคำค้น' : 'ยังไม่มีรายชื่อในทะเบียนนักเรียน — ผู้ดูแลระบบนำเข้าได้ที่ ตั้งค่าระบบ › ทะเบียนนักเรียน')"></p></div>
+                <ul class="ro-list" x-show="roRows.length" :class="ro.loading && 'is-busy'" :aria-busy="ro.loading ? 'true' : 'false'">
+                    <template x-for="it in roRows" :key="it.key"><li>
+                        <button type="button" class="ro-row" @click="roOpen(it)" :data-ro-item="it.studentId || it.clientId">
+                            <span class="ro-av" :class="it.c && it.c.riskLevel ? 'is-' + it.c.riskLevel : ''" aria-hidden="true" x-text="roInitials(it.name)"></span>
+                            <span class="ro-main"><b x-text="it.name"></b><em x-show="it.nickname" x-text="'(' + it.nickname + ')'"></em>
+                                <small x-text="[it.grade ? 'ชั้น ' + it.grade + (it.number ? ' เลขที่ ' + it.number : '') : '', it.studentId ? 'StudentID ' + it.studentId : 'ยังไม่ผูก StudentID', (it.caseNo || (it.c && it.c.caseNo)) ? 'เลขเคส ' + (it.caseNo || it.c.caseNo) : '', it.status && it.status !== 'studying' ? it.statusLabel : ''].filter(Boolean).join(' • ')"></small></span>
+                            <span class="ro-tags">
+                                <span class="ro-tag is-risk" x-show="it.c" :class="it.c && it.c.riskLevel ? 'is-' + it.c.riskLevel : 'is-none'" x-text="it.c ? (!it.c.riskLevel ? 'ยังไม่ประเมิน' : it.c.riskLevel === 'green' ? 'ปกติ' : (it.c.riskLevel === 'yellow' ? 'เฝ้าระวัง' : 'วิกฤต')) : ''"></span>
+                                <span class="ro-tag is-file" x-show="it.hasFile && !it.c" x-text="it.clientId ? 'มีแฟ้มเคส' : 'มีแฟ้ม (ผู้อื่นดูแล)'"></span>
+                                <span class="ro-tag" x-show="!it.hasFile">ยังไม่มีแฟ้ม</span></span>
+                            <svg class="ico w-5 h-5 ro-go" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                        </button></li></template>
+                </ul>
+                <nav class="ro-pager" x-show="!roRiskMode && ro.data && ro.data.pages > 1" aria-label="เปลี่ยนหน้า">
+                    <button type="button" class="tl-btn tl-btn-ghost" :disabled="ro.page <= 1 || ro.loading" @click="roGo(ro.page - 1)" data-ro-prev><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-chevron-left"/></svg>ก่อนหน้า</button>
+                    <span x-text="ro.data ? ro.page + ' / ' + ro.data.pages : ''"></span>
+                    <button type="button" class="tl-btn tl-btn-ghost" :disabled="!ro.data || ro.page >= ro.data.pages || ro.loading" @click="roGo(ro.page + 1)" data-ro-next>ถัดไป<svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                </nav>
             </div></template>
 
             <!-- TAB 3: REFERRALS -->
@@ -8194,7 +8547,12 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                 <svg class="ico w-3.5 h-3.5" aria-hidden="true"><use :href="'#' + riskBadge(activeStudent && activeStudent.riskLevel).icon"/></svg>
                                 <span x-text="activeStudent ? riskBadge(activeStudent.riskLevel).label : ''"></span></span>
                         </div>
-                        <p class="text-xs text-slate-500 mt-0.5" x-text="activeStudent ? ('ชั้น ' + activeStudent.grade + (activeStudent.advisor ? ' • ครูที่ปรึกษา: ' + activeStudent.advisor : '') + (activeStudent.studentId ? ' • StudentID ' + activeStudent.studentId : '')) : ''"></p>
+                        <div class="cn-chips" x-show="activeStudent" data-pf-ids>
+                            <span class="cn-chip is-case" x-show="activeStudent && activeStudent.caseNo" :title="'เลขเคส (ให้ครั้งเดียวตอนเปิดแฟ้ม ไม่เปลี่ยน)'" data-pf-caseno><svg class="ico w-3.5 h-3.5" aria-hidden="true"><use href="#i-file-text"/></svg><span x-text="activeStudent ? activeStudent.caseNo : ''"></span></span>
+                            <span class="cn-chip" x-show="activeStudent && activeStudent.grade" x-text="activeStudent ? 'ชั้น ' + activeStudent.grade : ''"></span>
+                            <span class="cn-chip" x-show="activeStudent && activeStudent.studentId" x-text="activeStudent ? 'StudentID ' + activeStudent.studentId : ''"></span>
+                            <span class="cn-chip" x-show="activeStudent && activeStudent.advisor" x-text="activeStudent ? 'ครูที่ปรึกษา ' + activeStudent.advisor : ''"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -8260,57 +8618,79 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
             <div class="pf-inner space-y-4 text-xs" x-show="!profileLoading">
                 
                 <!-- TAB 0: GENERAL INFORMATION -->
-                <div x-show="profileTab === 'general'" class="space-y-4">
-                    <div class="p-5 rounded-2xl bg-white/90 border border-slate-200/80 grid grid-cols-1 sm:grid-cols-2 gap-4 shadow-2xs">
-                        <div>
-                            <p class="text-[10px] font-bold uppercase text-slate-400">ชื่อ-นามสกุล</p>
-                            <p class="font-extrabold text-slate-900 text-sm mt-0.5" x-text="activeStudent ? activeStudent.name + ' (' + activeStudent.nickname + ')' : '-'"></p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold uppercase text-slate-400">ระดับชั้น / ครูที่ปรึกษา</p>
-                            <p class="font-bold text-slate-800 text-sm mt-0.5" x-text="activeStudent ? (activeStudent.grade + ' • ' + (activeStudent.advisor || '-')) : '-'"></p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold uppercase text-slate-400">วันเกิด / เพศ</p>
-                            <p class="font-semibold text-slate-700 mt-0.5" x-text="activeStudent ? (activeStudent.dob + ' • เพศ: ' + (activeStudent.gender || 'ไม่ระบุ')) : '-'"></p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold uppercase text-slate-400">ผู้ปกครอง / เบอร์ติดต่อ</p>
-                            <p class="font-semibold text-slate-700 mt-0.5" x-text="activeStudent ? (activeStudent.parentName + ' • ' + activeStudent.parentPhone) : '-'"></p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-bold uppercase text-slate-400">สถานะความเสี่ยงเบื้องต้น</p>
-                            <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full font-bold text-[11px]"
-                                  :class="{
-                                      'bg-emerald-100 text-emerald-800': activeStudent && activeStudent.riskLevel === 'green',
-                                      'bg-amber-100 text-amber-900': activeStudent && activeStudent.riskLevel === 'yellow',
-                                      'bg-red-100 text-red-800': activeStudent && activeStudent.riskLevel === 'red'
-                                  }"
-                                  x-text="activeStudent ? (!activeStudent.riskLevel ? 'ยังไม่ได้ประเมินความเสี่ยง' : activeStudent.riskLevel === 'green' ? 'ปกติ (สีเขียว)' : (activeStudent.riskLevel === 'yellow' ? 'เฝ้าระวัง (สีเหลือง)' : 'เร่งด่วน (สีแดง)')) : '-'"></span>
-                        </div>
-                    </div>
-                    <!-- ข้อมูลจากทะเบียนนักเรียน (Registry.gs) — each category only for roles allowed by the administrator; checked on the server -->
-                    <div class="rg-box" data-rg-prof x-show="rg.loading || rg.err || (rg.prof && rg.prof.allowedAny)">
-                        <div class="rg-head"><h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-file-spreadsheet"/></svg>ข้อมูลจากทะเบียนนักเรียน</h5>
-                            <span class="flex-1"></span>
-                            <select x-show="rg.prof && rg.prof.years.length > 1" :value="rg.prof && rg.prof.year" @change="rgProfile(rg.profFor, $event.target.value)" aria-label="ปีการศึกษาของข้อมูลทะเบียน" data-rg-year>
-                                <template x-for="y in (rg.prof ? rg.prof.years : [])" :key="'rgy' + y"><option :value="y" x-text="'ปีการศึกษา ' + y" :selected="rg.prof && rg.prof.year === y"></option></template></select>
-                            <span class="tl-mute" x-show="rg.prof && rg.prof.years.length === 1" x-text="rg.prof ? 'ปีการศึกษา ' + rg.prof.year : ''"></span></div>
-                        <template x-if="rg.loading && !rg.prof"><div class="sk-fade"><span class="sr-only">กำลังโหลดข้อมูลทะเบียน…</span><div class="sk sk-line w-70" aria-hidden="true"></div><div class="sk sk-line w-50" aria-hidden="true"></div></div></template>
+                <div x-show="profileTab === 'general'" class="space-y-4" data-pf-general>
+                    <div class="pg" data-pg="case">
+                        <template x-if="rg.loading && !rg.prof"><div class="pg-facts" aria-hidden="true"><template x-for="n in 4" :key="'pgsk' + n"><div class="pg-fact"><div class="sk sk-line w-50"></div><div class="sk sk-title"></div></div></template></div></template>
                         <p class="tl-error" x-show="rg.err" role="alert" x-text="rg.err"></p>
-                        <template x-if="rg.prof && rg.prof.allowedAny"><div class="space-y-2">
-                            <p class="tl-mute" x-show="!rg.prof.linked" data-rg-unlinked>แฟ้มนี้ยังไม่ได้เชื่อมกับทะเบียนนักเรียน (StudentID) — เชื่อมได้ที่ ตั้งค่าระบบ → ทะเบียนนักเรียน</p>
-                            <p class="tl-mute" x-show="rg.prof.linked && !rg.prof.year" data-rg-none>ยังไม่มีข้อมูลทะเบียนเพิ่มเติมของนักเรียนคนนี้</p>
-                            <template x-for="g in rg.prof.groups" :key="'rgg' + g.key"><details class="rg-group" :open="g.key === 'general' || g.key === 'contact'" :data-rg-group="g.key">
-                                <summary><b x-text="g.label"></b> <small class="tl-mute" x-text="g.fields.length ? g.fields.length + ' รายการ' : 'ไม่มีข้อมูล'"></small></summary>
-                                <dl class="rg-dl"><template x-for="f in g.fields" :key="'rgf' + f.key"><div><dt x-text="f.label"></dt>
-                                    <dd><span x-text="g.masked && rg.reveal[f.key] ? rg.reveal[f.key] : f.value" :data-rg-val="f.key"></span>
-                                        <button type="button" class="rg-reveal" x-show="g.masked && !rg.reveal[f.key]" @click="rgReveal(f.key)" :disabled="!!rg.revealBusy" :data-rg-reveal="f.key">แสดง</button></dd></div></template></dl>
-                                <p class="tl-mute" x-show="g.masked && g.fields.length">กด “แสดง” เพื่อดูเลขเต็ม 30 วินาที — ทุกครั้งถูกบันทึกในประวัติการใช้งาน</p>
-                            </details></template>
-                            <p class="tl-mute" x-show="rg.prof.restricted" data-rg-restricted>บางหมวดแสดงเฉพาะผู้ที่ได้รับสิทธิ์ (กำหนดที่ ตั้งค่าระบบ → ตารางสิทธิ์ หมวด “ข้อมูลทะเบียนนักเรียน”)</p>
-                        </div></template>
+                        <!-- key facts: from the registry first, then from the case file -->
+                        <div class="pg-facts" x-show="!(rg.loading && !rg.prof)">
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span>
+                                <div><small>ชั้นเรียน</small><b x-text="pgClass(activeStudent) || 'ไม่มีข้อมูล'" :class="!pgClass(activeStudent) && 'is-none'"></b>
+                                    <em x-show="rg.prof && rg.prof.student && rg.prof.student.year" x-text="rg.prof && rg.prof.student ? 'ปีการศึกษา ' + rg.prof.student.year : ''"></em></div></div>
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-calendar-days"/></svg></span>
+                                <div><small>วันเกิด</small><b x-text="pgBirth(activeStudent) ? pgDate(pgBirth(activeStudent)) : 'ไม่มีข้อมูล'" :class="!pgBirth(activeStudent) && 'is-none'" data-pg-dob></b>
+                                    <em x-show="pgBirth(activeStudent)" x-text="pgAge(pgBirth(activeStudent))"></em></div></div>
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-user-round"/></svg></span>
+                                <div><small>เพศ</small><b x-text="pgF('gender', activeStudent && activeStudent.gender !== 'ไม่ระบุ' ? activeStudent.gender : '') || 'ไม่มีข้อมูล'" :class="!pgF('gender', activeStudent && activeStudent.gender !== 'ไม่ระบุ' ? activeStudent.gender : '') && 'is-none'"></b>
+                                    <em x-show="pgF('studentType')" x-text="pgF('studentType')"></em></div></div>
+                            <div class="pg-fact"><span class="pg-ic"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-users-round"/></svg></span>
+                                <div><small>ครูประจำชั้น / ครูที่ปรึกษา</small><b x-text="pgF('advisor', activeStudent && activeStudent.advisor) || 'ไม่มีข้อมูล'" :class="!pgF('advisor', activeStudent && activeStudent.advisor) && 'is-none'" data-pg-advisor></b></div></div>
+                        </div>
+                        <!-- people & contact -->
+                        <div class="pg-grid" x-show="pgHas(['guardian','relation','father','mother','parentPhone','studentPhone','email','parentEmail','address']) || (true && activeStudent && (activeStudent.parentName || activeStudent.parentPhone))">
+                            <section class="pg-card" x-show="pgHas(['guardian','father','mother']) || (true && activeStudent && activeStudent.parentName && activeStudent.parentName !== 'ไม่ระบุ')" data-pg-family>
+                                <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-house-heart"/></svg>ครอบครัว</h5>
+                                <dl class="pg-dl">
+                                    <div x-show="pgF('guardian', true && activeStudent && activeStudent.parentName !== 'ไม่ระบุ' ? activeStudent.parentName : '')"><dt>ผู้ปกครอง</dt><dd x-text="pgF('guardian', true && activeStudent && activeStudent.parentName !== 'ไม่ระบุ' ? activeStudent.parentName : '') + (pgF('relation') ? ' (' + pgF('relation') + ')' : '')"></dd></div>
+                                    <div x-show="pgF('father')"><dt>บิดา</dt><dd x-text="pgF('father') + (pgF('fatherStatus') ? ' • ' + pgF('fatherStatus') : '')"></dd></div>
+                                    <div x-show="pgF('mother')"><dt>มารดา</dt><dd x-text="pgF('mother') + (pgF('motherStatus') ? ' • ' + pgF('motherStatus') : '')"></dd></div>
+                                    <div x-show="pgF('siblings')"><dt>พี่น้อง</dt><dd x-text="pgF('siblings')"></dd></div>
+                                </dl></section>
+                            <section class="pg-card" x-show="pgHas(['parentPhone','studentPhone','email','parentEmail','address']) || (true && activeStudent && activeStudent.parentPhone && activeStudent.parentPhone !== '-')" data-pg-contact>
+                                <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-phone"/></svg>ติดต่อ</h5>
+                                <dl class="pg-dl">
+                                    <div x-show="pgF('parentPhone', true && activeStudent && activeStudent.parentPhone !== '-' ? activeStudent.parentPhone : '')"><dt>โทรศัพท์ผู้ปกครอง</dt><dd><a class="pg-tel" :href="'tel:' + String(pgF('parentPhone', true && activeStudent && activeStudent.parentPhone !== '-' ? activeStudent.parentPhone : '')).replace(/[^0-9+]/g, '')" x-text="pgF('parentPhone', true && activeStudent && activeStudent.parentPhone !== '-' ? activeStudent.parentPhone : '')"></a></dd></div>
+                                    <div x-show="pgF('studentPhone')"><dt>โทรศัพท์นักเรียน</dt><dd><a class="pg-tel" :href="'tel:' + String(pgF('studentPhone')).replace(/[^0-9+]/g, '')" x-text="pgF('studentPhone')"></a></dd></div>
+                                    <div x-show="pgF('email')"><dt>อีเมลนักเรียน</dt><dd x-text="pgF('email')"></dd></div>
+                                    <div x-show="pgF('parentEmail')"><dt>อีเมลผู้ปกครอง</dt><dd x-text="pgF('parentEmail')"></dd></div>
+                                    <div x-show="pgF('address')" class="pg-wide"><dt>ที่อยู่ปัจจุบัน</dt><dd x-text="pgF('address')"></dd></div>
+                                </dl></section>
+                        </div>
+                        <section class="pg-card pg-health" x-show="pgHas(['blood','disease','drugAllergy','foodAllergy'])" data-pg-health>
+                            <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-heart-pulse"/></svg>สุขภาพที่ควรรู้</h5>
+                            <dl class="pg-dl">
+                                <div x-show="pgF('disease')"><dt>โรคประจำตัว</dt><dd x-text="pgF('disease')"></dd></div>
+                                <div x-show="pgF('drugAllergy')"><dt>แพ้ยา</dt><dd x-text="pgF('drugAllergy')"></dd></div>
+                                <div x-show="pgF('foodAllergy')"><dt>แพ้อาหาร</dt><dd x-text="pgF('foodAllergy')"></dd></div>
+                                <div x-show="pgF('blood')"><dt>หมู่โลหิต</dt><dd x-text="pgF('blood')"></dd></div>
+                            </dl></section>
+                        <p class="pg-note" x-show="rg.prof && !rg.prof.linked" data-rg-unlinked>แฟ้มนี้ยังไม่ได้เชื่อมกับทะเบียนนักเรียน (StudentID) — ข้อมูลด้านบนมาจากแฟ้มเคส ผู้ดูแลระบบเชื่อมได้ที่ ตั้งค่าระบบ › ทะเบียนนักเรียน</p>
+                        <p class="pg-note" x-show="rg.prof && rg.prof.linked && !rg.prof.year && rg.prof.allowedAny" data-rg-none>ยังไม่มีข้อมูลทะเบียนเพิ่มเติมของนักเรียนคนนี้</p>
+                        <p class="pg-note" x-show="rg.prof && rg.prof.limited" data-pg-limited>แสดงเฉพาะข้อมูลทั่วไป — ข้อมูลติดต่อ ครอบครัว และสุขภาพ เปิดได้เมื่อคุณได้รับมอบหมายแฟ้มของนักเรียนคนนี้</p>
+                        <!-- every registry field, by category (each category only for roles allowed; checked on the server) -->
+                        <details class="pg-all" data-rg-prof x-show="rg.prof && rg.prof.allowedAny && rg.prof.groups.some(g => g.fields.length)">
+                            <summary><span><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-file-spreadsheet"/></svg>ข้อมูลทะเบียนทั้งหมด</span>
+                                <small x-text="rg.prof ? (rg.prof.year ? 'ปีการศึกษา ' + rg.prof.year + ' • ' : '') + rg.prof.groups.reduce((n, g) => n + g.fields.length, 0) + ' รายการ' : ''"></small><svg class="ico w-4 h-4 pg-chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+                            <div class="pg-all-body">
+                                <div class="pg-year" x-show="rg.prof && rg.prof.years.length > 1"><label>ปีการศึกษา <select :value="rg.prof && rg.prof.year" @change="rgReload($event.target.value)" data-rg-year>
+                                    <template x-for="y in (rg.prof ? rg.prof.years : [])" :key="'rgy' + y"><option :value="y" x-text="y" :selected="rg.prof && rg.prof.year === y"></option></template></select></label></div>
+                                <template x-for="g in (rg.prof ? rg.prof.groups : [])" :key="'rgg' + g.key"><section class="pg-group" x-show="g.fields.length" :data-rg-group="g.key">
+                                    <h6 x-text="g.label"></h6>
+                                    <dl class="pg-dl"><template x-for="f in g.fields" :key="'rgf' + f.key"><div><dt x-text="f.label"></dt>
+                                        <dd><span x-text="g.masked && rg.reveal[f.key] ? rg.reveal[f.key] : f.value" :data-rg-val="f.key"></span>
+                                            <button type="button" class="rg-reveal" x-show="g.masked && !rg.reveal[f.key]" @click="rgReveal(f.key)" :disabled="!!rg.revealBusy" :data-rg-reveal="f.key">แสดง</button></dd></div></template></dl>
+                                    <p class="tl-mute" x-show="g.masked">กด “แสดง” เพื่อดูเลขเต็ม 30 วินาที — ทุกครั้งถูกบันทึกในประวัติการใช้งาน</p>
+                                </section></template>
+                            </div>
+                        </details>
+                        <p class="pg-note" x-show="rg.prof && rg.prof.restricted && !rg.prof.limited" data-rg-restricted>บางหมวดของข้อมูลทะเบียนแสดงเฉพาะผู้ที่ได้รับสิทธิ์ (ผู้ดูแลระบบกำหนดที่ ตั้งค่าระบบ › ตารางสิทธิ์ หมวด “ข้อมูลทะเบียนนักเรียน”)</p>
                     </div>
+                    <section class="pg-card pg-care" data-pg-care>
+                        <h5><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-hand-heart"/></svg>การดูแลในระบบ</h5>
+                        <div class="pg-care-row"><span>สถานะความเสี่ยงเบื้องต้น</span>
+                            <span class="pg-risk" :class="activeStudent && activeStudent.riskLevel ? 'is-' + activeStudent.riskLevel : 'is-none'"
+                                  x-text="activeStudent ? (!activeStudent.riskLevel ? 'ยังไม่ได้ประเมิน' : activeStudent.riskLevel === 'green' ? 'ปกติ (สีเขียว)' : (activeStudent.riskLevel === 'yellow' ? 'เฝ้าระวัง (สีเหลือง)' : 'วิกฤต (สีแดง)')) : '-'"></span></div>
+                    </section>
                 </div>
 
                 <!-- TAB: ไทม์ไลน์การให้บริการ (Service Timeline) — read-only view over the existing records of this case -->
@@ -8356,7 +8736,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             <img :src="phAvatar(tl.data.client.avatar || (activeStudent && activeStudent.avatar) || '')" onerror="this.removeAttribute('src')" alt="" class="tl-avatar" data-tl-photo>
                             <div class="min-w-0">
                                 <div class="flex flex-wrap items-center gap-2"><h5 class="tl-name" x-text="tl.data.client.name"></h5><span class="tl-pill" x-show="tl.data.client.nickname" x-text="tl.data.client.nickname"></span></div>
-                                <p class="tl-meta"><span x-text="'Case ID ' + tl.data.client.id"></span><span x-show="tl.data.client.grade" x-text="'ชั้น ' + tl.data.client.grade"></span><span x-show="tlAge(tl.data.client.birthDateISO) !== ''" x-text="'อายุ ' + tlAge(tl.data.client.birthDateISO) + ' ปี'"></span></p>
+                                <p class="tl-meta"><span class="cn-chip is-case" x-show="tl.data.client.caseNo" x-text="tl.data.client.caseNo" data-tl-caseno></span><span x-show="tl.data.client.grade" x-text="'ชั้น ' + tl.data.client.grade"></span><span x-show="tlAge(tl.data.client.birthDateISO) !== ''" x-text="'อายุ ' + tlAge(tl.data.client.birthDateISO) + ' ปี'"></span></p>
                                 <p class="tl-meta"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-graduation-cap"/></svg>โรงเรียนสาธิตแห่งมหาวิทยาลัยธรรมศาสตร์</p>
                             </div>
                             <button type="button" class="tl-btn tl-btn-ghost ml-auto" @click="tl.data = null; tlLoad()" :disabled="tl.loading" data-tl-refresh><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>รีเฟรช</button>
@@ -8569,6 +8949,15 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                 </article></template></div>
                         </section>
 
+<section class="tl-card rl-by" x-show="(bp.data.byRole || []).length" data-bp-byrole>
+                            <div class="tl-sec-h"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-users-round"/></svg><div><h5>แยกตามบทบาทในเหตุการณ์</h5><p class="tl-mute">นับทุกบันทึกเหมือนด้านบน แล้วแยกหัวตามบทบาทของนักเรียนคนนี้</p></div></div>
+                            <div class="rl-groups"><template x-for="g in (bp.data.byRole || [])" :key="'rlg' + g.role">
+                                <div class="rl-group" :class="'is-' + (g.role || 'none')" :data-rl-group="g.role || 'none'">
+                                    <div class="rl-group-h"><b x-text="g.label"></b><span x-text="g.records + ' ครั้ง'"></span></div>
+                                    <ul><template x-for="c in g.codes" :key="g.role + c.code"><li><em x-text="c.code"></em><span x-text="c.text"></span><b x-text="c.count"></b></li></template></ul>
+                                </div></template></div>
+                        </section>
+
                         <!-- history -->
                         <section class="tl-card" aria-labelledby="bp-h-h" data-bp-history>
                             <div class="tl-frow">
@@ -8581,12 +8970,25 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                 <li :class="r.status === 'cancelled' && 'is-cancel'" :data-bp-rec="r.id">
                                     <div class="bp-rec-h"><b x-text="r.occurredDate ? 'เกิดเหตุ ' + formatThaiDateDisplay(r.occurredDate) + (r.occurredTime ? ' ' + r.occurredTime + ' น.' : '') : 'ไม่ระบุวันเกิดเหตุ'"></b>
                                         <span class="tl-mute" x-text="'บันทึก ' + a3Time(r.recordedAt) + ' • ' + r.recorderName"></span><span class="flex-1"></span>
+                                        <span class="rl-chip" :class="'is-' + (r.role || 'none')" x-show="r.role" x-text="r.roleLabel" data-bp-rec-role></span>
                                         <span class="tl-status" :class="r.status === 'cancelled' ? 'tl-s-stop' : 'tl-s-ok'" x-text="r.status === 'cancelled' ? 'ยกเลิก' : 'บันทึกแล้ว'"></span></div>
                                     <p class="tl-tags"><template x-for="c in r.codes" :key="r.id + 'c' + c"><span class="tl-tag" x-text="c"></span></template></p>
+                                    <p class="bp-line" x-show="r.counterparts && r.counterparts.length" data-bp-rec-cp><b>คู่กรณี: </b><span x-text="(r.counterparts || []).map(x => x.name + (x.grade ? ' (' + x.grade + ')' : '') + (x.role ? ' — ' + x.roleLabel : '')).join(', ')"></span></p>
                                     <template x-if="r.full"><div><p x-show="r.detail" class="bp-line"><b>รายละเอียด: </b><span x-text="r.detail"></span></p><p x-show="r.handling" class="bp-line"><b>วิธีจัดการ: </b><span x-text="r.handling"></span></p></div></template>
-                                    <template x-if="!r.full"><p class="tl-mute">รายละเอียดเปิดได้เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ</p></template>
+                                    <template x-if="!r.full"><p class="tl-mute" x-text="'รายละเอียดเปิดให้: ' + (r.shareLabel || 'เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ')"></p></template>
                                     <button type="button" class="tl-btn tl-btn-ghost mt-2" @click="bpOpenRec(r)" data-bp-rec-open>รายละเอียดฉบับเต็ม</button>
                                 </li></template></ol>
+                        </section>
+
+                        <!-- named as a counterpart in another student's record: reference only -->
+                        <section class="tl-card" aria-labelledby="bp-inv-h" x-show="(bp.data.involved || []).length" data-bp-involved>
+                            <div class="tl-sec-h"><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-users-round"/></svg><div><h5 id="bp-inv-h">เกี่ยวข้องในเหตุการณ์ (เป็นคู่กรณี)</h5>
+                                <p class="tl-mute">นักเรียนคนนี้ถูกระบุเป็นคู่กรณีในบันทึกพฤติกรรมของนักเรียนคนอื่น — แสดงเป็นรายการอ้างอิงเท่านั้น ไม่เปิดรายละเอียดและไม่นับเป็นพฤติกรรมของนักเรียนคนนี้</p></div></div>
+                            <ol class="bp-recs mt-3"><template x-for="x in (bp.data.involved || [])" :key="'bpi' + x.recordId">
+                                <li :data-bp-inv="x.recordId"><div class="bp-rec-h"><b x-text="x.occurredDate ? 'เกิดเหตุ ' + formatThaiDateDisplay(x.occurredDate) : 'บันทึก ' + a3Time(x.recordedAt)"></b>
+                                    <span class="rl-chip" :class="'is-' + (x.role || 'none')" x-text="'บทบาท: ' + x.roleLabel" data-bp-inv-role></span>
+                                    <span class="tl-mute" x-text="'ผู้บันทึก ' + (x.recorderName || '-')"></span></div>
+                                    <p class="bp-line" x-text="x.otherName ? 'บันทึกของ ' + x.otherName + (x.otherGrade ? ' (' + x.otherGrade + ')' : '') : 'บันทึกของนักเรียนคนอื่น (คุณไม่มีสิทธิ์เปิดแฟ้มนั้น)'"></p></li></template></ol>
                         </section>
                     </div>
                     </template>
@@ -8604,6 +9006,8 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                     <div><dt>วันที่บันทึก</dt><dd x-text="a3Time(bp.rec.recordedAt)"></dd></div>
                                     <div><dt>ผู้บันทึก</dt><dd x-text="bp.rec.recorderName"></dd></div>
                                     <div><dt>พฤติกรรม</dt><dd x-text="bp.rec.codes.map(c => bhLabel(bp.rec, c)).join('\n')"></dd></div>
+                                    <div><dt>บทบาทของนักเรียนคนนี้</dt><dd x-text="bp.rec.roleLabel || 'ไม่ระบุบทบาท'" data-bp-rec-role-detail></dd></div>
+                                    <template x-if="bp.rec.full"><div><dt>คู่กรณี</dt><dd x-text="(bp.rec.counterparts || []).length ? bp.rec.counterparts.map(x => x.name + (x.grade ? ' (' + x.grade + ')' : '') + (x.role ? ' — ' + x.roleLabel : '') + (x.studentId ? ' • StudentID ' + x.studentId : (x.source === 'typed' ? ' • พิมพ์เอง' : ''))).join('\n') : '-'" data-bp-rec-cp-detail></dd></div></template>
                                     <template x-if="bp.rec.full"><div><dt>รายละเอียด</dt><dd x-text="bp.rec.detail || '-'"></dd></div></template>
                                     <template x-if="bp.rec.full"><div><dt>ช่วงเวลา/ความถี่</dt><dd x-text="bp.rec.period || '-'"></dd></div></template>
                                     <template x-if="bp.rec.full"><div><dt>แหล่งข้อมูล</dt><dd x-text="(bp.rec.sources || []).map(k => (bm.meta && bm.meta.sources[k]) || k).join(', ') + (bp.rec.sourceOther ? ' (' + bp.rec.sourceOther + ')' : '') || '-'"></dd></div></template>
@@ -8612,7 +9016,8 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                     <template x-if="bp.rec.status === 'cancelled'"><div><dt>ยกเลิก</dt><dd x-text="a3Time(bp.rec.cancelledAt) + (bp.rec.cancelReason ? ' — ' + bp.rec.cancelReason : '')"></dd></div></template>
                                     <template x-if="bp.rec.updatedByName && bp.rec.version > 1"><div><dt>แก้ไขล่าสุด</dt><dd x-text="a3Time(bp.rec.updatedAt) + ' โดย ' + bp.rec.updatedByName"></dd></div></template>
                                 </dl>
-                                <template x-if="!bp.rec.full"><p class="tl-mute">รายละเอียดเปิดได้เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ</p></template>
+                                <template x-if="!bp.rec.full"><p class="tl-mute" x-text="'รายละเอียดเปิดให้: ' + (bp.rec.shareLabel || 'เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ')"></p></template>
+                                <template x-if="bp.rec.full && bp.rec.shareLabel"><p class="tl-mute" data-bp-rec-share x-text="'การเปิดรายละเอียด: ' + bp.rec.shareLabel"></p></template>
                                 <div class="a3-save-row" x-show="bp.rec.canEdit && !bp.cancel.id">
                                     <button type="button" class="tl-btn tl-btn-ghost" @click="bpEditRec(bp.rec)" data-bp-edit>แก้ไข</button>
                                     <button type="button" class="tl-btn tl-btn-ghost" @click="bp.cancel = { id: bp.rec.id, reason: '', busy: false, err: '' }" data-bp-cancel>ยกเลิกระเบียน</button></div>
@@ -9537,14 +9942,20 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         </div>
                     </div>
 
-                    <!-- Auto-populated Grade & Advisor Teacher -->
+                    <!-- Auto-populated Grade & Advisor Teacher (from the student registry when available) -->
+                    <p class="cf-pre" x-show="cfPre && cfPre.studentId" data-cf-pre>
+                        <svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-link"/></svg>
+                        <span x-text="'ดึงจากทะเบียนนักเรียน (StudentID ' + (cfPre ? cfPre.studentId : '') + '): ' + [cfPre && cfPre.grade ? 'ชั้น ' + cfPre.grade : 'ไม่พบชั้นปีปัจจุบัน',
+                            cfPre && cfPre.regAllowed ? (cfPre.birthDateISO ? 'วันเกิด ' + formatThaiDateDisplay(cfPre.birthDateISO) : 'ไม่มีวันเกิดที่อ่านได้') : '',
+                            cfPre && cfPre.regAllowed ? (cfPre.advisor ? 'ครูประจำชั้น ' + cfPre.advisor : 'ไม่มีชื่อครูประจำชั้น') : ''].filter(Boolean).join(' • ') + ' — แก้ไขได้ก่อนบันทึก'"></span>
+                        <small x-show="cfPre && !cfPre.regAllowed">บทบาทของคุณยังไม่มีสิทธิ์ดู “ข้อมูลทั่วไปจากทะเบียน” จึงไม่ได้ดึงวันเกิดและครูประจำชั้น</small></p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">ระดับชั้น *</label>
                             <select x-model="caseForm.grade" required class="w-full px-3.5 py-2 water-drop-select text-xs">
                                 <option value="">-- เลือกระดับชั้น --</option>
                                 <template x-for="g in availableGradesInSystem" :key="g">
-                                    <option :value="g" x-text="g"></option>
+                                    <option :value="g" x-text="g" :selected="caseForm.grade === g"></option>
                                 </template>
                             </select>
                         </div>
@@ -9553,9 +9964,10 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             <select x-model="caseForm.advisor" required class="w-full px-3.5 py-2 water-drop-select text-xs">
                                 <option value="">-- เลือกครูที่ปรึกษา --</option>
                                 <template x-for="tName in advisorTeachersList" :key="tName">
-                                    <option :value="tName" x-text="tName"></option>
+                                    <option :value="tName" x-text="tName + (cfPre && cfPre.advisor === tName ? ' (จากทะเบียน)' : '')" :selected="caseForm.advisor === tName"></option>
                                 </template>
                             </select>
+                            <small class="cf-hint" x-show="adv.loaded && !adv.items.some(x => x.active)" data-cf-adv-empty>ยังไม่มีรายชื่อครู — ผู้ดูแลระบบเพิ่มได้ที่ ตั้งค่าระบบ › ครูประจำชั้น</small>
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">วันที่รับบริการ (Asia/Bangkok) *</label>
@@ -9641,7 +10053,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         <header class="a3-head">
                             <div>
                                 <h4 class="a3-h"><svg class="ico" aria-hidden="true"><use href="#i-clipboard-check"/></svg>การประเมินนักเรียน 360° (Student 360° Assessment)</h4>
-                                <p class="a3-sub">เครื่องมือคัดกรองเชิงปฏิบัติการเพื่อสนับสนุนการช่วยเหลือนักเรียน 3 มิติ (AC • BH • MO) — <b>ไม่ใช่แบบทดสอบวินิจฉัยโรค</b> และไม่แปลผลเป็นการวินิจฉัยใด ๆ • บันทึกแต่ละครั้งเป็นประวัติใหม่ ผูกกับ Case ID เดียวกัน</p>
+                                <p class="a3-sub">เครื่องมือคัดกรองเชิงปฏิบัติการเพื่อสนับสนุนการช่วยเหลือนักเรียน 3 มิติ (AC • BH • MO) — <b>ไม่ใช่แบบทดสอบวินิจฉัยโรค</b> และไม่แปลผลเป็นการวินิจฉัยใด ๆ • บันทึกแต่ละครั้งเป็นประวัติใหม่ ผูกกับแฟ้มเคสเดียวกัน</p>
                             </div>
                             <template x-if="a3Ready() && a3.loaded">
                                 <span class="a3-chip" :class="'a3-st-' + (a3TabStatus('s360') || {}).k" x-text="(a3TabStatus('s360') || {}).label"></span>
@@ -9933,7 +10345,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         <header class="a3-head">
                             <div>
                                 <h4 class="a3-h" id="a3-bps-h"><svg class="ico" aria-hidden="true"><use href="#i-list-checks"/></svg>ประเด็นชีวจิตสังคมและความเสี่ยงรายหัวข้อ (บันทึกแยกส่วน)</h4>
-                                <p class="a3-sub">ช่องบันทึกและคะแนน 1–10 ด้านบนบันทึกพร้อมบันทึกเคสครั้งนี้ตามเดิม • ส่วนนี้ใช้ปุ่มบันทึกของตนเอง เก็บเป็นประวัติตามวันที่ ผูกกับ Case ID และไม่ลบข้อมูลครั้งก่อน</p>
+                                <p class="a3-sub">ช่องบันทึกและคะแนน 1–10 ด้านบนบันทึกพร้อมบันทึกเคสครั้งนี้ตามเดิม • ส่วนนี้ใช้ปุ่มบันทึกของตนเอง เก็บเป็นประวัติตามวันที่ ผูกกับแฟ้มเคสและไม่ลบข้อมูลครั้งก่อน</p>
                             </div>
                             <template x-if="a3Ready() && a3.loaded"><span class="a3-chip" :class="'a3-st-' + (a3TabStatus('biopsychosocial') || {}).k" x-text="(a3TabStatus('biopsychosocial') || {}).label"></span></template>
                         </header>
@@ -10372,7 +10784,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                 <header class="aw-dash-head">
                                     <div>
                                         <h4 id="aw-dash-title" class="aw-h"><svg class="ico" aria-hidden="true"><use href="#i-clipboard-check"/></svg>เครื่องมือการประเมินเพิ่มเติม</h4>
-                                        <p class="aw-sub">เครื่องมือจากเอกสาร “เครื่องมือการปฏิบัติงานสังคมสงเคราะห์ทางการแพทย์” (รับรองโดยสภาวิชาชีพสังคมสงเคราะห์) • บันทึกแยกเป็นรายครั้ง ผูกกับ Case ID และมีรหัสการประเมิน (Assessment ID) ของตนเอง</p>
+                                        <p class="aw-sub">เครื่องมือจากเอกสาร “เครื่องมือการปฏิบัติงานสังคมสงเคราะห์ทางการแพทย์” (รับรองโดยสภาวิชาชีพสังคมสงเคราะห์) • บันทึกแยกเป็นรายครั้ง ผูกกับแฟ้มเคสและมีรหัสการประเมิน (Assessment ID) ของตนเอง</p>
                                     </div>
                                     <button type="button" class="aw-btn aw-btn-ghost" x-show="formStudentId && !isCreatingNewStudentInCase" @click="awLoadList(formStudentId, true)" :disabled="aw.listLoading"><svg class="ico" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>รีเฟรช</button>
                                 </header>
@@ -10381,7 +10793,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                 <template x-if="isCreatingNewStudentInCase || !formStudentId">
                                     <div class="aw-empty" role="status">
                                         <svg class="ico w-7 h-7" aria-hidden="true"><use href="#i-info"/></svg>
-                                        <p class="font-bold">ยังไม่มี Case ID สำหรับเชื่อมโยงการประเมิน</p>
+                                        <p class="font-bold">ยังไม่มีแฟ้มเคสสำหรับเชื่อมโยงการประเมิน</p>
                                         <p>เลือกผู้รับบริการที่มีอยู่ในแถบที่ 1 หรือบันทึกเคสผู้รับบริการใหม่ให้เรียบร้อยก่อน แล้วจึงเปิดเครื่องมือการประเมินจากแถบนี้หรือจากแฟ้มผู้รับบริการ</p>
                                     </div>
                                 </template>
@@ -10914,7 +11326,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         <h3 id="il-title" class="aw-title" x-text="ilCat.fullName"></h3>
                         <p class="aw-meta" x-show="il.clientId">
                             <span x-text="(students.find(s => s.id === il.clientId) || {}).name || ''"></span>
-                            <span class="aw-meta-id">• Case ID <code x-text="il.clientId"></code></span>
+                            <span class="aw-meta-id" x-show="activeStudent && activeStudent.caseNo">• เลขเคส <code x-text="activeStudent ? activeStudent.caseNo : ''"></code></span>
                             <span class="aw-meta-id" x-show="il.item">• Assessment ID <code x-text="il.item && il.item.id"></code></span>
                         </p>
                     </div>
@@ -11412,7 +11824,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         <h3 id="aw-title" class="aw-title" x-text="aw.def.nameTh"></h3>
                         <p class="aw-meta">
                             <span x-text="(students.find(s => s.id === aw.clientId) || {}).name || ''"></span>
-                            <span class="aw-meta-id">• Case ID <code x-text="aw.clientId"></code></span>
+                            <span class="aw-meta-id" x-show="activeStudent && activeStudent.caseNo">• เลขเคส <code x-text="activeStudent ? activeStudent.caseNo : ''"></code></span>
                             <span class="aw-meta-id" x-show="aw.item">• Assessment ID <code x-text="aw.item && aw.item.id"></code></span>
                             <span x-show="aw.item">• ผู้ประเมิน <b x-text="aw.item && aw.item.assessorName"></b></span>
                             <span x-show="!aw.item">• ผู้ประเมิน <b x-text="authUser && authUser.fullName"></b> (จากบัญชีที่เข้าสู่ระบบ)</span>
@@ -12346,7 +12758,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     <script src="js/app-2-4577189a13.js"></script>
     <script src="js/app-3-0ebcb3a77b.js"></script>
     <!-- ALPINE.JS LOGIC -->
-    <script src="js/app-4-ad1f61cecd.js"></script>
+    <script src="js/app-4-c7f4ea8efa.js"></script>
 <!-- loading animation clip (MP4, base64). Not executed; read by TssLoaderVideoSrc only when a loader is shown. -->
 
 <script>
