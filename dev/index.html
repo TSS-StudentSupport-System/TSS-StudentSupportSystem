@@ -72,7 +72,7 @@
     
     <!-- Google Fonts: Inter, Sarabun, Mali -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Mali:wght@400;500;600;700&family=Sarabun:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/app-6-7a591f2cab.css">
+    <link rel="stylesheet" href="css/app-6-657caed37a.css">
 <style id="tss-care">
 /* ===== การดูแลต่อเนื่องและความปลอดภัย ===== */
 .sg-box{margin-top:10px;background:#fff;border:1.5px solid #f3c6c6;border-radius:14px;padding:10px 12px;color:#4a1212}
@@ -1713,7 +1713,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                         <div><b x-text="'สร้าง Red Alert ' + a.code + (a.kind === 'immediate' ? ' (แจ้งทันที)' : ' (ถึง ' + a.count + ' ครั้ง)')"></b>
                                             <p x-text="'สถานะการแจ้งผู้รับผิดชอบ: ' + a.notifyLabel" :data-notify="a.notifyStatus"></p></div></div>
                                 </template>
-                                <p class="tl-mute">ผู้เชี่ยวชาญ 4 วิชาชีพที่รับผิดชอบเคสเห็นการแจ้งเตือนที่แถบด้านบน • หากพบอันตรายใกล้เกิดขึ้น ให้ดำเนินการตามแผนฉุกเฉินของสถานศึกษาทันที</p>
+                                <p class="tl-mute">ผู้เชี่ยวชาญที่รับผิดชอบเคสเห็นการแจ้งเตือนที่แถบด้านบน • หากพบอันตรายใกล้เกิดขึ้น ให้ดำเนินการตามแผนฉุกเฉินของสถานศึกษาทันที</p>
                             </div>
                         </template>
                         <div class="flex flex-wrap gap-2 justify-center">
@@ -1782,6 +1782,114 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         </div>
                     </section>
 
+                    <!-- occurrence: when and where (new) -->
+                    <section class="bf-sec" aria-labelledby="bf-socc" data-bf-occ>
+                        <h4 class="bf-h" id="bf-socc"><span class="bf-num">2</span>วันและเวลาที่เกิดเหตุ</h4>
+                        <div class="bf-occ">
+                            <label class="bf-f"><span>วันที่เกิดเหตุ</span><input type="date" x-model="bf.occDate" :max="todayISO()" @change="bfTouch()" data-bf-occ-date></label>
+                            <div class="bf-f"><span>เวลาที่เกิดเหตุ</span><div class="bf-timerow"><input type="time" x-model="bf.occTime" @change="bfTouch()" data-bf-occ-time><button type="button" class="tl-btn tl-btn-ghost" @click="bfNowTime()" data-bf-occ-now>ใช้เวลาปัจจุบัน</button></div></div>
+                            <label class="bf-f"><span>สถานที่</span><select x-model="bf.loc" @change="if (bf.loc !== 'in_school') bf.abc.place = ''; bfTouch()" data-bf-loc><option value="">ไม่ระบุ</option><option value="in_school">ในโรงเรียน</option><option value="outside">นอกโรงเรียน</option><option value="online">ออนไลน์</option></select></label>
+                            <label class="bf-f bf-f-wide" x-show="bf.loc === 'outside' || bf.loc === 'online'"><span x-text="bf.loc === 'online' ? 'ระบุช่องทางหรือแพลตฟอร์ม' : 'ระบุสถานที่'"></span><input type="text" maxlength="120" x-model="bf.locDetail" @input="bfTouch()" data-bf-loc-detail></label>
+                            <label class="bf-f bf-f-wide" x-show="bf.loc === 'in_school' && pm.meta && (pm.meta.places || []).length"><span>จุดในโรงเรียน</span><select x-model="bf.abc.place" @change="bfTouch()" data-bf-loc-place><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.places : [])" :key="'bflp' + x"><option :value="x" x-text="x" :selected="bf.abc.place === x"></option></template></select></label>
+                        </div>
+                        <p class="tl-mute bf-occ-note">วันที่บันทึกในระบบเป็นวันที่กรอกแยกต่างหาก จึงบันทึกเหตุการณ์ย้อนหลังได้</p>
+                    </section>
+
+                    <!-- 2. behaviours -->
+                    <section class="bf-sec" :class="{ 'bf-err': bf.fe.codes }" aria-labelledby="bf-s2">
+                        <div class="bf-h2row">
+                            <h4 class="bf-h" id="bf-s2"><span class="bf-num">3</span>พฤติกรรมที่ปรากฏ</h4>
+                            <span class="bf-count" role="status" aria-live="polite" x-text="'เลือกแล้ว ' + bf.codes.length + ' รายการ'" data-bf-count></span>
+                            <span class="flex-1"></span>
+                            <label class="bf-search"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-search"/></svg><input type="search" x-model="bf.fq" @input="bf.dom = ''" placeholder="ค้นหารหัสหรือพฤติกรรม เช่น EF7, มาสาย" aria-label="ค้นหาพฤติกรรม" data-bf-fq></label>
+                        </div>
+                        <p class="a3-ferr" x-show="bf.fe.codes" x-text="bf.fe.codes"></p>
+                        <div class="bf-mo7" role="alert" x-show="bfMO7" data-bf-mo7>
+                            <svg class="ico w-7 h-7" aria-hidden="true"><use href="#i-siren"/></svg>
+                            <div><b>พบการบันทึกประเด็นความเสี่ยงด้านความปลอดภัยของนักเรียน ต้องตรวจสอบและประเมินสถานการณ์โดยผู้รับผิดชอบทันที</b>
+                                <p>MO7 เป็นสัญญาณให้บุคลากรตรวจสอบความปลอดภัย ไม่ใช่การยืนยันระดับความเสี่ยงทางคลินิก • หากมีอันตรายใกล้เกิดขึ้น ให้ดำเนินการตามแนวทางคุ้มครองนักเรียนและแผนฉุกเฉินของสถานศึกษาทันที • เมื่อบันทึกสำเร็จ ระบบสร้าง Red Alert และแจ้งผู้เชี่ยวชาญที่รับผิดชอบ</p>
+                                <template x-if="bm.meta.safetyProcedure"><p x-text="'ขั้นตอนของสถานศึกษา: ' + bm.meta.safetyProcedure"></p></template>
+                                <template x-if="bm.meta && bm.meta.guidance"><div class="sg-box" data-bf-guidance>
+                                    <b>ทำทันที (ไม่ต้องรอระบบแจ้ง)</b>
+                                    <ol><template x-for="(st, i) in bm.meta.guidance.steps" :key="'sg' + i"><li x-text="st"></li></template></ol>
+                                    <p x-show="bm.meta.guidance.contacts" class="sg-contacts" x-text="'ติดต่อในโรงเรียน: ' + bm.meta.guidance.contacts"></p></div></template>
+                            </div>
+                        </div>
+                        <details class="bf-codes" data-bf-codes :open="bf.codes.length === 0">
+                            <summary class="bf-codes-s" data-bf-codes-s>
+                                <span class="bf-codes-chips"><template x-for="c in bf.codes" :key="'cs' + c"><span class="bf-chip" :class="BH_DOM_STYLE[bhItem(c).domain]" x-text="c"></span></template></span>
+                                <span class="bf-codes-t" x-text="bf.codes.length ? 'เลือกแล้ว ' + bf.codes.length + ' รายการ • กดเพื่อดูรายการทั้งหมด' : 'กดเพื่อเลือกรหัสพฤติกรรม'"></span>
+                                <svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                            </summary>
+                        <div class="bf-cats" role="tablist" aria-label="หมวดใหญ่ของพฤติกรรม" x-show="bfHasBH" data-bf-cats>
+                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'bh' && 'is-on'" :aria-selected="bf.cat === 'bh'" @click="bfSetCat('bh')" data-bf-cat="bh">
+                                <span><b>พฤติกรรมความเสี่ยงตามธรรมนูญนักเรียน</b><small>รหัส BH</small></span><span class="bf-cat-n" x-text="bfCatCount('bh') || ''"></span></button>
+                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'gen' && 'is-on'" :aria-selected="bf.cat === 'gen'" @click="bfSetCat('gen')" data-bf-cat="gen">
+                                <span><b>พฤติกรรมนักเรียนทั่วไป</b><small>รหัสอื่น ๆ ทั้งหมด</small></span><span class="bf-cat-n" x-text="bfCatCount('gen') || ''"></span></button>
+                        </div>
+                        <p class="tl-mute text-xs" x-show="bfHasBH && (bf.fq || '').trim()" data-bf-cat-search>กำลังค้นหาในทั้ง 2 หมวด</p>
+                        <div class="bf-tabs" role="tablist" aria-label="เลือกหมวดพฤติกรรม" data-bf-tabs>
+                            <button type="button" role="tab" class="bf-tab" :class="!bf.dom && 'is-on'" :aria-selected="!bf.dom" @click="bf.dom = ''" data-bf-tab=""><span>ทุกหมวด</span><small x-text="(bfHasBH && !(bf.fq || '').trim() ? bfCatCount(bf.cat) : bf.codes.length) || ''"></small></button>
+                            <template x-for="g in bfGroupsCat" :key="'bftg' + g.id"><div class="bf-tabg" role="group" :aria-label="g.nameEn" :data-bf-tabg="g.id"><small x-text="g.nameEn"></small>
+                            <template x-for="d in g.domains" :key="'bft' + d.code">
+                                <button type="button" role="tab" class="bf-tab" :class="[BH_DOM_STYLE[d.code], bf.dom === d.code && 'is-on']" :aria-selected="bf.dom === d.code" @click="bf.dom = d.code" :data-bf-tab="d.code" :title="d.nameTh">
+                                    <b x-text="d.code"></b><span class="bf-tab-n" x-text="d.nameEn"></span><small x-text="bf.codes.filter(c => (bhItem(c) || {}).domain === d.code).length || ''"></small></button>
+                            </template></div></template>
+                        </div>
+                        <div class="bf-doms">
+                            <template x-for="g in bfGroupsCat" :key="'bfg' + g.id"><div class="bf-group" x-show="!bf.dom || g.domains.some(x => x.code === bf.dom)" :data-bf-group="g.id">
+                            <p class="bf-ghead"><span x-text="g.nameEn"></span><small x-text="g.nameTh"></small></p>
+                            <div class="bf-gdoms">
+                            <template x-for="d in g.domains" :key="'bd' + d.code">
+                                <div class="bf-dom" x-show="!bf.dom || bf.dom === d.code" :class="BH_DOM_STYLE[d.code]" :data-bf-dom="d.code" role="group" :aria-label="d.code + ' ' + d.nameTh">
+                                    <div class="bf-dom-h"><span class="bf-dom-code" x-text="d.code"></span><div><b x-text="d.nameTh"></b><small x-text="d.nameEn"></small></div>
+                                        <span class="bf-dom-n" x-text="bf.codes.filter(c => (bhItem(c) || {}).domain === d.code).length || ''"></span></div>
+                                    <p class="bf-restr" x-show="d.restricted" :data-bf-restr="d.code"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg><span>ข้อมูลอ่อนไหว — รหัสหมวดนี้เห็นได้เฉพาะผู้บันทึกและผู้เชี่ยวชาญ (ตรวจสิทธิ์ที่เซิร์ฟเวอร์)</span></p>
+                                    <p class="tl-mute p-2" x-show="!bfItems(d.code).length">ไม่มีรายการที่ตรงกับคำค้น</p>
+                                    <template x-for="(it, ix) in bfItems(d.code)" :key="it.code">
+                                        <div><p class="bf-grp" x-show="it.group && (ix === 0 || bfItems(d.code)[ix - 1].group !== it.group)" x-text="it.group" :data-bf-grp="it.group"></p>
+                                        <label class="bf-item" :class="{ 'is-on': bf.codes.includes(it.code), 'is-mo7': it.code === 'MO7' }" :data-bf-item="it.code">
+                                            <input type="checkbox" :checked="bf.codes.includes(it.code)" @change="bfToggle(it.code)">
+                                            <span class="bf-tick" aria-hidden="true"><svg class="ico w-3.5 h-3.5"><use href="#i-check"/></svg></span>
+                                            <span class="bf-code" x-text="it.code"></span><span class="bf-txt"><span x-text="it.text"></span><small class="bf-desc" x-show="it.description" x-text="it.description"></small></span>
+                                        </label></div>
+                                    </template>
+                                </div>
+                            </template>
+                            </div></div></template>
+                        </div>
+                        </details>
+                    </section>
+
+                    <!-- 3. details + 4. handling -->
+                    <div class="bf-two">
+                        <section class="bf-sec" aria-labelledby="bf-s3">
+                            <h4 class="bf-h" id="bf-s3"><span class="bf-num">4</span>รายละเอียดพฤติกรรมเพิ่มเติม</h4>
+                            <label class="bf-f bf-f-wide" :class="{ 'is-err': bf.fe.detail }"><span x-text="'เหตุการณ์ สถานการณ์ และบริบทที่สังเกตได้' + (bfMO7 ? ' *' : '')"></span>
+                                <textarea rows="5" maxlength="3000" x-model="bf.detail" @input="bfTouch('detail')" data-bf-detail placeholder="เขียนสิ่งที่เห็นหรือได้ยินจริง เช่น เวลา สถานที่ ใครอยู่ด้วย เกิดอะไรขึ้น"></textarea>
+                                <em x-show="bf.fe.detail" x-text="bf.fe.detail"></em><small class="bf-cc" x-text="(bf.detail || '').length + ' / 3000 ตัวอักษร'"></small></label>
+                            <div class="bf-f bf-f-wide"><span>แหล่งข้อมูล</span>
+                                <div class="bf-srcs"><template x-for="k in Object.keys(bm.meta.sources)" :key="'bsrc' + k">
+                                    <button type="button" class="bf-src" :aria-pressed="bf.sources.includes(k) ? 'true' : 'false'" @click="a3ToggleSrc(bf.sources, k); bfTouch()" x-text="bm.meta.sources[k]" :data-bf-src="k"></button></template></div>
+                                <input x-show="bf.sources.includes('other')" maxlength="120" x-model="bf.sourceOther" @input="bfTouch()" placeholder="ระบุแหล่งข้อมูลอื่น" class="mt-2"></div>
+                        </section>
+                        <section class="bf-sec" aria-labelledby="bf-s4">
+                            <h4 class="bf-h" id="bf-s4"><span class="bf-num">5</span>วิธีการจัดการพฤติกรรมที่เกิดขึ้น</h4>
+                            <label class="bf-f bf-f-wide"><span>สิ่งที่ดำเนินการไปแล้วจริง (เว้นว่างได้)</span>
+                                <textarea rows="5" maxlength="3000" x-model="bf.handling" @input="bfTouch()" data-bf-handling placeholder="เช่น พูดคุยกับนักเรียน • ประสานครูที่ปรึกษา/ผู้ปกครอง • ช่วยเหลือเบื้องต้น • ส่งต่อผู้เชี่ยวชาญ"></textarea></label>
+                        </section>
+                        <details class="bf-sec bf-more" x-show="pm.meta && modOn('pbis')" data-bf-abc-wrap :open="!!(bf.abc.period || bf.abc.subject || bf.abc.antecedent || bf.abc.consequence)"><summary class="bf-more-s" data-bf-abc-open>+ บริบทเพิ่มเติม (ABC) — ไม่บังคับ</summary>
+                        <section aria-labelledby="bf-s5" data-bf-abc>
+                            <h4 class="bf-h" id="bf-s5"><span class="bf-num">6</span>บริบทของพฤติกรรม (ABC) <small class="tl-mute">ไม่บังคับ — ช่วยให้เห็นรูปแบบเพื่อวางแผนป้องกัน</small></h4>
+                            <div class="is-row" x-show="pm.meta">
+                                
+                                <label class="bf-f"><span>ช่วงเวลา</span><select x-model="bf.abc.period" @change="bfTouch()" data-bf-abc-period><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.periods : [])" :key="'bfat' + x"><option :value="x" x-text="x" :selected="bf.abc.period === x"></option></template></select></label>
+                                <label class="bf-f"><span>วิชา/กิจกรรม</span><input type="text" maxlength="80" x-model="bf.abc.subject" @input="bfTouch()" placeholder="เช่น คณิตศาสตร์"></label></div>
+                            <div class="is-row">
+                                <label class="bf-f"><span>สิ่งที่เกิดขึ้นก่อน (A)</span><select x-model="bf.abc.antecedent" @change="bfTouch()" data-bf-abc-a><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.antecedents : [])" :key="'bfaa' + x"><option :value="x" x-text="x" :selected="bf.abc.antecedent === x"></option></template></select></label>
+                                <label class="bf-f"><span>สิ่งที่ตามมาหลังพฤติกรรม (C)</span><select x-model="bf.abc.consequence" @change="bfTouch()" data-bf-abc-c><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.consequences : [])" :key="'bfac' + x"><option :value="x" x-text="x" :selected="bf.abc.consequence === x"></option></template></select></label></div>
+                        </section></details>
+                    </div>
                     <!-- counterparts (optional) -->
                     <section class="bf-sec" :class="{ 'bf-err': bf.fe.counterparts }" aria-labelledby="bf-scp" data-bf-cp>
                         <h4 class="bf-h" id="bf-scp"><span class="bf-num bf-num-ico"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-users-round"/></svg></span>คู่กรณี <small class="tl-mute">ไม่บังคับ • เพิ่มได้หลายคน</small></h4>
@@ -1820,101 +1928,6 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         <p class="tl-mute bf-cp-note">แฟ้มของคู่กรณีจะแสดงเพียงว่า “เกี่ยวข้องในเหตุการณ์” พร้อมวันที่ โดยไม่เปิดรายละเอียดของบันทึกนี้</p>
                     </section>
 
-                    <!-- 2. behaviours -->
-                    <section class="bf-sec" :class="{ 'bf-err': bf.fe.codes }" aria-labelledby="bf-s2">
-                        <div class="bf-h2row">
-                            <h4 class="bf-h" id="bf-s2"><span class="bf-num">2</span>พฤติกรรมที่ปรากฏ</h4>
-                            <span class="bf-count" role="status" aria-live="polite" x-text="'เลือกแล้ว ' + bf.codes.length + ' รายการ'" data-bf-count></span>
-                            <span class="flex-1"></span>
-                            <label class="bf-search"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-search"/></svg><input type="search" x-model="bf.fq" @input="bf.dom = ''" placeholder="ค้นหารหัสหรือพฤติกรรม เช่น EF7, มาสาย" aria-label="ค้นหาพฤติกรรม" data-bf-fq></label>
-                        </div>
-                        <p class="a3-ferr" x-show="bf.fe.codes" x-text="bf.fe.codes"></p>
-                        <div class="bf-mo7" role="alert" x-show="bfMO7" data-bf-mo7>
-                            <svg class="ico w-7 h-7" aria-hidden="true"><use href="#i-siren"/></svg>
-                            <div><b>พบการบันทึกประเด็นความเสี่ยงด้านความปลอดภัยของนักเรียน ต้องตรวจสอบและประเมินสถานการณ์โดยผู้รับผิดชอบทันที</b>
-                                <p>MO7 เป็นสัญญาณให้บุคลากรตรวจสอบความปลอดภัย ไม่ใช่การยืนยันระดับความเสี่ยงทางคลินิก • หากมีอันตรายใกล้เกิดขึ้น ให้ดำเนินการตามแนวทางคุ้มครองนักเรียนและแผนฉุกเฉินของสถานศึกษาทันที • เมื่อบันทึกสำเร็จ ระบบสร้าง Red Alert และแจ้งผู้เชี่ยวชาญที่รับผิดชอบ</p>
-                                <template x-if="bm.meta.safetyProcedure"><p x-text="'ขั้นตอนของสถานศึกษา: ' + bm.meta.safetyProcedure"></p></template>
-                                <template x-if="bm.meta && bm.meta.guidance"><div class="sg-box" data-bf-guidance>
-                                    <b>ทำทันที (ไม่ต้องรอระบบแจ้ง)</b>
-                                    <ol><template x-for="(st, i) in bm.meta.guidance.steps" :key="'sg' + i"><li x-text="st"></li></template></ol>
-                                    <p x-show="bm.meta.guidance.contacts" class="sg-contacts" x-text="'ติดต่อในโรงเรียน: ' + bm.meta.guidance.contacts"></p></div></template>
-                            </div>
-                        </div>
-                        <div class="bf-cats" role="tablist" aria-label="หมวดใหญ่ของพฤติกรรม" x-show="bfHasBH" data-bf-cats>
-                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'bh' && 'is-on'" :aria-selected="bf.cat === 'bh'" @click="bfSetCat('bh')" data-bf-cat="bh">
-                                <span><b>พฤติกรรมความเสี่ยงตามธรรมนูญนักเรียน</b><small>รหัส BH</small></span><span class="bf-cat-n" x-text="bfCatCount('bh') || ''"></span></button>
-                            <button type="button" role="tab" class="bf-cat" :class="bf.cat === 'gen' && 'is-on'" :aria-selected="bf.cat === 'gen'" @click="bfSetCat('gen')" data-bf-cat="gen">
-                                <span><b>พฤติกรรมนักเรียนทั่วไป</b><small>รหัสอื่น ๆ ทั้งหมด</small></span><span class="bf-cat-n" x-text="bfCatCount('gen') || ''"></span></button>
-                        </div>
-                        <p class="tl-mute text-xs" x-show="bfHasBH && (bf.fq || '').trim()" data-bf-cat-search>กำลังค้นหาในทั้ง 2 หมวด</p>
-                        <div class="bf-tabs" role="tablist" aria-label="เลือกหมวดพฤติกรรม" data-bf-tabs>
-                            <button type="button" role="tab" class="bf-tab" :class="!bf.dom && 'is-on'" :aria-selected="!bf.dom" @click="bf.dom = ''" data-bf-tab=""><span>ทุกหมวด</span><small x-text="(bfHasBH && !(bf.fq || '').trim() ? bfCatCount(bf.cat) : bf.codes.length) || ''"></small></button>
-                            <template x-for="g in bfGroupsCat" :key="'bftg' + g.id"><div class="bf-tabg" role="group" :aria-label="g.nameEn" :data-bf-tabg="g.id"><small x-text="g.nameEn"></small>
-                            <template x-for="d in g.domains" :key="'bft' + d.code">
-                                <button type="button" role="tab" class="bf-tab" :class="[BH_DOM_STYLE[d.code], bf.dom === d.code && 'is-on']" :aria-selected="bf.dom === d.code" @click="bf.dom = d.code" :data-bf-tab="d.code" :title="d.nameTh">
-                                    <b x-text="d.code"></b><span class="bf-tab-n" x-text="d.nameEn"></span><small x-text="bf.codes.filter(c => (bhItem(c) || {}).domain === d.code).length || ''"></small></button>
-                            </template></div></template>
-                        </div>
-                        <div class="bf-doms">
-                            <template x-for="g in bfGroupsCat" :key="'bfg' + g.id"><div class="bf-group" x-show="!bf.dom || g.domains.some(x => x.code === bf.dom)" :data-bf-group="g.id">
-                            <p class="bf-ghead"><span x-text="g.nameEn"></span><small x-text="g.nameTh"></small></p>
-                            <div class="bf-gdoms">
-                            <template x-for="d in g.domains" :key="'bd' + d.code">
-                                <div class="bf-dom" x-show="!bf.dom || bf.dom === d.code" :class="BH_DOM_STYLE[d.code]" :data-bf-dom="d.code" role="group" :aria-label="d.code + ' ' + d.nameTh">
-                                    <div class="bf-dom-h"><span class="bf-dom-code" x-text="d.code"></span><div><b x-text="d.nameTh"></b><small x-text="d.nameEn"></small></div>
-                                        <span class="bf-dom-n" x-text="bf.codes.filter(c => (bhItem(c) || {}).domain === d.code).length || ''"></span></div>
-                                    <p class="bf-restr" x-show="d.restricted" :data-bf-restr="d.code"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg><span>ข้อมูลอ่อนไหว — รหัสหมวดนี้เห็นได้เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ (ตรวจสิทธิ์ที่เซิร์ฟเวอร์)</span></p>
-                                    <p class="tl-mute p-2" x-show="!bfItems(d.code).length">ไม่มีรายการที่ตรงกับคำค้น</p>
-                                    <template x-for="(it, ix) in bfItems(d.code)" :key="it.code">
-                                        <div><p class="bf-grp" x-show="it.group && (ix === 0 || bfItems(d.code)[ix - 1].group !== it.group)" x-text="it.group" :data-bf-grp="it.group"></p>
-                                        <label class="bf-item" :class="{ 'is-on': bf.codes.includes(it.code), 'is-mo7': it.code === 'MO7' }" :data-bf-item="it.code">
-                                            <input type="checkbox" :checked="bf.codes.includes(it.code)" @change="bfToggle(it.code)">
-                                            <span class="bf-tick" aria-hidden="true"><svg class="ico w-3.5 h-3.5"><use href="#i-check"/></svg></span>
-                                            <span class="bf-code" x-text="it.code"></span><span class="bf-txt"><span x-text="it.text"></span><small class="bf-desc" x-show="it.description" x-text="it.description"></small></span>
-                                        </label></div>
-                                    </template>
-                                </div>
-                            </template>
-                            </div></div></template>
-                        </div>
-                    </section>
-
-                    <!-- 3. details + 4. handling -->
-                    <div class="bf-two">
-                        <section class="bf-sec" aria-labelledby="bf-s3">
-                            <h4 class="bf-h" id="bf-s3"><span class="bf-num">3</span>รายละเอียดพฤติกรรมเพิ่มเติม</h4>
-                            <label class="bf-f bf-f-wide" :class="{ 'is-err': bf.fe.detail }"><span x-text="'เหตุการณ์ สถานการณ์ และบริบทที่สังเกตได้' + (bfMO7 ? ' *' : '')"></span>
-                                <textarea rows="5" maxlength="3000" x-model="bf.detail" @input="bfTouch('detail')" data-bf-detail placeholder="เขียนสิ่งที่เห็นหรือได้ยินจริง เช่น เวลา สถานที่ ใครอยู่ด้วย เกิดอะไรขึ้น"></textarea>
-                                <em x-show="bf.fe.detail" x-text="bf.fe.detail"></em></label>
-                            <div class="bf-f bf-f-wide"><span>แหล่งข้อมูล</span>
-                                <div class="bf-srcs"><template x-for="k in Object.keys(bm.meta.sources)" :key="'bsrc' + k">
-                                    <button type="button" class="bf-src" :aria-pressed="bf.sources.includes(k) ? 'true' : 'false'" @click="a3ToggleSrc(bf.sources, k); bfTouch()" x-text="bm.meta.sources[k]" :data-bf-src="k"></button></template></div>
-                                <input x-show="bf.sources.includes('other')" maxlength="120" x-model="bf.sourceOther" @input="bfTouch()" placeholder="ระบุแหล่งข้อมูลอื่น" class="mt-2"></div>
-                        </section>
-                        <section class="bf-sec" aria-labelledby="bf-s4">
-                            <h4 class="bf-h" id="bf-s4"><span class="bf-num">4</span>วิธีการจัดการพฤติกรรมที่เกิดขึ้น</h4>
-                            <label class="bf-f bf-f-wide"><span>สิ่งที่ดำเนินการไปแล้วจริง (เว้นว่างได้)</span>
-                                <textarea rows="5" maxlength="3000" x-model="bf.handling" @input="bfTouch()" data-bf-handling placeholder="เช่น พูดคุยกับนักเรียน • ประสานครูที่ปรึกษา/ผู้ปกครอง • ช่วยเหลือเบื้องต้น • ส่งต่อผู้เชี่ยวชาญ"></textarea></label>
-                        </section>
-                        <section class="bf-sec bf-share" aria-labelledby="bf-ssh" data-bf-share>
-                            <h4 class="bf-h" id="bf-ssh"><span class="bf-num bf-num-ico"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg></span>ใครอ่านรายละเอียดของบันทึกนี้ได้</h4>
-                            <p class="tl-mute">บุคลากรทุกคนเห็นว่ามีการบันทึกพฤติกรรมรหัสใด เมื่อไร และใครบันทึก ส่วนรายละเอียด (ข้อ 3–4 คู่กรณี และบริบท) เห็นตามที่คุณเลือก — ผู้เชี่ยวชาญ 4 วิชาชีพเห็นทั้งหมดเสมอ</p>
-                            <div class="bf-share-opts" role="radiogroup" aria-labelledby="bf-ssh"><template x-for="o in BH_SHARE_OPTS" :key="'bsh' + o[0]">
-                                <label class="bf-share-o" :class="bf.share === o[0] && 'is-on'"><input type="radio" name="bf-share" :value="o[0]" x-model="bf.share" @change="bfTouch()" :data-bf-share-o="o[0]">
-                                    <span><b x-text="o[1]"></b><small x-text="o[2]"></small></span></label></template></div>
-                        </section>
-                        <details class="bf-sec bf-more" x-show="pm.meta && modOn('pbis')" data-bf-abc-wrap :open="!!(bf.abc.place || bf.abc.period || bf.abc.subject || bf.abc.antecedent || bf.abc.consequence)"><summary class="bf-more-s" data-bf-abc-open>+ บริบทเพิ่มเติม (ABC) — ไม่บังคับ</summary>
-                        <section aria-labelledby="bf-s5" data-bf-abc>
-                            <h4 class="bf-h" id="bf-s5"><span class="bf-num">5</span>บริบทของพฤติกรรม (ABC) <small class="tl-mute">ไม่บังคับ — ช่วยให้เห็นรูปแบบเพื่อวางแผนป้องกัน</small></h4>
-                            <div class="is-row" x-show="pm.meta">
-                                <label class="bf-f"><span>สถานที่</span><select x-model="bf.abc.place" @change="bfTouch()" data-bf-abc-place><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.places : [])" :key="'bfap' + x"><option :value="x" x-text="x" :selected="bf.abc.place === x"></option></template></select></label>
-                                <label class="bf-f"><span>ช่วงเวลา</span><select x-model="bf.abc.period" @change="bfTouch()" data-bf-abc-period><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.periods : [])" :key="'bfat' + x"><option :value="x" x-text="x" :selected="bf.abc.period === x"></option></template></select></label>
-                                <label class="bf-f"><span>วิชา/กิจกรรม</span><input type="text" maxlength="80" x-model="bf.abc.subject" @input="bfTouch()" placeholder="เช่น คณิตศาสตร์"></label></div>
-                            <div class="is-row">
-                                <label class="bf-f"><span>สิ่งที่เกิดขึ้นก่อน (A)</span><select x-model="bf.abc.antecedent" @change="bfTouch()" data-bf-abc-a><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.antecedents : [])" :key="'bfaa' + x"><option :value="x" x-text="x" :selected="bf.abc.antecedent === x"></option></template></select></label>
-                                <label class="bf-f"><span>สิ่งที่ตามมาหลังพฤติกรรม (C)</span><select x-model="bf.abc.consequence" @change="bfTouch()" data-bf-abc-c><option value="">— ไม่ระบุ —</option><template x-for="x in (pm.meta ? pm.meta.consequences : [])" :key="'bfac' + x"><option :value="x" x-text="x" :selected="bf.abc.consequence === x"></option></template></select></label></div>
-                        </section></details>
-                    </div>
                 </div>
                 </template>
             </div>
@@ -2211,7 +2224,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                         <template x-if="is.fo.fromAlert && isFromAlertRef()">
                             <div class="is-alert-ref" data-is-from-alert><svg class="ico w-5 h-5" aria-hidden="true"><use href="#i-siren"/></svg>
                                 <span class="min-w-0"><b x-text="'มาจาก Red Alert ' + isFromAlertRef().code"></b><small x-text="isFromAlertRef().text"></small></span>
-                                <span class="tl-mute" x-show="!is.fo.canCreate">เปิดดูแผนที่มีอยู่ได้ — การสร้างแผนทำได้เฉพาะ 4 วิชาชีพ</span></div>
+                                <span class="tl-mute" x-show="!is.fo.canCreate">เปิดดูแผนที่มีอยู่ได้ — การสร้างแผนทำได้เฉพาะ ผู้เชี่ยวชาญ</span></div>
                         </template>
                         <div class="flex flex-wrap gap-2 items-center" x-show="is.fo.plans.length">
                             <label class="tl-field is-narrow"><span>ประเภทแผน</span><select x-model="is.fo.type" data-filter data-filter-default="" data-is-type><option value="">ทุกประเภท</option><option value="short">มีแผนระยะสั้น</option><option value="long">มีแผนระยะยาว</option><option value="both">มีทั้งสองแผน</option></select></label>
@@ -4526,7 +4539,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                             <small class="bc-orig" x-show="c.builtin && c.originalText !== c.name" x-text="'ชื่อเดิมตามแบบบันทึก: ' + c.originalText"></small>
                             <span class="bc-chips"><span class="bc-chip" x-text="c.domain"></span>
                                 <span class="bc-chip bc-grp" x-show="c.group" x-text="c.group"></span>
-                                <span class="bc-chip" x-show="c.restricted" :data-bc-restr="c.code">ข้อมูลอ่อนไหว — เห็นเฉพาะผู้บันทึก + 4 วิชาชีพ</span>
+                                <span class="bc-chip" x-show="c.restricted" :data-bc-restr="c.code">ข้อมูลอ่อนไหว — เห็นเฉพาะผู้บันทึก + ผู้เชี่ยวชาญ</span>
                                 <span class="bc-chip" :class="['bc-m-' + c.alertMode, c.alertMode === 'unset' && 'bc-unset']" x-text="'Red Alert: ' + bcRule(c)" :data-bc-rule="c.code"></span>
                                 <span class="bc-chip bc-safe" x-show="c.safetyCandidate && c.alertMode !== 'immediate'" :data-bc-safe="c.code">ควรพิจารณาแจ้งทันที (ความปลอดภัย) — รอการอนุมัติ</span>
                                 <span class="bc-chip" x-show="c.used" x-text="'ใช้แล้ว ' + c.used + ' รายการ'"></span>
@@ -4572,7 +4585,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
             <template x-if="currentTab === 'bh_review' && tabAllowed('bh_review')"><div data-page class="tss-card p-6 rounded-3xl space-y-4" data-rv-page>
                 <div class="flex flex-wrap items-end justify-between gap-3">
                     <div><h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2"><svg class="ico w-5 h-5 bc-ico" aria-hidden="true"><use href="#i-clipboard-check"/></svg>ตรวจทานบันทึกพฤติกรรม</h2>
-                        <p class="text-xs text-slate-500">บันทึกจากบุคลากรนอก 4 วิชาชีพ — นับเข้าเกณฑ์ Red Alert แล้วตั้งแต่บันทึก • ตรวจว่าเป็นนักเรียนคนที่ถูกต้องและเขียนเชิงข้อเท็จจริง แก้/ยกเลิกได้จากแฟ้ม หรือย้ายไปยังนักเรียนที่ถูกต้อง</p></div>
+                        <p class="text-xs text-slate-500">บันทึกจากบุคลากรนอกกลุ่มผู้เชี่ยวชาญ — นับเข้าเกณฑ์ Red Alert แล้วตั้งแต่บันทึก • ตรวจว่าเป็นนักเรียนคนที่ถูกต้องและเขียนเชิงข้อเท็จจริง แก้/ยกเลิกได้จากแฟ้ม หรือย้ายไปยังนักเรียนที่ถูกต้อง</p></div>
                     <button type="button" class="tl-btn tl-btn-ghost" @click="rvLoad()" :disabled="rv.loading"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>รีเฟรช</button>
                 </div>
                 <div class="hm-tip" x-show="tipOn('bh_review')" data-tip="bh_review"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-sparkles"/></svg><span>ตรวจว่าบันทึกเป็นข้อเท็จจริง (สิ่งที่เห็น) ไม่ใช่การตีความ และถูกตัวนักเรียน — ถ้าผิดคน ใช้ “ย้ายไปนักเรียนที่ถูกต้อง”</span><button type="button" class="hm-tip-x" @click="tipHide('bh_review')" aria-label="ซ่อนคำแนะนำ"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-x"/></svg></button></div>
@@ -4633,6 +4646,20 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                     <p class="text-xs text-slate-500">ค่าที่ว่างไว้หมายถึงยังไม่เปิดใช้ — ระบบไม่กำหนดตัวเลขแทนนโยบายของโรงเรียน</p></div>
                 <!-- เปิด–ปิดโมดูล (manage_settings): nothing is deleted; the server refuses actions of a switched-off module -->
                 <p class="is-note" x-show="tabAllowed('sys_settings')" data-cs-hub-link><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-info"/></svg><span>ตั้งค่าแต่ละฟีเจอร์ สิทธิ์ของแต่ละบทบาท และการแสดงผล รวมไว้ที่ <button type="button" class="underline font-bold" @click="currentTab = 'sys_settings'">ตั้งค่าระบบ</button></span></p>
+                <section class="tl-card space-y-3" data-ba-acc-card x-show="tabAllowed('sys_settings')" x-init="baAccLoad()">
+                    <div class="flex flex-wrap items-center gap-2"><h3 class="font-extrabold flex items-center gap-2"><svg class="ico w-5 h-5 pb-star" aria-hidden="true"><use href="#i-shield-check"/></svg>สิทธิ์เข้าถึงบันทึกพฤติกรรม</h3>
+                        <button type="button" class="tl-btn tl-btn-ghost" x-show="baAcc.canEdit && !baAcc.open && baAcc.matrix" @click="baAccEdit()" data-ba-acc-edit>แก้ไข</button></div>
+                    <p class="tl-mute">กำหนดว่าแต่ละกลุ่มเห็นส่วนใดของบันทึกพฤติกรรม ผู้บันทึกและผู้เชี่ยวชาญเห็นทุกส่วนเสมอ</p>
+                    <div class="overflow-x-auto"><table class="w-full text-sm" data-ba-acc-table>
+                        <thead><tr><th class="text-left font-bold py-2 pr-3">ส่วนของบันทึก</th><template x-for="a in baAcc.auds" :key="'baa' + a.key"><th class="font-bold py-2 px-2 text-center" x-text="a.label"></th></template></tr></thead>
+                        <tbody><template x-for="c in baAcc.cats" :key="'bac' + c.key"><tr :data-ba-acc-row="c.key">
+                            <td class="py-2 pr-3" x-text="c.label"></td>
+                            <template x-for="a in baAcc.auds" :key="'bac' + c.key + a.key"><td class="py-2 px-2 text-center">
+                                <input type="checkbox" class="w-4 h-4" :aria-label="c.label + ' — ' + a.label" :checked="(baAcc.open ? baAcc.draft : baAcc.matrix)[c.key][a.key]" :disabled="!baAcc.open || a.fixed" @change="baAccToggle(c.key, a.key)" :data-ba-acc-cell="c.key + '.' + a.key"></td></template></tr></template></tbody></table></div>
+                    <div class="is-row" x-show="baAcc.open"><label class="tl-field tl-grow"><span>เหตุผลในการเปลี่ยนสิทธิ์ *</span><input type="text" maxlength="300" x-model="baAcc.note" data-ba-acc-note placeholder="เช่น ปรับตามนโยบายของสถานศึกษาปี 2569"></label>
+                        <button type="button" class="tl-btn tl-btn-primary self-end" :disabled="baAcc.busy" @click="baAccSave()" data-ba-acc-save>บันทึกสิทธิ์</button><button type="button" class="tl-btn tl-btn-ghost self-end" @click="baAcc.open = false">ยกเลิก</button></div>
+                    <p class="a3-ferr" x-show="baAcc.err" x-text="baAcc.err" role="alert"></p>
+                </section>
                 <section class="tl-card space-y-3" data-mod-card>
                     <div class="flex flex-wrap items-center gap-2"><h3 class="font-extrabold flex items-center gap-2"><svg class="ico w-5 h-5 pb-star" aria-hidden="true"><use href="#i-layout-grid"/></svg>เปิด–ปิดโมดูล</h3><span class="flex-1"></span>
                         <button type="button" class="tl-btn tl-btn-ghost" x-show="!modForm.open" @click="modEdit()" data-mod-edit>แก้ไข</button></div>
@@ -4648,7 +4675,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                     <div class="space-y-4">
                         <section class="tl-card space-y-2"><h5 class="is-h5">การแจ้งต่อ Red Alert แจ้งทันที (MO7) ที่ยังไม่มีผู้เปิดตรวจสอบ</h5>
                             <div class="is-row"><label class="tl-field is-narrow" :class="cs.fe.escalateHours && 'is-err'"><span>แจ้งต่อเมื่อเกิน (ชั่วโมง)</span><input type="number" min="0.25" max="168" step="0.25" x-model="cs.form.escalateHours" placeholder="ว่าง = ปิด" data-cs-f="hours"><small class="is-fe" x-text="cs.fe.escalateHours"></small></label></div>
-                            <fieldset class="is-fs" :class="cs.fe.escalateUserIds && 'is-err'"><legend>ผู้รับการแจ้งต่อ (4 วิชาชีพ — ระบบจะมอบหมายเคสให้เมื่อแจ้งต่อ เพื่อให้เปิดดูได้)</legend>
+                            <fieldset class="is-fs" :class="cs.fe.escalateUserIds && 'is-err'"><legend>ผู้รับการแจ้งต่อ (ผู้เชี่ยวชาญ — ระบบจะมอบหมายเคสให้เมื่อแจ้งต่อ เพื่อให้เปิดดูได้)</legend>
                                 <template x-for="u in cs.data.specialists" :key="'csu' + u.id"><label class="is-check"><input type="checkbox" :checked="cs.form.escalateUserIds.includes(u.id)" @change="csToggleUser(u.id)" :data-cs-user="u.id"><span x-text="u.fullName"></span></label></template>
                                 <small class="is-fe" x-text="cs.fe.escalateUserIds"></small></fieldset>
                             <p class="tl-mute">ระบบตรวจทุก 15 นาทีเมื่อติดตั้งตัวตั้งเวลา (รัน <code>installSafetyEscalationTrigger</code> หนึ่งครั้งใน Apps Script) และตรวจทุกครั้งที่มีผู้เปิดรายการ Red Alert</p>
@@ -8848,6 +8875,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                 <div x-show="profileTab === 'behavior'" class="tl-page" data-bp-page>
                     <div class="tl-head">
                         <h4 class="tl-title">ข้อมูลพฤติกรรม</h4><span class="flex-1"></span>
+                        <button type="button" class="tl-btn tl-btn-ghost" @click="bpPrint()" :disabled="!bp.data || !bpRecords.length" data-bp-print><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-printer"/></svg>พิมพ์รายงาน</button>
                         <button type="button" class="tl-btn tl-btn-ghost" @click="bp.data = null; bpLoad()" :disabled="bp.loading" data-bp-refresh><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>รีเฟรช</button>
                         <button data-ro-hide type="button" class="tl-btn tl-btn-primary" @click="openBehaviorForm(activeStudent && activeStudent.id)" data-bp-new><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-plus"/></svg>บันทึกพฤติกรรม</button>
                     </div>
@@ -8975,7 +9003,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                     <p class="tl-tags"><template x-for="c in r.codes" :key="r.id + 'c' + c"><span class="tl-tag" x-text="c"></span></template></p>
                                     <p class="bp-line" x-show="r.counterparts && r.counterparts.length" data-bp-rec-cp><b>คู่กรณี: </b><span x-text="(r.counterparts || []).map(x => x.name + (x.grade ? ' (' + x.grade + ')' : '') + (x.role ? ' — ' + x.roleLabel : '')).join(', ')"></span></p>
                                     <template x-if="r.full"><div><p x-show="r.detail" class="bp-line"><b>รายละเอียด: </b><span x-text="r.detail"></span></p><p x-show="r.handling" class="bp-line"><b>วิธีจัดการ: </b><span x-text="r.handling"></span></p></div></template>
-                                    <template x-if="!r.full"><p class="tl-mute" x-text="'รายละเอียดเปิดให้: ' + (r.shareLabel || 'เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ')"></p></template>
+                                    <template x-if="!r.full"><p class="tl-mute" x-text="'รายละเอียดเปิดให้: ' + (r.shareLabel || 'เฉพาะผู้บันทึกและผู้เชี่ยวชาญ')"></p></template>
                                     <button type="button" class="tl-btn tl-btn-ghost mt-2" @click="bpOpenRec(r)" data-bp-rec-open>รายละเอียดฉบับเต็ม</button>
                                 </li></template></ol>
                         </section>
@@ -9016,7 +9044,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                     <template x-if="bp.rec.status === 'cancelled'"><div><dt>ยกเลิก</dt><dd x-text="a3Time(bp.rec.cancelledAt) + (bp.rec.cancelReason ? ' — ' + bp.rec.cancelReason : '')"></dd></div></template>
                                     <template x-if="bp.rec.updatedByName && bp.rec.version > 1"><div><dt>แก้ไขล่าสุด</dt><dd x-text="a3Time(bp.rec.updatedAt) + ' โดย ' + bp.rec.updatedByName"></dd></div></template>
                                 </dl>
-                                <template x-if="!bp.rec.full"><p class="tl-mute" x-text="'รายละเอียดเปิดให้: ' + (bp.rec.shareLabel || 'เฉพาะผู้บันทึกและผู้เชี่ยวชาญ 4 วิชาชีพ')"></p></template>
+                                <template x-if="!bp.rec.full"><p class="tl-mute" x-text="'รายละเอียดเปิดให้: ' + (bp.rec.shareLabel || 'เฉพาะผู้บันทึกและผู้เชี่ยวชาญ')"></p></template>
                                 <template x-if="bp.rec.full && bp.rec.shareLabel"><p class="tl-mute" data-bp-rec-share x-text="'การเปิดรายละเอียด: ' + bp.rec.shareLabel"></p></template>
                                 <div class="a3-save-row" x-show="bp.rec.canEdit && !bp.cancel.id">
                                     <button type="button" class="tl-btn tl-btn-ghost" @click="bpEditRec(bp.rec)" data-bp-edit>แก้ไข</button>
@@ -9313,7 +9341,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                                         </section>
                                     </template>
                                 </div>
-                                <p class="restricted-note mt-3" x-show="log.restricted && log.specialistSections"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg>มีข้อมูลแถบที่ 3–4 (คะแนน บันทึกชีวจิตสังคม แผนช่วยเหลือ) ที่แสดงเฉพาะ 4 วิชาชีพ — แสดงเพียงระดับความเสี่ยงโดยสรุป</p>
+                                <p class="restricted-note mt-3" x-show="log.restricted && log.specialistSections"><svg class="ico w-4 h-4" aria-hidden="true"><use href="#i-lock"/></svg>มีข้อมูลแถบที่ 3–4 (คะแนน บันทึกชีวจิตสังคม แผนช่วยเหลือ) ที่แสดงเฉพาะ ผู้เชี่ยวชาญ — แสดงเพียงระดับความเสี่ยงโดยสรุป</p>
                                 <details class="lg-src" x-show="log.note">
                                     <summary>ดูข้อความบันทึกต้นฉบับ</summary>
                                     <p x-text="log.note"></p>
@@ -10045,7 +10073,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
                     <button type="button" class="cw-btn cw-btn-dark" @click="intakeActiveTab = 'presenting_issue'">กลับไปแถบที่ 2</button>
                 </div>
 
-                <!-- TAB: การประเมินนักเรียน 360° (AC / BH / MO) — 4 วิชาชีพเท่านั้น (server: a360.*) -->
+                <!-- TAB: การประเมินนักเรียน 360° (AC / BH / MO) — ผู้เชี่ยวชาญเท่านั้น (server: a360.*) -->
                 <template x-if="canAccessSpecialistData()">
                 <div x-show="intakeActiveTab === 's360'" data-step="s360" data-a3-sec="s360" class="cw-panel-in space-y-5"
                      x-effect="if (intakeActiveTab === 's360') a3Enter()">
@@ -10774,7 +10802,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
 
                 </template>
 
-                <!-- TAB 5: เครื่องมือการประเมินเพิ่มเติม (renamed from the former specialist tab) — RBAC: 4 วิชาชีพเท่านั้น -->
+                <!-- TAB 5: เครื่องมือการประเมินเพิ่มเติม (renamed from the former specialist tab) — RBAC: ผู้เชี่ยวชาญเท่านั้น -->
                 <div x-show="intakeActiveTab === 'specialist'" data-step="specialist" class="cw-panel-in space-y-6">
                     <!-- Authorized Specialist Workspace (other roles see the shared denial panel above) -->
                     <template x-if="canAccessSpecialistData()">
@@ -12758,7 +12786,7 @@ i.ba-SI{background:var(--bh-si)}i.ba-FM{background:var(--bh-fm)}i.ba-PD{backgrou
     <script src="js/app-2-4577189a13.js"></script>
     <script src="js/app-3-0ebcb3a77b.js"></script>
     <!-- ALPINE.JS LOGIC -->
-    <script src="js/app-4-c7f4ea8efa.js"></script>
+    <script src="js/app-4-bd5c54b353.js"></script>
 <!-- loading animation clip (MP4, base64). Not executed; read by TssLoaderVideoSrc only when a loader is shown. -->
 
 <script>
